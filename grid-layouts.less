@@ -1,0 +1,122 @@
+// MEDIA QUERIES
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@phone: ~'(max-width: 600px)';
+@tablet: ~'(min-width: 601px) and (max-width: 900px)';
+@tablet-and-down: ~'(max-width: 900px)';
+@tablet-and-up: ~'(min-width: 601px)';
+@desktop: ~'(min-width: 901px)';
+
+/**
+ * RESPONSIVE LAYOUTS
+ *
+ * Some notes:
+ * - always use the direct child selector for columns so nested layouts don't interfere
+ * - for grid layouts with different span sizes use incrementing .col-(num) classes and apply sizes to these classes
+ **/
+
+.layout-responsive-1 {
+	/**
+	* specs: max cols 12
+	* desktop: 4
+	* tablet: 6
+	* phone: 12
+	**/
+
+	@media @desktop {
+		> .col {
+			.col-span(4);
+		}
+	}
+
+	@media @tablet {
+		> .col {
+			.col-span(6);
+		}
+	}
+
+	@media @phone {
+		> .col {
+			.col-span(12);
+		}
+	}
+}
+
+.layout-responsive-2 {
+	/**
+	* specs: max cols 12
+	* desktop: 6
+	* tablet: 12
+	* phone: 12
+	**/
+
+	@media @desktop {
+		> .col {
+			.col-span(6);
+		}
+	}
+
+	@media @tablet {
+		> .col {
+			.col-span(12);
+		}
+	}
+
+	@media @phone {
+		> .col {
+			.col-span(12);
+		}
+	}
+}
+
+.layout-responsive-3 {
+	/**
+	* specs:
+	* desktop: 8/4
+	* tablet: 8/4
+	* phone: 12
+	**/
+
+	@media @tablet-and-up {
+		> .col-1 {
+			.col-span(8);
+		}
+
+		> .col-2 {
+			.col-span(4);
+		}
+	}
+
+	@media @phone {
+		> .col {
+			.col-span(12);
+		}
+	}
+}
+
+.layout-responsive-4 {
+	/**
+	* specs:
+	* desktop: 3
+	* tablet: 6
+	* phone: 12
+	**/
+
+	@media @desktop {
+		> .col {
+			.col-span(3);
+		}
+	}
+
+	@media @tablet {
+		> .col {
+			.col-span(6);
+		}
+	}
+
+	@media @phone {
+		> .col {
+			.col-span(12);
+		}
+	}
+}
