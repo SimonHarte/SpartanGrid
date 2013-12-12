@@ -26,54 +26,60 @@
  * .col-span(3.5)
  **/
 
-/*--- base variables ---*/
-@grid-fixed-width: 960px;
-@grid-fixed-gutter: 20px;
-@grid-max-cols: 12;
-
-/*-- set up fluid grid ---*/
-@grid-fluid-width: 100%;
-@decimal-places: 3;
 // used for rounding calculated numbers
 
-// fluid gutter is calculated relatively to the static gutter in fixed grid width
-@grid-fluid-gutter: round(percentage((100 / (@grid-fixed-width / @grid-fixed-gutter)) / 100), @decimal-places);
-
-// calculate the width of one grid column
-@grid-one-col: (@grid-fluid-width - (@grid-fluid-gutter * (@grid-max-cols))) / @grid-max-cols;
-
 /*--- mixins ---*/
-.grid-type(@type) {
-	.span-width(@num: @grid-max-cols) when (@type = 'fluid') {
-		width: round((@grid-one-col * @num) + (@grid-fluid-gutter * (@num - 1)), @decimal-places);
-	}
+.grid-create(@type, @fixed-width, @fixed-gutter, @cols) {
+	@width: 100%;
 
-	.span-width(@num: @grid-max-cols) when (@type = 'fixed') {
-		width: round((@grid-one-col * @num) + (@grid-fluid-gutter * @num), @decimal-places);
-	}
+	// fluid gutter is calculated relatively to the static gutter in fixed grid width
+	@gutter: round(percentage((100 / (@fixed-width / @fixed-gutter)) / 100), @decimal-places);
 
-	.indent(@num: 0) when (@num >= 0) {
-		margin-left: round((@grid-one-col * @num) + (@grid-fluid-gutter * (@num + 1)), @decimal-places);
-	}
+	// calculate the width of one grid column
+	@one-col: (@width - (@gutter * (@cols))) / @cols;
 
-	.indent(@num: -1) when (@num < 0) {
-		margin-left: round((@grid-one-col * @num) + (@grid-fluid-gutter * (@num - 1)), @decimal-places);
-	}
+	#grid > .grid-mixins(@width, @gutter, @cols, @one-col);
+}
 
-	.push(@num) when (@num >= 0) {
-		position: relative;
-		left: round((@grid-one-col * @num) + (@grid-fluid-gutter * @num), @decimal-places);
-	}
+.grid-create(@type, @fixed-width, @fixed-gutter, @cols) when (@type = 'fixed') {
+	@width: @fixed-width;
+	@gutter: @fixed-gutter;
 
-	.pull(@num) when (@num >= 0) {
-		position: relative;
-		right: round((@grid-one-col * @num) + (@grid-fluid-gutter * @num), @decimal-places);
-	}
+	// calculate the width of one grid column
+	@one-col: (@width - (@gutter * (@cols))) / @cols;
+
+	#grid > .grid-mixins(@width, @gutter, @cols, @one-col);
 }
 
 #grid {
-	.create(@type: 'fluid') {
-		.grid-type(@type);
+	.grid-create(@grid-type, @grid-fixed-width, @grid-fixed-gutter, @grid-max-cols);
+	
+	.grid-mixins(@width, @gutter, @cols, @one-col) {
+		.span-width(@num: @cols) {
+			width: round((@one-col * @num) + (@gutter * (@num - 1)), @decimal-places);
+		}
+
+		.indent(@num: 0) when (@num >= 0) {
+			margin-left: round((@one-col * @num) + (@gutter * (@num + 1)), @decimal-places);
+		}
+		
+		.indent(@num: -1) when (@num < 0) {
+			margin-left: round((@one-col * @num) + (@gutter * (@num - 1)), @decimal-places);
+		}
+
+		.row-indent(@num: 0) {
+			margin-left: -(round((@one-col * @num) + (@gutter * (@num + 1)), @decimal-places));
+		}
+
+		.push(@num) when (@num >= 0) {
+			position: relative;
+			left: round((@one-col * @num) + (@gutter * @num), @decimal-places);
+		}
+
+		.pull(@num) when (@num >= 0) {
+			position: relative;
+			right: round((@one-col * @num) + (@gutter * @num), @decimal-places);
+		}
 	}
 
 	// less loop
@@ -91,6 +97,13 @@
 	.loop (@index) when (@index = 0) {
 	}
 }
+
+/*--- base variables ---*/
+@grid-fixed-width: 960px;
+@grid-fixed-gutter: 20px;
+@grid-max-cols: 12;
+@grid-type: 'fluid';
+@decimal-places: 3;
 
 // mixins to call inside less loop
 #loop-mixin {
@@ -169,8 +182,9 @@
 	padding-right: 0;
 }
 
-.row:extend(.clearfix) {
-	.offset(-1);
+.row {
+	.clearfix();
+	#grid > .row-indent(0);
 
 	&.ordered {
 		position: relative;
@@ -178,7 +192,7 @@
 }
 
 .col {
-	.offset(1);
+	#grid > .indent(0);
 	float: left;
 
 	&.spacer {
