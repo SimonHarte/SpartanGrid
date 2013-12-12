@@ -1,4 +1,4 @@
 responsibly
 ===========
 
-The fluid and compact less grid framework which allows for easy responsiveness
+[See fluid responsive example usage](http://responsibly-grid.herokuapp.com/)
