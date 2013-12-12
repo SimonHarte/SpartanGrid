@@ -1,31 +1,3 @@
-/**
- * Grid requirements
- *
- * 1. Grid must be fluid so it adjusts on every viewport's content width
- * 2. Grid must be able to float items on multiple lines, e.g. 4 items on one or 2 lines (2 items each)
- * 3. Grid should be applicable as HTML classes and/or mixins
- * 4. You should be able to set up responsive grid layouts
- *    e.g. different amount of columns in different viewports (see requirement 2)
- * 
- * 
- * Grid specs
- * 
- * 1. We use percentage widths and spacings to cover requirement 1
- * 2. We use a negative margin row with all left margin cols to cover requirement 2
- * 3. The grid can be set up completely in HTML by using the given classes: .row, .layout-responsive-x, .col, .col-span-xx, .offset-x
- *    Or you can apply the same styles in LESS by using the mixins: .row(), .layout-responsive-x(), .col(), .col-span(xx), .offset(x)
- * 4. To build a responsive grid use .layout-responsive classes on your grid .rows and declare the .cols inside those layouts.
- *    Use .col-xx instead of .col-span-xx as logical unit inside such a layout if columns have different sizes
- * 
- * NEW
- * Use .ordered, .pull-x and .push-x to optically reposition elements while keeping the html order!
- * credit for this goes to twitter bootstrap
- *
- *
- * Hint: since everything gets calculated within mixins you could even use float numbers for grid widths ;)
- * .col-span(3.5)
- **/
-
 /*--- base variables ---*/
 @grid-fixed-width: 960px;
 @grid-fixed-gutter: 20px;
@@ -233,17 +205,13 @@
 
 /*--- generate grid classes ---*/
 /**
- * .loop() in helpers.less
- * 
  * Parameters:
  * 1) amount of iterations
  * 2) class selector prefix to generate
  * 3) mixin to apply to each selector
  *
- * mixins to apply can be found in loopmixins.less
- 
  * Example:
- * .loop(12, item, 'setTabIndex');
+ * #grid > .loop(12, class-prefix, 'mixin');
  *
  * NOTE: you can not use the generated classes themselves as mixins!
  */
