@@ -26,10 +26,21 @@
  * .col-span(3.5)
  **/
 
-// used for rounding calculated numbers
+/*--- base variables ---*/
+@grid-fixed-width: 960px;
+@grid-fixed-gutter: 20px;
+@grid-max-cols: 12;
+// grid type either fluid or fixed
+@grid-type: 'fluid';
+// to what floating point number should be rounded?
+@decimal-places: 3;
 
-/*--- mixins ---*/
+/*
+ * duplicate mixin switches according to passed type
+ * any other value than 'fixed' is assumed as fluid
+ */
 .grid-create(@type, @fixed-width, @fixed-gutter, @cols) {
+	// fluid grid (default)
 	@width: 100%;
 
 	// fluid gutter is calculated relatively to the static gutter in fixed grid width
@@ -38,39 +49,51 @@
 	// calculate the width of one grid column
 	@one-col: (@width - (@gutter * (@cols))) / @cols;
 
-	#grid > .grid-mixins(@width, @gutter, @cols, @one-col);
+	// implement grid mixins with type dependent variables
+	#grid > .grid-mixins(@width, @gutter, @one-col);
 }
 
-.grid-create(@type, @fixed-width, @fixed-gutter, @cols) when (@type = 'fixed') {
+.grid-create('fixed', @fixed-width, @fixed-gutter, @cols) {
+	// fixed grid
 	@width: @fixed-width;
 	@gutter: @fixed-gutter;
 
 	// calculate the width of one grid column
 	@one-col: (@width - (@gutter * (@cols))) / @cols;
 
-	#grid > .grid-mixins(@width, @gutter, @cols, @one-col);
+	// implement grid mixins with type dependent variables
+	#grid > .grid-mixins(@width, @gutter, @one-col);
 }
 
 #grid {
+	/*
+	 * pass grid variables from global scope (defined on top)
+	 * to our switch mixin which manipulates/creates variables
+	 * this mixin is also our unlocker to use #grid > .mixins() as usual
+	 */
 	.grid-create(@grid-type, @grid-fixed-width, @grid-fixed-gutter, @grid-max-cols);
-	
-	.grid-mixins(@width, @gutter, @cols, @one-col) {
-		.span-width(@num: @cols) {
+
+	// grid mixins which get called with manipulated variables from unlocker
+	.grid-mixins(@width, @gutter, @one-col) {
+		.span-width(@num) {
 			width: round((@one-col * @num) + (@gutter * (@num - 1)), @decimal-places);
 		}
 
+		// indent grid columns either way with these mixins
 		.indent(@num: 0) when (@num >= 0) {
 			margin-left: round((@one-col * @num) + (@gutter * (@num + 1)), @decimal-places);
 		}
-		
+
 		.indent(@num: -1) when (@num < 0) {
 			margin-left: round((@one-col * @num) + (@gutter * (@num - 1)), @decimal-places);
 		}
 
+		// used only on .row for proper negative indent
 		.row-indent(@num: 0) {
 			margin-left: -(round((@one-col * @num) + (@gutter * (@num + 1)), @decimal-places));
 		}
 
+		// visually manipulate grid column order with these mixins
 		.push(@num) when (@num >= 0) {
 			position: relative;
 			left: round((@one-col * @num) + (@gutter * @num), @decimal-places);
@@ -98,14 +121,10 @@
 	}
 }
 
-/*--- base variables ---*/
-@grid-fixed-width: 960px;
-@grid-fixed-gutter: 20px;
-@grid-max-cols: 12;
-@grid-type: 'fluid';
-@decimal-places: 3;
-
-// mixins to call inside less loop
+/*
+ * mixins to call inside less loop
+ * use standardized global mixins - because we have them...
+ */
 #loop-mixin {
 	// base grid loops
 	.apply('grid-span', @index) {
@@ -126,7 +145,12 @@
 	// grid loops end
 }
 
-// make simpler mixins available (mainly for class/mixin name consistency)
+/*
+ * make simpler global mixins available
+ * (mainly for class/mixin name consistency)
+ * values will depend on grid type
+ * (either percent or pixel)
+ */
 .col-span(@num: 0) when (@num >= 0) {
 	#grid > .span-width(@num);
 }
@@ -173,7 +197,7 @@
 	}
 }
 
-/*--- base layout styles ---*/
+/*--- base grid layout styles ---*/
 .row,
 .col {
 	display: block;
@@ -184,17 +208,24 @@
 
 .row {
 	.clearfix();
+	// one gutter negative indent for row
 	#grid > .row-indent(0);
 
+	// used to .push and .pull columns
 	&.ordered {
 		position: relative;
 	}
 }
 
 .col {
+	// one gutter indent for each column
 	#grid > .indent(0);
 	float: left;
 
+	/*
+	 * spacer class for the rare occasion we have an "empty" column in a responsive grid layout
+	 * where the use of .offset is not possible because of realignment of columns
+	 */
 	&.spacer {
 		min-height: 1px;
 	}
