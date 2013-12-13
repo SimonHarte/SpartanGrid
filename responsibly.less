@@ -1,4 +1,7 @@
-/*--- base variables ---*/
+/*
+ * base variables
+ * adjust these for your setup
+ */
 @grid-fixed-width: 960px;
 @grid-fixed-gutter: 20px;
 @grid-max-cols: 12;
@@ -19,7 +22,7 @@
 	@gutter: round(percentage((100 / (@fixed-width / @fixed-gutter)) / 100), @decimal-places);
 
 	// calculate the width of one grid column
-	@one-col: (@width - (@gutter * (@cols))) / @cols;
+	@one-col: (@width - @gutter * @cols) / @cols;
 
 	// implement grid mixins with type dependent variables
 	#grid > .grid-mixins(@width, @gutter, @one-col);
@@ -31,7 +34,7 @@
 	@gutter: @fixed-gutter;
 
 	// calculate the width of one grid column
-	@one-col: (@width - (@gutter * (@cols))) / @cols;
+	@one-col: (@width - @gutter * @cols) / @cols;
 
 	// implement grid mixins with type dependent variables
 	#grid > .grid-mixins(@width, @gutter, @one-col);
@@ -47,10 +50,10 @@
 
 	// grid mixins which get called with manipulated variables from unlocker
 	.grid-mixins(@width, @gutter, @one-col) {
-		.span-width(@num) {
+		.span-width(@num) when (@num > 0) {
 			width: round((@one-col * @num) + (@gutter * (@num - 1)), @decimal-places);
 		}
-
+		
 		// indent grid columns either way with these mixins
 		.indent(@num: 0) when (@num >= 0) {
 			margin-left: round((@one-col * @num) + (@gutter * (@num + 1)), @decimal-places);
