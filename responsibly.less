@@ -183,6 +183,7 @@
 
 .row {
 	.clearfix();
+	width: 100%; // 100% width so percentage column margins are the same as negative row indent
 	// one gutter negative indent for row
 	#grid > .row-indent(0);
 
@@ -203,6 +204,7 @@
 	 */
 	&.spacer {
 		min-height: 1px;
+		visibility: hidden;
 	}
 }
 
