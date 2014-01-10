@@ -19,25 +19,29 @@
 	@width: 100%;
 
 	// fluid gutter is calculated relatively to the static gutter in fixed grid width
-	@gutter: round(percentage((100 / (@fixed-width / @fixed-gutter)) / 100), @decimal-places);
-
+	@row-gutter: round(percentage(@fixed-gutter / @fixed-width), @decimal-places);
+	// percentage column gutter has to be slightly bigger than row indent because row indent changes the container width
+	@true-gutter: round(percentage(@fixed-gutter / (@fixed-width + @fixed-gutter)), @decimal-places);
+	
 	// calculate the width of one grid column
-	@one-col: (@width - @gutter * @cols) / @cols;
+	@one-col: (@width - @true-gutter * @cols) / @cols;
 
 	// implement grid mixins with type dependent variables
-	#grid > .grid-mixins(@width, @gutter, @one-col);
+	#grid > .grid-mixins(@width, @row-gutter, @true-gutter, @one-col);
 }
 
 .grid-create('fixed', @fixed-width, @fixed-gutter, @cols) {
 	// fixed grid
 	@width: @fixed-width;
 	@gutter: @fixed-gutter;
-
+	
 	// calculate the width of one grid column
-	@one-col: (@width - @gutter * @cols) / @cols;
+	// add one gutter to grid width because of negative indent
+	@one-col: ((@width + @gutter) - @gutter * @cols) / @cols;
 
 	// implement grid mixins with type dependent variables
-	#grid > .grid-mixins(@width, @gutter, @one-col);
+	// gutter passed twice because in fluid (percentage) grid column gutter is slightly bigger than row indent
+	#grid > .grid-mixins(@width, @gutter, @gutter, @one-col);
 }
 
 #grid {
@@ -49,7 +53,7 @@
 	.grid-create(@grid-type, @grid-fixed-width, @grid-fixed-gutter, @grid-max-cols);
 
 	// grid mixins which get called with manipulated variables from unlocker
-	.grid-mixins(@width, @gutter, @one-col) {
+	.grid-mixins(@width, @row-gutter, @gutter, @one-col) {
 		.span-width(@num) when (@num > 0) {
 			width: round((@one-col * @num) + (@gutter * (@num - 1)), @decimal-places);
 		}
@@ -65,7 +69,7 @@
 
 		// used only on .row for proper negative indent
 		.row-indent(@num: 0) {
-			margin-left: -(round((@one-col * @num) + (@gutter * (@num + 1)), @decimal-places));
+			margin-left: -(round((@one-col * @num) + (@row-gutter * (@num + 1)), @decimal-places));
 		}
 
 		// visually manipulate grid column order with these mixins
