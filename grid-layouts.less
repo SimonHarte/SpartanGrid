@@ -13,8 +13,8 @@
  * Some notes:
  * - always use the direct child selector for columns so nested layouts don't interfere
  * - for grid layouts with different span sizes use incrementing .col-(num) classes and apply sizes to these classes
- * - use the #responsive > .cleared-columns([column-count]) mixin
- *   to easily and properly set up all same width columns within a responsive layout
+ * - use the #responsive > .cleared-columns([column-count]) mixin to easily and properly set up all same width columns within a responsive layout.
+ *   Note that you must distinguish different viewports through their media query here because it may generate different :nth-child selectors
  **/
 
 #responsive {
