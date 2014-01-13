@@ -13,7 +13,25 @@
  * Some notes:
  * - always use the direct child selector for columns so nested layouts don't interfere
  * - for grid layouts with different span sizes use incrementing .col-(num) classes and apply sizes to these classes
+ * - use the #responsive > .cleared-columns([column-count]) mixin
+ *   to easily and properly set up all same width columns within a responsive layout
  **/
+
+#responsive {
+	// grid-max-cols from responsibly
+	@max-cols: @grid-max-cols;
+	
+	// simple mixin to clear float on every new grid line
+	.cleared-columns(@columns) {
+		> .col {
+			.col-span(@max-cols / @columns);
+
+			&:nth-child(@{columns}n+1) {
+				clear: left;
+			}
+		}
+	}
+}
 
 .layout-responsive-1 {
 	/**
@@ -23,22 +41,16 @@
 	* phone: 12
 	**/
 
-	@media @desktop {
-		> .col {
-			.col-span(4);
-		}
+	> .col {
+		.col-span(12);
 	}
 
 	@media @tablet {
-		> .col {
-			.col-span(6);
-		}
+		#responsive > .cleared-columns(2);
 	}
 
-	@media @phone {
-		> .col {
-			.col-span(12);
-		}
+	@media @desktop {
+		#responsive > .cleared-columns(3);
 	}
 }
 
@@ -50,22 +62,12 @@
 	* phone: 12
 	**/
 
+	> .col {
+		.col-span(12);
+	}
+
 	@media @desktop {
-		> .col {
-			.col-span(6);
-		}
-	}
-
-	@media @tablet {
-		> .col {
-			.col-span(12);
-		}
-	}
-
-	@media @phone {
-		> .col {
-			.col-span(12);
-		}
+		#responsive > .cleared-columns(2);
 	}
 }
 
@@ -77,6 +79,10 @@
 	* phone: 12
 	**/
 
+	> .col {
+		.col-span(12);
+	}
+
 	@media @tablet-and-up {
 		> .col-1 {
 			.col-span(8);
@@ -84,12 +90,6 @@
 
 		> .col-2 {
 			.col-span(4);
-		}
-	}
-
-	@media @phone {
-		> .col {
-			.col-span(12);
 		}
 	}
 }
@@ -102,21 +102,15 @@
 	* phone: 12
 	**/
 
-	@media @desktop {
-		> .col {
-			.col-span(3);
-		}
+	> .col {
+		.col-span(12);
 	}
 
 	@media @tablet {
-		> .col {
-			.col-span(6);
-		}
+		#responsive > .cleared-columns(2);
 	}
 
-	@media @phone {
-		> .col {
-			.col-span(12);
-		}
+	@media @desktop {
+		#responsive > .cleared-columns(4);
 	}
 }
