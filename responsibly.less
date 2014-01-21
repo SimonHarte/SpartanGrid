@@ -63,6 +63,8 @@
 			margin-left: round((@one-col * @num) + (@gutter * (@num + 1)), @decimal-places);
 		}
 
+		// negative indent can only be used in a fixed grid system and sadly not be generated with the loop
+		// still, you can use this mixin if the need occurs
 		.indent(@num: -1) when (@num < 0) {
 			margin-left: round((@one-col * @num) + (@gutter * (@num - 1)), @decimal-places);
 		}
