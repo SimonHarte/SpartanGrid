@@ -36,7 +36,7 @@
 	}
 }
 
-.col-set(@col-name, @col-span) {
+.col-set(@col-name; @col-span) {
 	> .@{col-name} {
 		.col-span(@col-span);
 	}
@@ -46,7 +46,7 @@
 	@clear: @grid-max-cols / @col-span;
 	
 	// use default col-set mixin to generate selector
-	.col-set(col, @col-span);
+	.col-set(col; @col-span);
 	
 	// with equal columns, clear every nth element for proper alignment
 	.col-clear(@clear);
@@ -86,7 +86,7 @@
 	**/
 
 	@media @tablet-and-down {
-		.col-set-equal(12)
+		.col-set-equal(12);
 	}
 
 	@media @desktop {
@@ -107,9 +107,9 @@
 	}
 
 	@media @tablet-and-up {
-		.col-set(col-1, 8);
+		.col-set(col-1; 8);
 
-		.col-set(col-2, 4);
+		.col-set(col-2; 4);
 	}
 }
 
