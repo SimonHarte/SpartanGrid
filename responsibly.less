@@ -165,7 +165,7 @@
 .row,
 .col {
 	display: block;
-	margin-right: 0;
+	margin-right: 0 !important;
 	padding-left: 0;
 	padding-right: 0;
 }
@@ -173,7 +173,7 @@
 .row {
 	.grid-cf();
 	// one gutter negative indent for row
-	#grid > .row-indent(0);
+	#grid > .row-indent(0) !important;
 
 	// used to .push and .pull columns
 	&.ordered {
@@ -183,7 +183,7 @@
 
 .col {
 	// one gutter indent for each column
-	#grid > .indent(0);
+	#grid > .indent(0) !important;
 	float: left;
 
 	/*
