@@ -137,7 +137,8 @@
 }
 
 .offset(@num: 0) {
-	#grid > .indent(@num);
+	// must use important statement to overwrite default row margin
+	#grid > .indent(@num) !important;
 }
 
 .push(@num: 0) when (@num >= 0) {
