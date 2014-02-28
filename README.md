@@ -134,6 +134,16 @@ Caveats
 ===========
 - basic knowledge of less needed to set up responsive grid layouts.
 
+Browser Support
+===========
+Since responsibly is actually supported in most browser (with media query polyfill) we just list the ones which are known to not support it.
+
+Not supported:
+- IE7-
+
+Partially supported:
+- Safari iOS, wrong measures with multiple small columns caused by bad rounding of percentage values
+ 
 Examples
 ===========
 [See fluid responsive example](http://responsibly-grid.herokuapp.com/)
