@@ -17,10 +17,10 @@ How it works
 ===========
 It is quite simple: You define a fixed grid width, a fixed gutter and an amount of grid columns, everything else is done with less.
 
-The fixed widths are just there to calculate the gutter relatively to the given width (or set up a static width grid).
+The fixed widths are there to calculate the percentage gutter relatively to the given width and column percentage widths or naturally set up a static width grid.
 The grid defines a row which has a compensating negative left margin and inside that you have columns with only left margins.
 
-You can set column widths, offsets etc. through specific, short classes or similar named mixins.
+You can set column widths, offsets etc. through specific, short classes or similar named mix-ins.
 
 Unlike many other grid systems responsibly doesn't use .omega classes or last/first-child selectors or similar to eliminate gutters where required.
 Instead you have a consistent structure which enables a simple implementation of responsive layouts.
@@ -29,7 +29,7 @@ Getting started
 ===========
 - Integrate responsibly in your project
 - adjust `grid-config.less`
-- Use the given classes in your markup or set up your own responsive layouts
+- Use the given classes in your markup or set up needed responsive layouts
 
 Details
 ===========
@@ -55,7 +55,7 @@ Explaining the setup and class scheme in dummy less code:
 
 That's basically all there is: a .row, a .col and .col-span-width
 
-## Grid mixins overview
+## Grid mix-ins overview
 	.col-span([columns]);
 	.offset([columns]);
 	.push([columns]);
@@ -63,24 +63,24 @@ That's basically all there is: a .row, a .col and .col-span-width
 
 ### col-span
 Used to set the column width, equivalent to `.col-span-[columns]`.
-Although you could just use the generated `.col-span-[columns]` classes as well, this mixin allows you to pass in any floating point number to generate a width,
+Although you could just use the generated `.col-span-[columns]` classes as well, this mix-in allows you to pass in any floating point number to generate a width,
 which enables you to set up a grid row with for example 5 columns with proper gutter size in a 12 column grid.
 
 ### offset
 Indent a column by the defined amount of grid columns, equivalent to `.offset-[columns]`.
-While there are just positive indents in generated classes, you could also call this mixin with negative values.
+While there are just positive indents in generated classes, you could also call this mix-in with negative values.
 
 ### push and pull
 Together with the additional class `.ordered` on `.row` you can reorder columns visually without changing the order in HTML.
-Note that you will have problems if these are used within certain responsive layouts.
+Note that you may run into problems if these are used within certain responsive layouts as they use relative positioning.
 Equivalent to `push-[columns]` and `pull-[columns]`, similar behavior as `.offset()`.
 
 
 Setting up responsive layouts
 ===========
-There are 3 mixins which will help you create responsive layout.
+There are 3 mix-ins which will help you create responsive layout.
 
-## Helper mixins overview
+## Helper mix-ins overview
 
 	.col-set([col-name], [columns]);
 	.col-set-equal([columns]);
@@ -90,7 +90,7 @@ There are 3 mixins which will help you create responsive layout.
 Generate a class `.[col-name]` with the given width.
 
 ### col-set-equal
-Generate a ´.col´ selector with the given width and also properly clear columns every nth-child element using the `.col-clear()` mixin.
+Generate a `.col` selector with the given width and also properly clear columns every nth child element using the `.col-clear()` mix-in.
 
 Example: if you have 6 columns in total but only 3 columns per line you want to clear the 4th element, so if the 3rd element is smaller (in height) than the 2nd the 4th won't align itself directly under the 3rd... got it? ;)
 
@@ -103,10 +103,10 @@ With the following example you get a layout where you have one column if the vie
 	.layout-r-1 {
 		// grid maximum columns = 12
 		
-		@media (max-width: 40em) {
+		@media (max-width: 39.99em) {
 			.col-set-equal(12);
 		}
-		@media (min-width: 40em) and (max-width: 80em) {
+		@media (min-width: 40em) and (max-width: 79.99em) {
 			.col-set-equal(6);
 		}
 		@media (min-width: 80em) {
@@ -116,7 +116,7 @@ With the following example you get a layout where you have one column if the vie
 	
 Defining the grid type
 ===========
-There is one special setup variable: ```@grid-type```
+There is one special setup variable: `@grid-type`
 
 With this variable you can define if you either want a fluid or static width grid, the other grid variables stay the same, responsibly just does different calculations using these values.
 
@@ -127,8 +127,8 @@ Advantages
 ===========
 - Small in size: **~8KB** of less code which per default generates **~2KB** of minified css.
 - With minimal configuration you can swiftly set up standard grid layouts using simple, generated classes.
-- Provides different less mixins to easily set up responsive layouts as you need them.
-- Actually even non-grid layouts are possible using the mixins as the values get calculated in less.
+- Provides less mix-ins to easily set up responsive layouts as you need them instead of generating a whole bunch of classes.
+- Actually even non-grid layouts are possible using the mix-ins as the values get calculated in less.
 
 Caveats
 ===========
@@ -136,13 +136,12 @@ Caveats
 
 Browser Support
 ===========
-Since responsibly is actually supported in most browser (with media query polyfill) we just list the ones which are known to not support it.
+**Not** supported:
+- IE7-: completely wrong behavior with negative `.row` margin
 
-Not supported:
-- IE7-
-
-Partially supported:
-- Safari iOS, wrong measures with multiple small columns caused by bad rounding of percentage values
+**Partially** supported:
+- IE8: basic grid working, no media query support and :nth-child clearing, **Note:** fully supported with respond.js and selectivizr.js polyfills
+- Safari iOS: wrong measures with lots of small columns caused by bad rounding of percentage values
  
 Examples
 ===========
