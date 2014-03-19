@@ -125,7 +125,7 @@ With this variable you can define if you either want a fluid or static width gri
 
 Advantages
 ===========
-- Small in size: **~8KB** of less code which per default generates **~2KB** of minified css.
+- Small in size: **~8KB** of less code which per default generates **~2KB** of minified css (responsive layouts excluded).
 - With minimal configuration you can swiftly set up standard grid layouts using simple, generated classes.
 - Provides less mix-ins to easily set up responsive layouts as you need them instead of generating a whole bunch of classes.
 - Actually even non-grid layouts are possible using the mix-ins as the values get calculated in less.
@@ -148,3 +148,7 @@ Examples
 [See fluid responsive example](http://responsibly-grid.herokuapp.com/)
 
 Responsibly is integrated in the [such.less frontend library](https://github.com/MarcDiethelm/such.less) and with that also in the [xtc](https://github.com/MarcDiethelm/xtc) project, check them out!
+
+ToDos
+===========
+- port to SASS (even though there already are good grid systems for SASS like [susy](https://github.com/ericam/susy)
