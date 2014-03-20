@@ -180,7 +180,7 @@
 
 .col-set(@col-name; @col-span) when (isnumber(@col-span)) {
 	// apply styles to child columns directly or to columns within child rows
-	> .row > @{col-name},
+	> .row > .@{col-name},
 	> .@{col-name} {
 		.col-span(@col-span);
 	}
