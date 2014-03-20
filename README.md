@@ -5,8 +5,8 @@ The flexible yet simple responsive grid system.
 Why
 ===========
 Responsibly arose from a project where we had the need for a fluid responsive grid system with both html and less integration possibilities.
-As we couldn't find anything covering the requirements at that time we simply took the time to develop something on our own.
-Over time through usage feedback, reviews and optimisations the initial idea developed into this vastly enhanced less grid system, called **responsibly**.
+As we couldn't find anything covering the requirements at that time we simply developed something on our own.
+Over time, through usage feedback, reviews and optimisations, the initial idea developed into this vastly enhanced less grid system, called **responsibly**.
 
 Contributors
 ===========
