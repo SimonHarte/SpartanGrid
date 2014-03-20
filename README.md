@@ -35,10 +35,12 @@ Details
 ===========
 Explaining the setup and class scheme in dummy less code:
 
+	// grid setup variables
 	@grid-fixed-width: 960px;
 	@grid-fixed-gutter: 20px;
 	@grid-max-cols: 12;
 	
+	// basic class scheme
 	.row {
 		.clearfix();
 		margin-left: -@gutter;
@@ -53,9 +55,12 @@ Explaining the setup and class scheme in dummy less code:
 		}
 	}
 
-That's basically all there is: a .row, a .col and .col-span-width
+That's basically all there is: a `.row`, a `.col` and its `.col-span-[width]`
 
 ## Grid mix-ins overview
+
+Instead of using the generated grid classes you can also use similar named mixins to implement the grid with less.
+
 	.col-span([columns]);
 	.offset([columns]);
 	.push([columns]);
