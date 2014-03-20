@@ -129,7 +129,7 @@
  * make simpler global mixins available
  * (mainly for class/mixin name consistency)
  * values will depend on grid type
- * (either percent or pixel)
+ * (either percentage or pixel)
  */
 .col-span(@num: 0) when (@num >= 0) {
 	#grid > .span-width(@num);
@@ -152,7 +152,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
  * You can use the following mixins to easily set up responsive layouts.
- * For grid layouts with non-equal span sizes use incrementing col-[integer] classes and apply sizes to each of these classes:
+ * For grid layouts with non-equal span sizes use incrementing col-[integer] classes and apply sizes to each of these classes.
  *
  * .col-set([colum name], [column span width]):
  * Standard mixin to set up a column in a responsive layout
@@ -179,6 +179,8 @@
 }
 
 .col-set(@col-name; @col-span) when (isnumber(@col-span)) {
+	// apply styles to child columns directly or to columns within child rows
+	> .row > @{col-name},
 	> .@{col-name} {
 		.col-span(@col-span);
 	}

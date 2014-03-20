@@ -114,6 +114,31 @@ With the following example you get a layout where you have one column if the vie
 		}
 	}
 	
+You can either apply responsive layouts by adding the class to the `.row` directly or make a whole section with multiple `.row`s which use the layout by wrapping them with a container using the layout class.
+
+Example:
+
+	<div class="row layout-r-1>
+		<div class="col"></div>
+		<div class="col"></div>
+		<div class="col"></div>
+	</div>
+	
+Or
+
+	<div class="layout-r-1>
+		<div class="row>
+			<div class="col"></div>
+			<div class="col"></div>
+			<div class="col"></div>
+		</div>
+		<div class="row>
+			<div class="col"></div>
+			<div class="col"></div>
+			<div class="col"></div>
+		</div>
+	</div>
+
 Defining the grid type
 ===========
 There is one special setup variable: `@grid-type`
@@ -121,7 +146,6 @@ There is one special setup variable: `@grid-type`
 With this variable you can define if you either want a fluid or static width grid, the other grid variables stay the same, responsibly just does different calculations using these values.
 
 **Note:** Keep in mind that you most likely can't just switch the grid type mid-project because of nested layouts, where fluid widths apply properly while static widths won't be correct.
-
 
 Advantages
 ===========
@@ -137,11 +161,13 @@ Caveats
 Browser Support
 ===========
 **Not** supported:
+
 - IE7-: completely wrong behavior with negative `.row` margin
 
 **Partially** supported:
-- IE8: basic grid working, no media query support and :nth-child clearing, **Note:** fully supported with respond.js and selectivizr.js polyfills
-- Safari iOS: wrong measures with lots of small columns caused by bad rounding of percentage values
+
+- IE8: basic grid working, no media query support and :nth-child clearing, **Note:** fully supported with [respond.js](https://github.com/scottjehl/Respond) and [selectivizr.js](http://selectivizr.com/) polyfills
+- Safari: wrong measures with lots of small columns caused by rounding to integer when converting percentage values to rendered pixels
  
 Examples
 ===========
