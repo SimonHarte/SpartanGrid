@@ -1,0 +1,138 @@
+// Content oriented media queries //
+
+@reading-length: 40em;
+
+// breakpoints
+@m-small-max: (@reading-length - .01);
+@m-medium-min: @reading-length;
+@m-medium-max: (@reading-length*2 - .01);
+@m-large-min: (@reading-length*2);
+
+// queries
+@m-small: ~"(max-width: @{m-small-max})";
+@m-medium: ~"(min-width: @{m-medium-min}) and (max-width: @{m-medium-max})";
+@m-medium-up: ~"(min-width: @{m-medium-min})";
+@m-medium-down: ~"(max-width: @{m-medium-max})";
+@m-large: ~"(min-width: @{m-large-min})";
+
+/**
+* You can use the following mixins to easily set up responsive layouts.
+* For grid layouts with non-equal span sizes use incrementing col-[integer] classes and apply sizes to each of these classes:
+*
+* .col-set([column name], [column span width]):
+* Standard mixin to set up a column in a responsive layout
+*
+* To set up layouts with equal width columns you only specify the width in `.col-set-equal`.
+*
+* .col-set-equal([column span width]):
+* Extended mixin to set up equal width columns and properly clear them at the same time
+*
+* Note: Every use of .col-set-equal() must be wrapped in a media query (even for smallest "mobile first" viewport).
+* Because else the `nth-child` selectors used in ` .col-set-equal()` for proper clearing would be passed on to all
+* other viewports/media queries in the layout.
+*
+* .col-clear([columns per line]):
+* Use this to manually clear every nth column if columns differ in height.
+* This ensures that a grid layout can have only [columns per line] columns on one horizontal grid line.
+*
+**/
+
+// layouts //
+
+.layout-r-1 {
+	/**
+	* specs: max cols 12
+	* large: 4
+	* medium: 6
+	* small: 12
+	**/
+
+	@media @m-small {
+		.col-set-equal(12);
+	}
+
+	@media @m-medium {
+		.col-set-equal(6);
+	}
+
+	@media @m-large {
+		.col-set-equal(4);
+	}
+}
+
+.layout-r-2 {
+	/**
+	* specs: max cols 12
+	* large: 6
+	* medium: 12
+	* small: 12
+	**/
+
+	@media @m-medium-down {
+		.col-set-equal(12);
+	}
+
+	@media @m-large {
+		.col-set-equal(6);
+	}
+}
+
+.layout-r-3 {
+	/**
+	* specs:
+	* large: 8/4
+	* medium: 8/4
+	* small: 12
+	**/
+
+	@media @m-small {
+		.col-set-equal(12);
+	}
+
+	@media @m-medium-up {
+		.col-set(col-1, 8);
+		.col-set(col-2, 4);
+	}
+}
+
+.layout-r-4 {
+	/**
+	* specs:
+	* large: 3
+	* medium: 6
+	* small: 12
+	**/
+
+	@media @m-small {
+		.col-set-equal(12);
+	}
+
+	@media @m-medium {
+		.col-set-equal(6);
+	}
+
+	@media @m-large {
+		.col-set-equal(3);
+	}
+}
+
+.layout-nogrid-1 {
+	/**
+	* specs:
+	* large: 9
+	* medium: 7
+	* small: 5
+	**/
+
+	@media @m-small {
+		.col-set(col, (@grid-max-cols / 5));
+	}
+
+	@media @m-medium {
+		.col-set(col, (@grid-max-cols / 7));
+	}
+
+	@media @m-large {
+		.col-set(col, (@grid-max-cols / 9));
+	}
+}
