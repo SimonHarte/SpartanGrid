@@ -1,38 +1,39 @@
-responsibly
-===========
+# responsibly
+
 The flexible yet simple responsive grid system.
 
-Why
-===========
+# Why
+
 Responsibly arose from a project where we had the need for a fluid responsive grid system with both html and less integration possibilities.
 As we couldn't find anything covering the requirements at that time we simply developed something on our own.
+
 Over time, through usage feedback, reviews and optimisations, the initial idea developed into this vastly enhanced less grid system, called **responsibly**.
 
-Contributors
-===========
+# Contributors
+
 - Simon Harte (s.harte@gmx.ch)
 - Marc Diethelm (marc@web5.me)
 
-How it works
-===========
-It is quite simple: You define a fixed grid width, a fixed gutter and an amount of grid columns, everything else is done with less.
+# How it works
 
-The fixed widths are there to calculate the percentage gutter relatively to the given width and column percentage widths or naturally set up a static width grid.
+It is quite simple: You define a fixed grid width, a fixed gutter and an amount of grid columns, everything else is done with less. You can then use generated classes to set up grid layouts.
+
+The fixed widths are there to calculate the relative percentage gutter and column widths or naturally set up a static width grid.
 The grid defines a row which has a compensating negative left margin and inside that you have columns with only left margins.
 
 You can set column widths, offsets etc. through specific, short classes or similar named mix-ins.
 
-Unlike many other grid systems responsibly doesn't use .omega classes or last/first-child selectors or similar to eliminate gutters where required.
+Unlike many other grid systems responsibly doesn't use .omega classes or last/first-child selectors etc. to eliminate gutters where required.
 Instead you have a consistent structure which enables a simple implementation of responsive layouts.
 
-Getting started
-===========
+# Getting started
+
 - Integrate responsibly in your project
 - adjust `grid-config.less`
 - Use the given classes in your markup or set up responsive layouts as needed
 
-Details
-===========
+# Details
+
 Example setup and grid structure:
 
 **less**
@@ -53,6 +54,12 @@ Example setup and grid structure:
 - `.row` initializes a grid row and uses [clearfix](https://github.com/h5bp/html5-boilerplate/blob/master/css/main.css#L161) to contain the floating `.col`s.
 - `.col` applies default column styles like float and margin (gutter).
 - `.col-span-[columns]` applies a column based width according ot the set maximum amount of columns.
+
+## Grid class generation
+
+Responsibly comes with a [less loop](http://blog.thehippo.de/2012/04/programming/do-a-loop-with-less-css/) to generate all the base classes using your settings.
+
+So if you've set for example `@grid-max-cols: 16`, you'll get class selectors ranging from `.col-span-1` to `.col-span-16` which can be used right away.
 
 ## Grid mix-ins overview
 
@@ -78,8 +85,8 @@ Note that you may run into problems if these are used within certain responsive 
 Equivalent to `push-[columns]` and `pull-[columns]`, similar behavior as `.offset()`.
 
 
-Setting up responsive layouts
-===========
+# Setting up responsive layouts
+
 There are 3 mix-ins which will help you create responsive layout.
 
 ## Helper mix-ins overview
@@ -141,27 +148,28 @@ Or
 		</div>
 	</div>
 
-Defining the grid type
-===========
+# Defining the grid type
+
 There is one special setup variable: `@grid-type`
 
 With this variable you can define if you either want a fluid or static width grid, the other grid variables stay the same, responsibly just does different calculations using these values.
 
 **Note:** Keep in mind that you most likely can't just switch the grid type mid-project because of nested layouts, where fluid widths apply properly while static widths won't be correct.
 
-Advantages
-===========
+# Advantages
+
 - Small in size: **~8KB** of less code which per default generates **~2KB** of minified css (responsive layouts excluded).
 - With minimal configuration you can swiftly set up standard grid layouts using simple, generated classes.
 - Provides less mix-ins to easily set up responsive layouts as you need them instead of generating a whole bunch of classes.
 - Actually even non-grid layouts are possible using the mix-ins as the values get calculated in less.
 
-Caveats
-===========
+# Caveats
+
+- less compiler/build must be present.
 - basic knowledge of less needed to set up responsive grid layouts.
 
-Browser Support
-===========
+# Browser Support
+
 **Not** supported:
 
 - IE7-: completely wrong behavior with negative `.row` margin
@@ -171,12 +179,12 @@ Browser Support
 - IE8: basic grid working, no media query support and :nth-child clearing, **Note:** fully supported with [respond.js](https://github.com/scottjehl/Respond) and [selectivizr.js](http://selectivizr.com/) polyfills
 - Safari: wrong measures with lots of small columns caused by rounding to integer when converting percentage values to rendered pixels
  
-Examples
-===========
+# Examples
+
 [See fluid responsive example](http://responsibly-grid.herokuapp.com/)
 
 Responsibly is integrated in the [such.less frontend library](https://github.com/MarcDiethelm/such.less) and with that also in the [xtc](https://github.com/MarcDiethelm/xtc) project, check them out!
 
-ToDos
-===========
+# ToDos
+
 - port to SASS (even though there already are good grid systems for SASS like [susy](https://github.com/ericam/susy))
