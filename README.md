@@ -29,33 +29,30 @@ Getting started
 ===========
 - Integrate responsibly in your project
 - adjust `grid-config.less`
-- Use the given classes in your markup or set up needed responsive layouts
+- Use the given classes in your markup or set up responsive layouts as needed
 
 Details
 ===========
-Explaining the setup and class scheme in dummy less code:
+Example setup and grid structure:
+
+**less**
 
 	// grid setup variables
 	@grid-fixed-width: 960px;
 	@grid-fixed-gutter: 20px;
 	@grid-max-cols: 12;
-	
-	// basic class scheme
-	.row {
-		.clearfix();
-		margin-left: -@gutter;
-		
-		.col {
-			float: left;
-			margin-left: @gutter;
-		}
-		
-		.col-span-3 {
-			width: 25% - @gutter;
-		}
-	}
 
-That's basically all there is: a `.row`, a `.col` and its `.col-span-[width]`
+**HTML**
+
+	<!-- defining two columns in the current grid (max columns: 12) -->
+	<div class="row">
+		<div class="col col-span-6"></div>
+		<div class="col col-span-6"></div>
+	</div>
+
+- `.row` initializes a grid row and uses [clearfix](https://github.com/h5bp/html5-boilerplate/blob/master/css/main.css#L161) to contain the floating `.col`s.
+- `.col` applies default column styles like float and margin (gutter).
+- `.col-span-[columns]` applies a column based width according ot the set maximum amount of columns.
 
 ## Grid mix-ins overview
 
@@ -92,12 +89,10 @@ There are 3 mix-ins which will help you create responsive layout.
 	.col-clear([column-count]);
 
 ### col-set
-Generate a class `.[col-name]` with the given width.
+Generate a class `.[col-name]` as direct child of `.row` with the given width.
 
 ### col-set-equal
-Generate a `.col` selector with the given width and also properly clear columns every nth child element using the `.col-clear()` mix-in.
-
-Example: if you have 6 columns in total but only 3 columns per line you want to clear the 4th element, so if the 3rd element is smaller (in height) than the 2nd the 4th won't align itself directly under the 3rd... got it? ;)
+Generate a `.col` selector as direct child of `.row` with the given width and also properly clear columns every nth child element using the `.col-clear()` mix-in.
 
 ### col-clear
 Clear the float every nth+1 columns, so like in the example above if you have 3 columns per line, clear the 4th, the 7th, the 10th etc.
@@ -120,6 +115,8 @@ With the following example you get a layout where you have one column if the vie
 	}
 	
 You can either apply responsive layouts by adding the class to the `.row` directly or make a whole section with multiple `.row`s which use the layout by wrapping them with a container using the layout class.
+
+See more [example responsive layouts](examples/responsive.layouts.les) for usage details.
 
 Example:
 
@@ -182,4 +179,4 @@ Responsibly is integrated in the [such.less frontend library](https://github.com
 
 ToDos
 ===========
-- port to SASS (even though there already are good grid systems for SASS like [susy](https://github.com/ericam/susy)
+- port to SASS (even though there already are good grid systems for SASS like [susy](https://github.com/ericam/susy))
