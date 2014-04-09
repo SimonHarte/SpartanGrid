@@ -14,6 +14,10 @@ Over time, through usage feedback, reviews and optimisations, the initial idea d
 - Simon Harte (s.harte@gmx.ch)
 - Marc Diethelm (marc@web5.me)
 
+# Requirements
+
+- Less version >= 1.4.0
+
 # How it works
 
 It is quite simple: You define a fixed grid width, a fixed gutter and an amount of grid columns, everything else is done with less. You can then use generated classes to set up grid layouts.
