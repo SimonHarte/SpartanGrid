@@ -9,11 +9,6 @@ As we couldn't find anything covering the requirements at that time we simply de
 
 Over time, through usage feedback, reviews and optimisations, the initial idea developed into this vastly enhanced less grid system, called **responsibly**.
 
-# Contributors
-
-- Simon Harte (s.harte@gmx.ch)
-- Marc Diethelm (marc@web5.me)
-
 # Requirements
 
 - Less version >= 1.4.0
@@ -182,6 +177,11 @@ With this variable you can define if you either want a fluid or static width gri
 
 - IE8: basic grid working, no media query support and :nth-child clearing, **Note:** fully supported with [respond.js](https://github.com/scottjehl/Respond) and [selectivizr.js](http://selectivizr.com/) polyfills
 - Safari: wrong measures with lots of small columns caused by rounding to integer when converting percentage values to rendered pixels
+
+# Contributors
+
+- Simon Harte (s.harte@gmx.ch)
+- Marc Diethelm (marc@web5.me)
  
 # Examples
 
