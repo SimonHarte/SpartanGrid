@@ -59,14 +59,14 @@ Responsibly comes with a [less loop](http://blog.thehippo.de/2012/04/programming
 
 So if you've set for example `@grid-max-cols: 16`, you'll get class selectors ranging from `.col-span-1` to `.col-span-16` which can be used right away.
 
-### Grid mix-ins overview
+### Grid classes/mix-ins overview
 
 Instead of using the generated grid classes you can also use similar named mixins to implement the grid with less.
 
-	.col-span([columns]);
-	.offset([columns]);
-	.push([columns]);
-	.pull([columns]);
+	.col-span([columns]), .col-span-[columns]
+	.offset([columns]), .offset-[columns]
+	.push([columns]), .push-[columns]
+	.pull([columns]), .pull-[columns]
 
 #### col-span
 Used to set the column width, equivalent to `.col-span-[columns]`.
@@ -75,7 +75,7 @@ which enables you to set up a grid row with for example 5 columns with proper gu
 
 #### offset
 Indent a column by the defined amount of grid columns, equivalent to `.offset-[columns]`.
-While there are just positive indents in generated classes, you could also call this mix-in with negative values.
+While there are just positive indents in generated classes, you could also call this mix-in with negative values (although not recommended).
 
 #### push and pull
 Together with the additional class `.ordered` on `.row` you can reorder columns visually without changing the order in HTML.
@@ -118,7 +118,40 @@ With the following example you get a layout where you have one column if the vie
 			.col-set-equal(4);
 		}
 	}
-	
+
+Note that you can't make mobile first as you might usually do. You either have to declare a media query or leave the definition out because of the nth-child selector in `col-set-equal`.
+
+Another working example of the above:
+
+	.layout-r-1 {
+		// grid maximum columns = 12
+		
+		// leave the default query style out if you'd set it to maximum grid width anyway
+		
+		@media (min-width: 40em) and (max-width: 79.99em) {
+			.col-set-equal(6);
+		}
+		@media (min-width: 80em) {
+			.col-set-equal(4);
+		}
+	}
+
+**Not** working:
+
+	.layout-r-1 {
+		// grid maximum columns = 12
+		
+		// "mobile first" without media query will generate an interfering :nth-child selector
+		.col-set-equal(12);
+		
+		@media (min-width: 40em) and (max-width: 79.99em) {
+			.col-set-equal(6);
+		}
+		@media (min-width: 80em) {
+			.col-set-equal(4);
+		}
+	}
+
 You can either apply responsive layouts by adding the class to the `.row` directly or make a whole section with multiple `.row`s which use the layout by wrapping them with a container using the layout class.
 
 See more [responsive example layouts](examples/responsive.layouts.les) for usage details.
