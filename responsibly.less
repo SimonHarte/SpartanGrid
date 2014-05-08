@@ -7,7 +7,7 @@
  * duplicate mixin switches according to passed type
  * any other value than 'fixed' is assumed as fluid
  */
-.grid-create(@type, @fixed-width, @fixed-gutter, @cols) {
+.grid-create(@type, @gutter-type: 'fluid', @fixed-width, @fixed-gutter, @cols) {
 	// fluid grid (default)
 	@width: 100%;
 
@@ -23,7 +23,18 @@
 	#grid > .grid-mixins(@width, @row-gutter, @true-gutter, @one-col);
 }
 
-.grid-create('fixed', @fixed-width, @fixed-gutter, @cols) {
+.grid-create(@type, 'fixed', @fixed-width, @fixed-gutter, @cols) {
+	// fluid grid (default)
+	@width: 100%;
+	
+	// calculate the width of one grid column
+	@one-col: (@width / @cols);
+
+	// implement grid mixins with type dependent variables
+	#grid > .grid-mixins(@width, @fixed-gutter, @one-col, 'fixed-gutter');
+}
+
+.grid-create('fixed', @gutter-type: 'fixed', @fixed-width, @fixed-gutter, @cols) {
 	// fixed grid
 	@width: @fixed-width;
 	@gutter: @fixed-gutter;
@@ -43,10 +54,10 @@
 	 * to our switch mixin which manipulates/creates variables
 	 * this mixin is also our unlocker to use #grid > .mixins() as usual
 	 */
-	.grid-create(@grid-type, @grid-fixed-width, @grid-fixed-gutter, @grid-max-cols);
+	.grid-create(@grid-type, @gutter-type, @grid-fixed-width, @grid-fixed-gutter, @grid-max-cols);
 
 	// grid mixins which get called with manipulated variables from unlocker
-	.grid-mixins(@width, @row-gutter, @gutter, @one-col) {
+	.grid-mixins(@width, @row-gutter, @gutter, @one-col) when (isnumber(@one-col)) {
 		.span-width(@num) when (@num > 0) {
 			width: round((@one-col * @num) + (@gutter * (@num - 1)), @decimal-places);
 		}
@@ -76,6 +87,37 @@
 		.pull(@num) when (@num >= 0) {
 			position: relative;
 			right: round((@one-col * @num) + (@gutter * @num), @decimal-places);
+		}
+	}
+	
+	// grid mixins which get called with manipulated variables from unlocker
+	.grid-mixins(@width, @gutter, @one-col, 'fixed-gutter') {
+		.span-width(@num) when (@num > 0) {
+			width: round((@one-col * @num), @decimal-places);
+			padding-left: @gutter*.5 !important;
+			padding-right: @gutter*.5 !important;
+		}
+		
+		// indent grid columns either way with these mixins
+		.indent(@num: 0) {
+			margin-left: round((@one-col * @num), @decimal-places);
+		}
+
+		// used only on .row for proper negative indent
+		.row-indent(@num: 0) {
+			margin-left: -@gutter*.5;
+			margin-right: -@gutter*.5;
+		}
+
+		// visually manipulate grid column order with these mixins
+		.push(@num) when (@num >= 0) {
+			position: relative;
+			left: round((@one-col * @num), @decimal-places);
+		}
+
+		.pull(@num) when (@num >= 0) {
+			position: relative;
+			right: round((@one-col * @num), @decimal-places);
 		}
 	}
 
