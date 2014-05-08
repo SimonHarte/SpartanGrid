@@ -47,10 +47,6 @@
 	* small: 12
 	**/
 
-	@media @m-small {
-		.col-set-equal(12);
-	}
-
 	@media @m-medium {
 		.col-set-equal(6);
 	}
@@ -68,10 +64,6 @@
 	* small: 12
 	**/
 
-	@media @m-medium-down {
-		.col-set-equal(12);
-	}
-
 	@media @m-large {
 		.col-set-equal(6);
 	}
@@ -85,10 +77,6 @@
 	* small: 12
 	**/
 
-	@media @m-small {
-		.col-set-equal(12);
-	}
-
 	@media @m-medium-up {
 		.col-set(col-1, 8);
 		.col-set(col-2, 4);
@@ -98,21 +86,25 @@
 .layout-r-4 {
 	/**
 	* specs:
-	* large: 3
-	* medium: 6
+	* large: 4 offset 8
+	* medium: 6 offset 6
 	* small: 12
 	**/
 
 	@media @m-small {
-		.col-set-equal(12);
+		> .row > .col,
+		> .col {
+			.col-span(4);
+			.offset(8);
+		}
 	}
 
 	@media @m-medium {
-		.col-set-equal(6);
-	}
-
-	@media @m-large {
-		.col-set-equal(3);
+		> .row > .col,
+		> .col {
+			.col-span(6);
+			.offset(6);
+		}
 	}
 }
 
