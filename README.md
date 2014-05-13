@@ -26,7 +26,7 @@ Instead you have a consistent structure which enables a simple implementation of
 
 ## Getting started
 
-- Integrate responsibly in your project
+- Integrate responsibly in your project with a less compiler
 - adjust `grid-config.less`
 - Use the given classes in your markup or set up responsive layouts as needed
 
@@ -53,7 +53,7 @@ Example setup and grid structure:
 - `.col` applies default column styles like float and margin (gutter).
 - `.col-span-[columns]` applies a column based width according ot the set maximum amount of columns.
 
-## Defining the grid type
+### Defining the grid type
 
 With the variable `@grid-type` you can define if you either want a fluid or static width grid.
 
