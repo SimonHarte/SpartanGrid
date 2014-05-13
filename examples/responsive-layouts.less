@@ -92,19 +92,11 @@
 	**/
 
 	@media @m-small {
-		> .row > .col,
-		> .col {
-			.col-span(4);
-			.offset(8);
-		}
+		.col-set(col, 4, 8);
 	}
 
 	@media @m-medium {
-		> .row > .col,
-		> .col {
-			.col-span(6);
-			.offset(6);
-		}
+		.col-set(col, 6, 6);
 	}
 }
 
