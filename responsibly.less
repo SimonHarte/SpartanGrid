@@ -4,18 +4,19 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*
- * duplicate mixin switches according to passed type
+ * multiple mixins switch according to passed types
  * any other value than 'fixed' is assumed as fluid
  */
-.grid-create(@type, @gutter-type: 'fluid', @fixed-width, @fixed-gutter, @cols) {
-	// fluid grid (default)
+
+// mixin for standard fluid grid with fluid gutter
+.grid-create(@type, @gutter-type, @fixed-width, @fixed-gutter, @cols) {
 	@width: 100%;
 
 	// fluid gutter is calculated relatively to the static gutter in fixed grid width
 	@row-gutter: round(percentage(@fixed-gutter / @fixed-width), @decimal-places);
 	// percentage column gutter has to be slightly bigger than row indent because row indent changes the container width
 	@true-gutter: round(percentage(@fixed-gutter / (@fixed-width + @fixed-gutter)), @decimal-places);
-	
+
 	// calculate the width of one grid column
 	@one-col: (@width - @true-gutter * @cols) / @cols;
 
@@ -23,10 +24,10 @@
 	#grid > .grid-mixins(@width, @row-gutter, @true-gutter, @one-col);
 }
 
+// mixin for fluid grid type and fixed gutter type
 .grid-create(@type, 'fixed', @fixed-width, @fixed-gutter, @cols) {
-	// fluid grid (default)
 	@width: 100%;
-	
+
 	// calculate the width of one grid column
 	@one-col: (@width / @cols);
 
@@ -34,11 +35,11 @@
 	#grid > .grid-mixins(@width, @fixed-gutter, @one-col, 'fixed-gutter');
 }
 
-.grid-create('fixed', @gutter-type: 'fixed', @fixed-width, @fixed-gutter, @cols) {
-	// fixed grid
+// only one mixin for fixed grid type needed because we cannot make fluid gutters in static grid
+.grid-create('fixed', @gutter-type, @fixed-width, @fixed-gutter, @cols) {
 	@width: @fixed-width;
 	@gutter: @fixed-gutter;
-	
+
 	// calculate the width of one grid column
 	// add one gutter to grid width because of negative indent
 	@one-col: ((@width + @gutter) - @gutter * @cols) / @cols;
@@ -50,18 +51,18 @@
 
 #grid {
 	/*
-	 * pass grid variables from global scope (defined on top)
+	 * pass grid variables from global scope (defined in config)
 	 * to our switch mixin which manipulates/creates variables
 	 * this mixin is also our unlocker to use #grid > .mixins() as usual
 	 */
 	.grid-create(@grid-type, @gutter-type, @grid-fixed-width, @grid-fixed-gutter, @grid-max-cols);
 
-	// grid mixins which get called with manipulated variables from unlocker
+	// fluid gutter grid mixins which get called with manipulated variables from unlocker
 	.grid-mixins(@width, @row-gutter, @gutter, @one-col) when (isnumber(@one-col)) {
 		.span-width(@num) when (@num > 0) {
 			width: round((@one-col * @num) + (@gutter * (@num - 1)), @decimal-places);
 		}
-		
+
 		// indent grid columns either way with these mixins
 		.indent(@num: 0) when (@num >= 0) {
 			margin-left: round((@one-col * @num) + (@gutter * (@num + 1)), @decimal-places);
@@ -70,10 +71,10 @@
 		// negative indent can only be used in a fixed grid system and sadly not be generated with the loop
 		// still, you can use this mixin if the need occurs
 		.indent(@num: -1) when (@num < 0) {
-			margin-left: round((@one-col * @num) + (@gutter * (@num - 1)), @decimal-places);
+			margin-left: -round((@one-col * @num) + (@gutter * (@num - 1)), @decimal-places);
 		}
 
-		// used only on .row for proper negative indent
+		// used only on .row for proper negative indent in fluid grid
 		.row-indent(@num: 0) {
 			margin-left: -(round((@one-col * @num) + (@row-gutter * (@num + 1)), @decimal-places));
 		}
@@ -89,21 +90,21 @@
 			right: round((@one-col * @num) + (@gutter * @num), @decimal-places);
 		}
 	}
-	
-	// grid mixins which get called with manipulated variables from unlocker
+
+	// fixed gutter grid mixins which get called with manipulated variables from unlocker
 	.grid-mixins(@width, @gutter, @one-col, 'fixed-gutter') {
 		.span-width(@num) when (@num > 0) {
 			width: round((@one-col * @num), @decimal-places);
 			padding-left: @gutter*.5 !important;
 			padding-right: @gutter*.5 !important;
 		}
-		
+
 		// indent grid columns either way with these mixins
 		.indent(@num: 0) {
 			margin-left: round((@one-col * @num), @decimal-places);
 		}
 
-		// used only on .row for proper negative indent
+		// used only on .row for proper negative indents
 		.row-indent(@num: 0) {
 			margin-left: -@gutter*.5;
 			margin-right: -@gutter*.5;
@@ -121,7 +122,7 @@
 		}
 	}
 
-	// less loop
+	// less loop to generate grid classes
 	.loop (@index, @class: item, @mixin: '') when (@index > 0) {
 		// create the actual css selector
 		.@{class}-@{index} {
@@ -178,7 +179,7 @@
 }
 
 .offset(@num: 0) {
-	// must use important statement to overwrite default row margin
+	// use important statement to overwrite default row margin applied with shorthands
 	#grid > .indent(@num) !important;
 }
 
@@ -263,6 +264,13 @@
 	}
 }
 
+// prefixed twitter bootstrap box sizing mixin
+.grid-box-sizing(@boxmodel: border-box) {
+	-webkit-box-sizing: @boxmodel;
+	-moz-box-sizing: @boxmodel;
+	box-sizing: @boxmodel;
+}
+
 /*--- base grid layout styles ---*/
 .row,
 .col {
@@ -284,6 +292,8 @@
 }
 
 .col {
+	// make sure we have the correct box sizing for fixed gutter grid
+	.grid-box-sizing();
 	// one gutter indent for each column
 	#grid > .indent(0) !important;
 	float: left;

@@ -181,11 +181,15 @@ Or
 
 ## Defining the grid type
 
-There is one special setup variable: `@grid-type`
+With the variable `@grid-type` you can define if you either want a fluid or static width grid.
 
-With this variable you can define if you either want a fluid or static width grid, the other grid variables stay the same, responsibly just does different calculations using these values.
+The other grid variables stay the same, responsibly just does different calculations using these values.
 
 **Note:** Keep in mind that you most likely can't just switch the grid type mid-project because of nested layouts, where fluid widths apply properly while static widths won't be correct.
+
+### Defining the gutter type
+
+Using `@grid-gutter-type` you can also define if the gutters between your columns should be fluid or fixed, independently of your grid type.
 
 ## Advantages
 
