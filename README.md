@@ -53,6 +53,18 @@ Example setup and grid structure:
 - `.col` applies default column styles like float and margin (gutter).
 - `.col-span-[columns]` applies a column based width according ot the set maximum amount of columns.
 
+## Defining the grid type
+
+With the variable `@grid-type` you can define if you either want a fluid or static width grid.
+
+The other grid variables stay the same, responsibly just does different calculations using these values.
+
+**Note:** Keep in mind that you most likely can't just switch the grid type mid-project because of nested layouts, where fluid widths apply properly while static widths won't be correct.
+
+### Defining the gutter type
+
+Using `@grid-gutter-type` you can also define if the gutters between your columns should be fluid or fixed, independently of your grid type.
+
 ### Grid class generation
 
 Responsibly comes with a [less loop](http://blog.thehippo.de/2012/04/programming/do-a-loop-with-less-css/) to generate all base classes using your settings.
@@ -178,18 +190,6 @@ Or
 			<div class="col"></div>
 		</div>
 	</div>
-
-## Defining the grid type
-
-With the variable `@grid-type` you can define if you either want a fluid or static width grid.
-
-The other grid variables stay the same, responsibly just does different calculations using these values.
-
-**Note:** Keep in mind that you most likely can't just switch the grid type mid-project because of nested layouts, where fluid widths apply properly while static widths won't be correct.
-
-### Defining the gutter type
-
-Using `@grid-gutter-type` you can also define if the gutters between your columns should be fluid or fixed, independently of your grid type.
 
 ## Advantages
 
