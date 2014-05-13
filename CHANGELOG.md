@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.0
+
+- third parameter for `.col-set()` mixin available to define offsets
+
 ## 1.1.0
 
 - block gutter implementation finished!
