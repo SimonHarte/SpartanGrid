@@ -17,7 +17,7 @@ This library requires [less](https://github.com/less/less.js) version 1.4.0 or a
 
 ### Demo
 
-Try the [dynamic online grid demo](http://responsibly-grid.herokuapp.com/).
+Try the [dynamic online grid demo](http://responsibly-grid.herokuapp.com/) (might take a few seconds to load the first time because of hosting).
 
 Responsibly is integrated in the [such.less frontend library](https://github.com/MarcDiethelm/such.less) and with that also in the [xtc](https://github.com/MarcDiethelm/xtc) project, check them out!
 
