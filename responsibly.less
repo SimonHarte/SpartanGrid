@@ -196,8 +196,8 @@
  * You can use the following mixins to easily set up responsive layouts.
  * For grid layouts with non-equal span sizes use incrementing col-[integer] classes and apply sizes to each of these classes.
  *
- * .col-set([colum name], [column span width]):
- * Standard mixin to set up a column in a responsive layout
+ * .col-set([colum name], [column span width], [offset]):
+ * Standard mixin to set up a column in a responsive layout.
  *
  * To set up layouts with equal width columns you only specify the width in `.col-set-equal`.
  *
@@ -220,7 +220,7 @@
 	}
 }
 
-.col-set(@col-name; @col-span) when (isnumber(@col-span)) {
+.col-set(@col-name; @col-span) {
 	// apply styles to child columns directly or to columns within child rows
 	> .row > .@{col-name},
 	> .@{col-name} {
@@ -228,12 +228,21 @@
 	}
 }
 
+.col-set(@col-name; @col-span; @offset) {
+	// apply styles to child columns directly or to columns within child rows
+	> .row > .@{col-name},
+	> .@{col-name} {
+		.col-span(@col-span);
+		.offset(@offset);
+	}
+}
+
 .col-set-equal(@col-span) when (isnumber(@col-span)) {
 	@clear: @grid-max-cols / @col-span;
-	
+
 	// use default col-set mixin to generate selector
 	.col-set(col; @col-span);
-	
+
 	// with equal columns, clear every nth element for proper alignment
 	.col-clear(@clear);
 }
