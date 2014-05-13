@@ -1,8 +1,25 @@
 # responsibly
 
-The flexible yet simple responsive grid system.
+The unbeatable, responsive less grid system.
 
 This library requires [less](https://github.com/less/less.js) version 1.4.0 or above.
+
+### Features
+
+- fluid or static
+- fully responsive
+- block gutter possible (fixed gutter in a fluid grid)
+- column reordering through css
+- simple classes and corresponding less mix-ins
+- integrated, dynamic class generation
+- define **any** column width through mix-ins!
+- lightweight (resulting css)
+
+### Demo
+
+Try the [dynamic online grid demo](http://responsibly-grid.herokuapp.com/).
+
+Responsibly is integrated in the [such.less frontend library](https://github.com/MarcDiethelm/such.less) and with that also in the [xtc](https://github.com/MarcDiethelm/xtc) project, check them out!
 
 ## Why
 
@@ -73,7 +90,7 @@ So if you've set for example `@grid-max-cols: 16`, you'll get class selectors ra
 
 ### Grid classes/mix-ins overview
 
-Instead of using the generated grid classes you can also use similar named mixins to implement the grid with less.
+Instead of using the generated grid classes you can also use similar named mix-ins to implement the grid with less.
 
 	.col-span([columns]), .col-span-[columns]
 	.offset([columns]), .offset-[columns]
@@ -218,12 +235,6 @@ Or
 
 - Simon Harte (s.harte@gmx.ch)
 - Marc Diethelm (marc@web5.me)
- 
-## Examples
-
-[See fluid responsive example](http://responsibly-grid.herokuapp.com/)
-
-Responsibly is integrated in the [such.less frontend library](https://github.com/MarcDiethelm/such.less) and with that also in the [xtc](https://github.com/MarcDiethelm/xtc) project, check them out!
 
 ## ToDos
 
