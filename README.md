@@ -118,12 +118,12 @@ There are 3 mix-ins which will help you create responsive layout.
 
 ### Helper mix-ins overview
 
-	.col-set([col-name], [columns]);
+	.col-set([col-name], [columns], [offset]);
 	.col-set-equal([columns]);
 	.col-clear([column-count]);
 
 #### col-set
-Generate a class `.[col-name]` as direct child of `.row` with the given width.
+Generate a class `.[col-name]` with `[columns]` width and `[offset]` indent as direct child of `.row` with the given width.
 
 #### col-set-equal
 Generate a `.col` selector as direct child of `.row` with the given width and also properly clear columns every nth child element using the `.col-clear()` mix-in.
@@ -211,6 +211,7 @@ Or
 ## Advantages
 
 - Small in size: **~8KB** of less code which per default generates **~2KB** of minified css (responsive layouts excluded).
+- Supports all features of other common grid systems together ([Twitter Bootstrap](http://getbootstrap.com/css/#grid), [Foundation](http://foundation.zurb.com/), [960](http://960.gs/)) and more!
 - With minimal configuration you can swiftly set up standard grid layouts using simple, generated classes.
 - Provides less mix-ins to easily set up responsive layouts as you need them instead of generating a whole bunch of classes.
 - Actually even non-grid layouts are possible using the mix-ins as the values get calculated in less.
