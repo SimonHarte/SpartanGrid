@@ -296,6 +296,8 @@
 	.grid-box-sizing();
 	// one gutter indent for each column
 	#grid > .indent(0) !important;
+	// columns should per default span the whole width if none is set
+	.col-span(@grid-max-cols);
 	float: left;
 
 	/*
