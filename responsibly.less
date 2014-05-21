@@ -55,59 +55,59 @@
 	 * to our switch mixin which manipulates/creates variables
 	 * this mixin is also our unlocker to use #grid > .mixins() as usual
 	 */
-	.grid-create(@grid-type, @gutter-type, @grid-fixed-width, @grid-fixed-gutter, @grid-max-cols);
+	#create > .grid-create(@grid-type, @grid-gutter-type, @grid-fixed-width, @grid-fixed-gutter, @grid-max-cols);
 
 	// fluid gutter grid mixins which get called with manipulated variables from unlocker
 	.grid-mixins(@width, @row-gutter, @gutter, @one-col) when (isnumber(@one-col)) {
 		.span-width(@num) when (@num > 0) {
-			width: round((@one-col * @num) + (@gutter * (@num - 1)), @decimal-places);
+			width: round((@one-col * @num) + (@gutter * (@num - 1)), @grid-decimal-places);
 		}
 
 		// indent grid columns either way with these mixins
 		.indent(@num: 0) when (@num >= 0) {
-			margin-left: round((@one-col * @num) + (@gutter * (@num + 1)), @decimal-places);
+			margin-left: round((@one-col * @num) + (@gutter * (@num + 1)), @grid-decimal-places);
 		}
 
 		// negative indent can only be used in a fixed grid system and sadly not be generated with the loop
 		// still, you can use this mixin if the need occurs
 		.indent(@num: -1) when (@num < 0) {
-			margin-left: -round((@one-col * @num) + (@gutter * (@num - 1)), @decimal-places);
+			margin-left: -round((@one-col * @num) + (@gutter * (@num - 1)), @grid-decimal-places);
 		}
 		
 		// used only on .col for uniquely applied gutter
 		.col-indent(@num: 0) when (@num >= 0) {
-			margin-left: round((@one-col * @num) + (@gutter * (@num + 1)), @decimal-places);
+			margin-left: round((@one-col * @num) + (@gutter * (@num + 1)), @grid-decimal-places);
 		}
 
 		// used only on .row for proper negative indent in fluid grid
 		.row-indent(@num: 0) {
-			margin-left: -(round((@one-col * @num) + (@row-gutter * (@num + 1)), @decimal-places));
+			margin-left: -(round((@one-col * @num) + (@row-gutter * (@num + 1)), @grid-decimal-places));
 		}
 
 		// visually manipulate grid column order with these mixins
 		.push(@num) when (@num >= 0) {
-			left: round((@one-col * @num) + (@gutter * @num), @decimal-places);
+			left: round((@one-col * @num) + (@gutter * @num), @grid-decimal-places);
 		}
 
 		.pull(@num) when (@num >= 0) {
-			right: round((@one-col * @num) + (@gutter * @num), @decimal-places);
+			right: round((@one-col * @num) + (@gutter * @num), @grid-decimal-places);
 		}
 	}
 
 	// fixed gutter grid mixins which get called with manipulated variables from unlocker
 	.grid-mixins(@width, @gutter, @one-col, 'fixed-gutter') {
 		.span-width(@num) when (@num > 0) {
-			width: round((@one-col * @num), @decimal-places);
+			width: round((@one-col * @num), @grid-decimal-places);
 		}
 
 		// indent grid columns either way with these mixins
 		.indent(@num: 0) {
-			margin-left: round((@one-col * @num), @decimal-places);
+			margin-left: round((@one-col * @num), @grid-decimal-places);
 		}
 
 		// used only on .col for uniquely applied gutter
 		.col-indent(@num: 0) {
-			margin-left: round((@one-col * @num), @decimal-places);
+			margin-left: round((@one-col * @num), @grid-decimal-places);
 			padding-left: @gutter*.5 !important;
 			padding-right: @gutter*.5 !important;
 		}
@@ -120,11 +120,11 @@
 
 		// visually manipulate grid column order with these mixins
 		.push(@num) when (@num >= 0) {
-			left: round((@one-col * @num), @decimal-places);
+			left: round((@one-col * @num), @grid-decimal-places);
 		}
 
 		.pull(@num) when (@num >= 0) {
-			right: round((@one-col * @num), @decimal-places);
+			right: round((@one-col * @num), @grid-decimal-places);
 		}
 	}
 
@@ -150,19 +150,19 @@
 #loop-mixin {
 	// base grid loops
 	.apply('grid-span', @index) {
-		.col-span(@index);
+		.grid-col-span(@index);
 	}
 
 	.apply('grid-offset', @index) {
-		.offset(@index);
+		.grid-offset(@index);
 	}
 
 	.apply('grid-push', @index) {
-		.push(@index);
+		.grid-push(@index);
 	}
 
 	.apply('grid-pull', @index) {
-		.pull(@index);
+		.grid-pull(@index);
 	}
 	// grid loops end
 }
@@ -176,20 +176,20 @@
  * values will depend on grid type
  * (either percentage or pixel)
  */
-.col-span(@num: 0) when (@num >= 0) {
+.grid-col-span(@num: 0) when (@num >= 0) {
 	#grid > .span-width(@num);
 }
 
-.offset(@num: 0) {
+.grid-offset(@num: 0) {
 	// use important statement to overwrite default row margin applied with shorthands
 	#grid > .indent(@num) !important;
 }
 
-.push(@num: 0) when (@num >= 0) {
+.grid-push(@num: 0) when (@num >= 0) {
 	#grid > .push(@num);
 }
 
-.pull(@num: 0) when (@num >= 0) {
+.grid-pull(@num: 0) when (@num >= 0) {
 	#grid > .pull(@num);
 }
 
@@ -217,37 +217,37 @@
  *
  **/
 
-.col-clear(@columns) when (isnumber(@columns)) {
+.grid-col-clear(@columns) when (isnumber(@columns)) {
 	> .col:nth-child(@{columns}n+1) {
 		clear: left;
 	}
 }
 
-.col-set(@col-name; @col-span) {
+.grid-col-set(@col-name; @col-span) {
 	// apply styles to child columns directly or to columns within child rows
 	> .row > .@{col-name},
 	> .@{col-name} {
-		.col-span(@col-span);
+		.grid-col-span(@col-span);
 	}
 }
 
-.col-set(@col-name; @col-span; @offset) {
+.grid-col-set(@col-name; @col-span; @offset) {
 	// apply styles to child columns directly or to columns within child rows
 	> .row > .@{col-name},
 	> .@{col-name} {
-		.col-span(@col-span);
-		.offset(@offset);
+		.grid-col-span(@col-span);
+		.grid-offset(@offset);
 	}
 }
 
-.col-set-equal(@col-span) when (isnumber(@col-span)) {
+.grid-col-set-equal(@col-span) when (isnumber(@col-span)) {
 	@clear: @grid-max-cols / @col-span;
 
 	// use default col-set mixin to generate selector
-	.col-set(col; @col-span);
+	.grid-col-set(col; @col-span);
 
 	// with equal columns, clear every nth element for proper alignment
-	.col-clear(@clear);
+	.grid-col-clear(@clear);
 }
 
 // BASE STYLES
@@ -306,7 +306,7 @@
 	// one gutter indent for each column
 	#grid > .col-indent(0) !important;
 	// columns should per default span the whole width if none is set
-	.col-span(@grid-max-cols);
+	.grid-col-span(@grid-max-cols);
 	float: left;
 
 	/*
