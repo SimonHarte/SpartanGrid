@@ -81,12 +81,14 @@
 
 		// visually manipulate grid column order with these mixins
 		.push(@num) when (@num >= 0) {
-			position: relative;
+			// extend class so save some bytes
+			&:extend(.grid-reposition);
 			left: round((@one-col * @num) + (@gutter * @num), @decimal-places);
 		}
 
 		.pull(@num) when (@num >= 0) {
-			position: relative;
+			// extend class so save some bytes
+			&:extend(.grid-reposition);
 			right: round((@one-col * @num) + (@gutter * @num), @decimal-places);
 		}
 	}
@@ -112,12 +114,14 @@
 
 		// visually manipulate grid column order with these mixins
 		.push(@num) when (@num >= 0) {
-			position: relative;
+			// extend class so save some bytes
+			&:extend(.grid-reposition);
 			left: round((@one-col * @num), @decimal-places);
 		}
 
 		.pull(@num) when (@num >= 0) {
-			position: relative;
+			// extend class so save some bytes
+			&:extend(.grid-reposition);
 			right: round((@one-col * @num), @decimal-places);
 		}
 	}
@@ -130,11 +134,7 @@
 		}
 
 		// next iteration
-		.loop(@index - 1, @class, @mixin);
-	}
-
-	// end the loop when index is 0
-	.loop (@index) when (@index = 0) {
+		#grid > .loop(@index - 1, @class, @mixin);
 	}
 }
 
@@ -250,6 +250,10 @@
 
 // BASE STYLES
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.grid-reposition {
+	position: relative;
+}
 
 // prefixed clearfix mixin from h5bp for grid only
 .grid-cf() {
