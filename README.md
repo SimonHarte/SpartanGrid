@@ -23,7 +23,7 @@ Responsibly is integrated in the [such.less frontend library](https://github.com
 
 ## Why
 
-Responsibly arose from a project where we had the need for a fluid responsive grid system with both html and less integration possibilities.
+Responsibly arose from a project in 2012 where we had the need for a fluid responsive grid system with both html and less integration possibilities.
 
 As we couldn't find anything covering the requirements at that time we simply developed something on our own.
 
@@ -40,6 +40,23 @@ You can set column widths, offsets etc. through specific, short classes or simil
 
 Unlike many other grid systems responsibly doesn't use .omega classes or last/first-child selectors etc. to eliminate gutters where required.
 Instead you have a consistent structure which enables a simple implementation of responsive layouts.
+
+## Comparison
+
+Just some common grid systems in comparison to responsibly:
+
+|       | responsibly | Twitter Bootstrap | Foundation | 960grid |
+|-------|:-----------:|:-----------------:|:----------:|:-------:|
+| less              | √ | √ | x | x |
+| sass              | x | x | √ | x |
+| fluid             | √ | √ | √ | √ |
+| fixed             | √ | √ | √ | √ |
+| responsive        | √ | √ | √ | ~ |
+| block gutter      | √ | x | √ | x |
+| column ordering   | √ | √ | √ | √ |
+| offsets           | √ | √ | √ | √ |
+| css size (min)    | 2.2kB | 11kB | 9.5kB | 2.7kB |
+
 
 ## Getting started
 
