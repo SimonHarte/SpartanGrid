@@ -1,61 +1,58 @@
-@import 'grid-config';
+@import "grid-config";
 
 // GRID CALCULATIONS
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/*
- * multiple mixins switch according to passed types
- * any other value than 'fixed' is assumed as fluid
- */
-
-// mixin for standard fluid grid with fluid gutter
-.grid-create('fluid', 'fluid', @fixed-width, @fixed-gutter, @cols) {
-	@width: 100%;
-
-	// fluid gutter is calculated relatively to the static gutter in fixed grid width
-	@row-gutter: round(percentage(@fixed-gutter / @fixed-width), @decimal-places);
-	// percentage column gutter has to be slightly bigger than row indent because row indent changes the container width
-	@true-gutter: round(percentage(@fixed-gutter / (@fixed-width + @fixed-gutter)), @decimal-places);
-
-	// calculate the width of one grid column
-	@one-col: (@width - @true-gutter * @cols) / @cols;
-
-	// implement grid mixins with type dependent variables
-	#grid > .grid-mixins(@width, @row-gutter, @true-gutter, @one-col);
-}
-
-// mixin for fluid grid type and fixed gutter type
-.grid-create('fluid', 'fixed', @fixed-width, @fixed-gutter, @cols) {
-	@width: 100%;
-
-	// calculate the width of one grid column
-	@one-col: (@width / @cols);
-
-	// implement grid mixins with type dependent variables
-	#grid > .grid-mixins(@width, @fixed-gutter, @one-col, 'fixed-gutter');
-}
-
-// only one mixin for fixed grid type needed because we cannot make fluid gutters in static grid
-.grid-create('fixed', @gutter-type, @fixed-width, @fixed-gutter, @cols) {
-	@width: @fixed-width;
-	@gutter: @fixed-gutter;
-
-	// calculate the width of one grid column
-	// add one gutter to grid width because of negative indent
-	@one-col: ((@width + @gutter) - @gutter * @cols) / @cols;
-
-	// implement grid mixins with type dependent variables
-	// gutter passed twice because in fluid (percentage) grid column gutter is slightly bigger than row indent
-	#grid > .grid-mixins(@width, @gutter, @gutter, @one-col);
-}
-
 #grid {
-	/*
-	 * pass grid variables from global scope (defined in config)
-	 * to our switch mixin which manipulates/creates variables
-	 * this mixin is also our unlocker to use #grid > .mixins() as usual
-	 */
-	#create > .grid-create(@grid-type, @grid-gutter-type, @grid-fixed-width, @grid-fixed-gutter, @grid-max-cols);
+	// multiple mixins switch according to passed types
+	// any other value than 'fixed' is assumed as fluid
+
+	// mixin for standard fluid grid with fluid gutter
+	.create('fluid', 'fluid', @fixed-width, @fixed-gutter, @cols) {
+		@width: 100%;
+
+		// fluid gutter is calculated relatively to the static gutter in fixed grid width
+		@row-gutter: round(percentage(@fixed-gutter / @fixed-width), @grid-decimal-places);
+		// percentage column gutter has to be slightly bigger than row indent because row indent changes the container width
+		@true-gutter: round(percentage(@fixed-gutter / (@fixed-width + @fixed-gutter)), @grid-decimal-places);
+
+		// calculate the width of one grid column
+		@one-col: (@width - @true-gutter * @cols) / @cols;
+
+		// implement grid mixins with type dependent variables
+		#grid > .grid-mixins(@width, @row-gutter, @true-gutter, @one-col);
+	}
+
+	// mixin for fluid grid type and fixed gutter type
+	.create('fluid', 'fixed', @fixed-width, @fixed-gutter, @cols) {
+		@width: 100%;
+
+		// calculate the width of one grid column
+		@one-col: (@width / @cols);
+
+		// implement grid mixins with type dependent variables
+		#grid > .grid-mixins(@width, @fixed-gutter, @one-col, 'fixed-gutter');
+	}
+
+	// only one mixin for fixed grid type needed because we cannot make fluid gutters in static grid
+	.create('fixed', @gutter-type, @fixed-width, @fixed-gutter, @cols) {
+		@width: @fixed-width;
+		@gutter: @fixed-gutter;
+
+		// calculate the width of one grid column
+		// add one gutter to grid width because of negative indent
+		@one-col: ((@width + @gutter) - @gutter * @cols) / @cols;
+
+		// implement grid mixins with type dependent variables
+		// gutter passed twice because in fluid (percentage) grid column gutter is slightly bigger than row indent
+		#grid > .grid-mixins(@width, @gutter, @gutter, @one-col);
+	}
+
+	// pass grid variables from global scope (defined in config)
+	// to our switch mixin which manipulates/creates variables
+	// this mixin is also our unlocker to use #grid > .mixins() as usual
+
+	#grid > .create(@grid-type, @grid-gutter-type, @grid-fixed-width, @grid-fixed-gutter, @grid-max-cols);
 
 	// fluid gutter grid mixins which get called with manipulated variables from unlocker
 	.grid-mixins(@width, @row-gutter, @gutter, @one-col) when (isnumber(@one-col)) {
@@ -73,7 +70,7 @@
 		.indent(@num: -1) when (@num < 0) {
 			margin-left: -round((@one-col * @num) + (@gutter * (@num - 1)), @grid-decimal-places);
 		}
-		
+
 		// used only on .col for uniquely applied gutter
 		.col-indent(@num: 0) when (@num >= 0) {
 			margin-left: round((@one-col * @num) + (@gutter * (@num + 1)), @grid-decimal-places);
@@ -132,23 +129,19 @@
 	.loop (@index, @class: item, @mixin: '') when (@index > 0) {
 		// create the actual css selector
 		.@{class}-@{index} {
-			#loop-mixin > .apply(@mixin, @index);
+			#grid > .apply(@mixin, @index);
 		}
 
 		// next iteration
 		#grid > .loop(@index - 1, @class, @mixin);
 	}
-}
 
-// GRID CLASS GENERATOR
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// GRID CLASS GENERATOR
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/*
- * mixins to call inside less loop
- * use standardized global mixins - because we have them...
- */
-#loop-mixin {
-	// base grid loops
+	// mixins to call inside less loop
+	// use standardized global mixins - because we have them...
+
 	.apply('grid-span', @index) {
 		.grid-col-span(@index);
 	}
@@ -164,18 +157,16 @@
 	.apply('grid-pull', @index) {
 		.grid-pull(@index);
 	}
-	// grid loops end
 }
 
 // GLOBAL MIXINS
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/*
- * make simpler global mixins available
- * (mainly for class/mixin name consistency)
- * values will depend on grid type
- * (either percentage or pixel)
- */
+// make simpler global mixins available
+// (mainly for class/mixin name consistency)
+// values will depend on grid type
+// (either percentage or pixel)
+
 .grid-col-span(@num: 0) when (@num >= 0) {
 	#grid > .span-width(@num);
 }
@@ -195,27 +186,25 @@
 
 // LAYOUT SETUP HELPERS
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
- * You can use the following mixins to easily set up responsive layouts.
- * For grid layouts with non-equal span sizes use incrementing col-[integer] classes and apply sizes to each of these classes.
- *
- * .col-set([colum name], [column span width], [offset]):
- * Standard mixin to set up a column in a responsive layout.
- *
- * To set up layouts with equal width columns you only specify the width in `.col-set-equal`.
- *
- * .col-set-equal([column span width]):
- * Extended mixin to set up equal width columns and properly clear them at the same time
- *
- * Note: Every use of .col-set-equal() must be wrapped in a media query (even for smallest "mobile first" viewport).
- *       Because else the `nth-child` selectors used in ` .col-set-equal()` for proper clearing would be passed on to all
- *       other viewports/media queries in the layout.
- *
- * .col-clear([colums per line]):
- * Use this to manually clear every nth column if columns differ in height.
- * This ensures that a grid layout can have only [colums per line] columns on one horizontal grid line.
- *
- **/
+
+// You can use the following mixins to easily set up responsive layouts.
+// For grid layouts with non-equal span sizes use incrementing col-[integer] classes and apply sizes to each of these classes.
+//
+// .col-set([colum name], [column span width], [offset]):
+// Standard mixin to set up a column in a responsive layout.
+//
+// To set up layouts with equal width columns you only specify the width in `.col-set-equal`.
+//
+// .col-set-equal([column span width]):
+// Extended mixin to set up equal width columns and properly clear them at the same time
+//
+// Note: Every use of .col-set-equal() must be wrapped in a media query (even for smallest "mobile first" viewport).
+//       Because else the `nth-child` selectors used in ` .col-set-equal()` for proper clearing would be passed on to all
+//       other viewports/media queries in the layout.
+//
+// .col-clear([colums per line]):
+// Use this to manually clear every nth column if columns differ in height.
+// This ensures that a grid layout can have only [colums per line] columns on one horizontal grid line.
 
 .grid-col-clear(@columns) when (isnumber(@columns)) {
 	> .col:nth-child(@{columns}n+1) {
@@ -309,28 +298,26 @@
 	.grid-col-span(@grid-max-cols);
 	float: left;
 
-	/*
-	 * spacer class for the rare occasion we have an "empty" column in a responsive grid layout
-	 * where the use of .offset is not possible because of realignment of columns
-	 */
+	// spacer class for the rare occasion we have an "empty" column in a responsive grid layout
+	// where the use of .offset is not possible because of realignment of columns
+
 	&.spacer {
 		min-height: 1px;
 		visibility: hidden;
 	}
 }
 
-/*--- generate grid classes ---*/
-/**
- * Parameters:
- * 1) amount of iterations
- * 2) class selector prefix to generate
- * 3) mixin to apply to each selector
- *
- * Example:
- * #grid > .loop(12, class-prefix, 'mixin');
- *
- * NOTE: you can not use the generated classes themselves as mixins!
- */
+// generate grid classes
+
+// Parameters:
+// 1) amount of iterations
+// 2) class selector prefix to generate
+// 3) mixin to apply to each selector
+//
+// Example:
+// #grid > .loop(12, class-prefix, 'mixin');
+//
+// NOTE: you can not use the generated classes themselves as mixins!
 
 .row {
 	#grid > .loop(@grid-max-cols, col-span, 'grid-span');
