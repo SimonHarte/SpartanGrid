@@ -73,6 +73,11 @@
 		.indent(@num: -1) when (@num < 0) {
 			margin-left: -round((@one-col * @num) + (@gutter * (@num - 1)), @decimal-places);
 		}
+		
+		// used only on .col for uniquely applied gutter
+		.col-indent(@num: 0) when (@num >= 0) {
+			margin-left: round((@one-col * @num) + (@gutter * (@num + 1)), @decimal-places);
+		}
 
 		// used only on .row for proper negative indent in fluid grid
 		.row-indent(@num: 0) {
@@ -97,13 +102,18 @@
 	.grid-mixins(@width, @gutter, @one-col, 'fixed-gutter') {
 		.span-width(@num) when (@num > 0) {
 			width: round((@one-col * @num), @decimal-places);
-			padding-left: @gutter*.5 !important;
-			padding-right: @gutter*.5 !important;
 		}
 
 		// indent grid columns either way with these mixins
 		.indent(@num: 0) {
 			margin-left: round((@one-col * @num), @decimal-places);
+		}
+
+		// used only on .col for uniquely applied gutter
+		.col-indent(@num: 0) {
+			margin-left: round((@one-col * @num), @decimal-places);
+			padding-left: @gutter*.5 !important;
+			padding-right: @gutter*.5 !important;
 		}
 
 		// used only on .row for proper negative indents
@@ -299,7 +309,7 @@
 	// make sure we have the correct box sizing for fixed gutter grid
 	.grid-box-sizing();
 	// one gutter indent for each column
-	#grid > .indent(0) !important;
+	#grid > .col-indent(0) !important;
 	// columns should per default span the whole width if none is set
 	.col-span(@grid-max-cols);
 	float: left;
