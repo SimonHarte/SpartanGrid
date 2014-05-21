@@ -55,7 +55,7 @@ Just some common grid systems in comparison to responsibly:
 | block gutter      | √ | x | √ | x |
 | column ordering   | √ | √ | √ | √ |
 | offsets           | √ | √ | √ | √ |
-| css size (min)    | 2.2kB | 11kB | 9.5kB | 2.7kB |
+| css size (min)    | 2kB | 11kB | 9.5kB | 2.7kB |
 
 
 ## Getting started
