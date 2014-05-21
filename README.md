@@ -55,7 +55,7 @@ Just some common grid systems in comparison to responsibly:
 | block gutter      | √ | x | √ | x |
 | column ordering   | √ | √ | √ | √ |
 | offsets           | √ | √ | √ | √ |
-| css size (min)    | 2kB | 11kB | 9.5kB | 2.7kB |
+| css size (min)    | **2KB** | **11KB** | **9.5KB** | **2.7KB** |
 
 
 ## Getting started
@@ -227,7 +227,7 @@ Or
 
 ## Advantages
 
-- Small in size: **~8KB** of less code which per default generates **~2KB** of minified css (responsive layouts excluded).
+- Small in size: **~10KB** of less code which per default generates **~2KB** of minified css (responsive layouts excluded).
 - Supports all features of other common grid systems together ([Twitter Bootstrap](http://getbootstrap.com/css/#grid), [Foundation](http://foundation.zurb.com/), [960](http://960.gs/)) and more!
 - With minimal configuration you can swiftly set up standard grid layouts using simple, generated classes.
 - Provides less mix-ins to easily set up responsive layouts as you need them instead of generating a whole bunch of classes.
@@ -256,4 +256,4 @@ Or
 
 ## ToDos
 
-- port to SASS (even though there already are good grid systems for SASS like [susy](https://github.com/ericam/susy))
+- port to SASS (even though there already are good grid systems for SASS like [Foundation](http://foundation.zurb.com/) and [susy](https://github.com/ericam/susy))
