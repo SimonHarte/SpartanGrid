@@ -109,21 +109,21 @@ So if you've set for example `@grid-max-cols: 16`, you'll get class selectors ra
 
 Instead of using the generated grid classes you can also use similar named mix-ins to implement the grid with less.
 
-	.col-span([columns]), .col-span-[columns]
-	.offset([columns]), .offset-[columns]
-	.push([columns]), .push-[columns]
-	.pull([columns]), .pull-[columns]
+	.grid-col-span([columns]), .col-span-[columns]
+	.grid-offset([columns]), .offset-[columns]
+	.grid-push([columns]), .push-[columns]
+	.grid-pull([columns]), .pull-[columns]
 
-#### col-span
+#### grid-col-span
 Used to set the column width, equivalent to `.col-span-[columns]`.
 Although you could just use the generated `.col-span-[columns]` classes as well, this mix-in allows you to pass in any floating point number to generate a width,
 which enables you to set up a grid row with for example 5 columns with proper gutter size in a 12 column grid.
 
-#### offset
+#### grid-offset
 Indent a column by the defined amount of grid columns, equivalent to `.offset-[columns]`.
 While there are just positive indents in generated classes, you could also call this mix-in with negative values (although not recommended).
 
-#### push and pull
+#### grid-push and grid-pull
 Together with the additional class `.ordered` on `.row` you can reorder columns visually without changing the order in HTML.
 Note that you may run into problems if these are used within certain responsive layouts as they use relative positioning.
 Equivalent to `push-[columns]` and `pull-[columns]`, similar behavior as `.offset()`.
@@ -155,13 +155,13 @@ With the following example you get a layout where you have one column if the vie
 		// grid maximum columns = 12
 		
 		@media (max-width: 39.99em) {
-			.col-set-equal(12);
+			.grid-col-set-equal(12);
 		}
 		@media (min-width: 40em) and (max-width: 79.99em) {
-			.col-set-equal(6);
+			.grid-col-set-equal(6);
 		}
 		@media (min-width: 80em) {
-			.col-set-equal(4);
+			.grid-col-set-equal(4);
 		}
 	}
 
@@ -175,10 +175,10 @@ Another working example of the above:
 		// leave the default query style out if you'd set it to maximum grid width anyway
 		
 		@media (min-width: 40em) and (max-width: 79.99em) {
-			.col-set-equal(6);
+			.grid-col-set-equal(6);
 		}
 		@media (min-width: 80em) {
-			.col-set-equal(4);
+			.grid-col-set-equal(4);
 		}
 	}
 
@@ -188,13 +188,13 @@ Another working example of the above:
 		// grid maximum columns = 12
 		
 		// "mobile first" without media query will generate an interfering :nth-child selector
-		.col-set-equal(12);
+		.grid-col-set-equal(12);
 		
 		@media (min-width: 40em) and (max-width: 79.99em) {
-			.col-set-equal(6);
+			.grid-col-set-equal(6);
 		}
 		@media (min-width: 80em) {
-			.col-set-equal(4);
+			.grid-col-set-equal(4);
 		}
 	}
 
