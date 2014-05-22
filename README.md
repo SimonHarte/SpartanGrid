@@ -135,17 +135,17 @@ There are 3 mix-ins which will help you create responsive layout.
 
 ### Helper mix-ins overview
 
-	.col-set([col-name], [columns], [offset]);
-	.col-set-equal([columns]);
-	.col-clear([column-count]);
+	.grid-col-set([col-name], [columns], [offset]);
+	.grid-col-set-equal([columns]);
+	.grid-col-clear([column-count]);
 
-#### col-set
+#### grid-col-set
 Generate a class `.[col-name]` with `[columns]` width and `[offset]` indent as direct child of `.row` with the given width.
 
-#### col-set-equal
+#### grid-col-set-equal
 Generate a `.col` selector as direct child of `.row` with the given width and also properly clear columns every nth child element using the `.col-clear()` mix-in.
 
-#### col-clear
+#### grid-col-clear
 Clear the float every nth+1 columns if columns differ in height, so if you have 3 columns per line, clear the 4th, the 7th, the 10th etc.
 
 ### Responsive layout example
