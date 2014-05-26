@@ -306,7 +306,7 @@
 	}
 }
 
-.grid-config(@type: 'fluid', @width: 960px, @gutter: 20px, @gutter-type: 'fluid', @cols: 12, @decimals: 3) {
+.grid-create(@type: 'fluid', @width: 960px, @gutter: 20px, @gutter-type: 'fluid', @cols: 12, @decimals: 3) {
 	@grid-fixed-width: @width;
 	@grid-fixed-gutter: @gutter;
 	@grid-max-cols: @cols;
@@ -315,9 +315,7 @@
 	@grid-gutter-type: @gutter-type;
 
 	@grid-decimal-places: @decimals;
-}
-
-.grid-create() {
+	
 	// set up grid styles depending on an included config
 	.grid();
 
