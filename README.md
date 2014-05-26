@@ -2,7 +2,7 @@
 
 The next generation less grid system. (This is madness...)
 
-This library requires [less](https://github.com/less/less.js) version 1.4.0 or above.
+This library requires [less](https://github.com/less/less.js) version 1.4.0 or above and currently doesn't work with less version 1.7.0.
 
 ### Features
 
