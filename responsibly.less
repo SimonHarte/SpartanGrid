@@ -310,17 +310,17 @@
 	@grid-fixed-width: @width;
 	@grid-fixed-gutter: @gutter;
 	@grid-max-cols: @cols;
-	
+
 	@grid-type: @type;
 	@grid-gutter-type: @gutter-type;
-	
+
 	@grid-decimal-places: @decimals;
 }
 
 .grid-create() {
 	// set up grid styles depending on an included config
 	.grid();
-	
+
 	.row {
 		.row-indent(0) !important;
 	}
@@ -331,7 +331,7 @@
 		// columns should per default span the whole width if none is set
 		.grid-col-span(@grid-max-cols);
 	}
-	
+
 	// generate grid classes
 
 	// Parameters:
@@ -340,14 +340,12 @@
 	// 3) mixin to apply to each selector
 	//
 	// Example:
-	// #grid > .loop(12, class-prefix, 'mixin');
+	// .grid > .loop(12, class-prefix, 'mixin');
 	//
 	// NOTE: you can not use the generated classes themselves as mixins!
 
-	.row {
-		.grid > .loop(@grid-max-cols, col-span, 'grid-span');
-		.grid > .loop(@grid-max-cols - 1, offset, 'grid-offset');
-		.grid > .loop(@grid-max-cols - 1, push, 'grid-push');
-		.grid > .loop(@grid-max-cols - 1, pull, 'grid-pull');
-	}
+	.grid > .loop(@grid-max-cols, col-span, 'grid-span');
+	.grid > .loop(@grid-max-cols - 1, offset, 'grid-offset');
+	.grid > .loop(@grid-max-cols - 1, push, 'grid-push');
+	.grid > .loop(@grid-max-cols - 1, pull, 'grid-pull');
 }
