@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.0
+
+- responsibly has a new name: Spartan!
+- grid creation API: `.grid-core()`, `.grid-unlock()` and `.grid-generate()`
+- generate viewport dependent grid css
+- all global grid mixins prefixed: `.grid-[mixin]`
+- reduce generated column selectors, don't use `.row` as necessary parent
+
 ## 1.2.0
 
 - third parameter for `.col-set()` mixin available to define offsets
