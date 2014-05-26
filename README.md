@@ -2,7 +2,7 @@
 
 The next generation less grid system. (This is madness...)
 
-This library requires [less](https://github.com/less/less.js) version 1.4.0 or above and currently doesn't work with less version 1.7.0.
+This library requires [less](https://github.com/less/less.js) version 1.4.0 or above but currently doesn't work with less version 1.7.0.
 
 ### Features
 
@@ -56,7 +56,7 @@ Just some common grid systems in comparison to Spartan:
 | block gutter      | √ | x | √ | x |
 | column ordering   | √ | √ | √ | √ |
 | offsets           | √ | √ | √ | √ |
-| viewport dependent grid setups | √ | ~ | x | x |
+| viewport dependent grid setups | √ | ~ | ~ | x |
 | base css size (min)    | **1.7KB** | **11KB** | **9.5KB** | **2.7KB** |
 
 
