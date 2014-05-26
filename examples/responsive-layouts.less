@@ -19,19 +19,19 @@
 * You can use the following mixins to easily set up responsive layouts.
 * For grid layouts with non-equal span sizes use incrementing col-[integer] classes and apply sizes to each of these classes:
 *
-* .col-set([column name], [column span width]):
+* .grid-col-set([column name], [column span width], [column offset]):
 * Standard mixin to set up a column in a responsive layout
 *
 * To set up layouts with equal width columns you only specify the width in `.col-set-equal`.
 *
-* .col-set-equal([column span width]):
+* .grid-col-set-equal([column span width]):
 * Extended mixin to set up equal width columns and properly clear them at the same time
 *
 * Note: Every use of .col-set-equal() must be wrapped in a media query (even for smallest "mobile first" viewport).
 * Because else the `nth-child` selectors used in ` .col-set-equal()` for proper clearing would be passed on to all
 * other viewports/media queries in the layout.
 *
-* .col-clear([columns per line]):
+* .grid-col-clear([columns per line]):
 * Use this to manually clear every nth column if columns differ in height.
 * This ensures that a grid layout can have only [columns per line] columns on one horizontal grid line.
 *
