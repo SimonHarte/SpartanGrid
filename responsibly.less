@@ -1,9 +1,10 @@
-@import "grid-config";
-
 // GRID CALCULATIONS
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#grid {
+// Note: We use !important statements for grid layout critical styles.
+//       Like this you can define for example margin shorthands on a column without affecting the grid indentation.
+
+.grid() {
 	// multiple mixins switch according to passed types
 	// any other value than 'fixed' is assumed as fluid
 
@@ -20,7 +21,7 @@
 		@one-col: (@width - @true-gutter * @cols) / @cols;
 
 		// implement grid mixins with type dependent variables
-		#grid > .grid-mixins(@width, @row-gutter, @true-gutter, @one-col);
+		.grid > .grid-mixins(@width, @row-gutter, @true-gutter, @one-col);
 	}
 
 	// mixin for fluid grid type and fixed gutter type
@@ -31,7 +32,7 @@
 		@one-col: (@width / @cols);
 
 		// implement grid mixins with type dependent variables
-		#grid > .grid-mixins(@width, @fixed-gutter, @one-col, 'fixed-gutter');
+		.grid > .grid-mixins(@width, @fixed-gutter, @one-col, 'fixed-gutter');
 	}
 
 	// only one mixin for fixed grid type needed because we cannot make fluid gutters in static grid
@@ -45,40 +46,42 @@
 
 		// implement grid mixins with type dependent variables
 		// gutter passed twice because in fluid (percentage) grid column gutter is slightly bigger than row indent
-		#grid > .grid-mixins(@width, @gutter, @gutter, @one-col);
+		.grid > .grid-mixins(@width, @gutter, @gutter, @one-col);
 	}
 
 	// pass grid variables from global scope (defined in config)
 	// to our switch mixin which manipulates/creates variables
 	// this mixin is also our unlocker to use #grid > .mixins() as usual
 
-	#grid > .create(@grid-type, @grid-gutter-type, @grid-fixed-width, @grid-fixed-gutter, @grid-max-cols);
+	.grid > .create(@grid-type, @grid-gutter-type, @grid-fixed-width, @grid-fixed-gutter, @grid-max-cols);
 
 	// fluid gutter grid mixins which get called with manipulated variables from unlocker
 	.grid-mixins(@width, @row-gutter, @gutter, @one-col) when (isnumber(@one-col)) {
 		.span-width(@num) when (@num > 0) {
-			width: round((@one-col * @num) + (@gutter * (@num - 1)), @grid-decimal-places);
+			width: round((@one-col * @num) + (@gutter * @num), @grid-decimal-places);
 		}
 
 		// indent grid columns either way with these mixins
 		.indent(@num: 0) when (@num >= 0) {
-			margin-left: round((@one-col * @num) + (@gutter * (@num + 1)), @grid-decimal-places);
+			margin-left: round((@one-col * @num) + (@gutter * @num), @grid-decimal-places);
 		}
 
 		// negative indent can only be used in a fixed grid system and sadly not be generated with the loop
 		// still, you can use this mixin if the need occurs
 		.indent(@num: -1) when (@num < 0) {
-			margin-left: -round((@one-col * @num) + (@gutter * (@num - 1)), @grid-decimal-places);
+			margin-left: -round((@one-col * @num) + (@gutter * @num), @grid-decimal-places);
 		}
 
 		// used only on .col for uniquely applied gutter
 		.col-indent(@num: 0) when (@num >= 0) {
-			margin-left: round((@one-col * @num) + (@gutter * (@num + 1)), @grid-decimal-places);
+			padding-left: @gutter*.5 !important;
+			padding-right: @gutter*.5 !important;
 		}
 
 		// used only on .row for proper negative indent in fluid grid
 		.row-indent(@num: 0) {
-			margin-left: -(round((@one-col * @num) + (@row-gutter * (@num + 1)), @grid-decimal-places));
+			margin-left: -@row-gutter*.5;
+			margin-right: -@row-gutter*.5;
 		}
 
 		// visually manipulate grid column order with these mixins
@@ -104,7 +107,6 @@
 
 		// used only on .col for uniquely applied gutter
 		.col-indent(@num: 0) {
-			margin-left: round((@one-col * @num), @grid-decimal-places);
 			padding-left: @gutter*.5 !important;
 			padding-right: @gutter*.5 !important;
 		}
@@ -129,11 +131,11 @@
 	.loop (@index, @class: item, @mixin: '') when (@index > 0) {
 		// create the actual css selector
 		.@{class}-@{index} {
-			#grid > .apply(@mixin, @index);
+			.grid > .apply(@mixin, @index);
 		}
 
 		// next iteration
-		#grid > .loop(@index - 1, @class, @mixin);
+		.grid > .loop(@index - 1, @class, @mixin);
 	}
 
 	// GRID CLASS GENERATOR
@@ -162,26 +164,25 @@
 // GLOBAL MIXINS
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// make simpler global mixins available
-// (mainly for class/mixin name consistency)
+// make prefixed global mixins available
 // values will depend on grid type
 // (either percentage or pixel)
 
 .grid-col-span(@num: 0) when (@num >= 0) {
-	#grid > .span-width(@num);
+	.span-width(@num);
 }
 
 .grid-offset(@num: 0) {
 	// use important statement to overwrite default row margin applied with shorthands
-	#grid > .indent(@num) !important;
+	.indent(@num) !important;
 }
 
 .grid-push(@num: 0) when (@num >= 0) {
-	#grid > .push(@num);
+	.push(@num);
 }
 
 .grid-pull(@num: 0) when (@num >= 0) {
-	#grid > .pull(@num);
+	.pull(@num);
 }
 
 // LAYOUT SETUP HELPERS
@@ -263,65 +264,90 @@
 }
 
 .grid-row-reorder() {
-	&,
 	> .col {
 		position: relative;
 	}
 }
 
-/*--- base grid layout styles ---*/
-.row,
-.col {
-	display: block;
-	margin-right: 0 !important;
-	padding-left: 0;
-	padding-right: 0;
-}
+// GRID CREATION API
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-.row {
-	.grid-cf();
-	// one gutter negative indent for row
-	#grid > .row-indent(0) !important;
+// generate base grid classes valid for every setup
+.grid-core() {
+	// base grid layout styles, valid for every grid setup
+	.row,
+	.col {
+		display: block;
+	}
 
-	// used to .push and .pull columns
-	&.ordered {
-		.grid-row-reorder();
+	.row {
+		.grid-cf();
+		padding-left: 0 !important;
+		padding-right: 0 !important;
+
+		// used to .push and .pull columns
+		&.ordered {
+			.grid-row-reorder();
+		}
+	}
+
+	.col {
+		// make sure we have the correct box sizing for fixed gutter grid
+		.grid-box-sizing();
+		float: left;
+		margin-right: 0 !important;
+
+		// spacer class for the rare occasion we have an "empty" column in a responsive grid layout
+		// where the use of .offset is not possible because of realignment of columns
+		&.spacer {
+			min-height: 1px;
+			visibility: hidden;
+		}
 	}
 }
 
-.col {
-	// make sure we have the correct box sizing for fixed gutter grid
-	.grid-box-sizing();
-	// one gutter indent for each column
-	#grid > .col-indent(0) !important;
-	// columns should per default span the whole width if none is set
-	.grid-col-span(@grid-max-cols);
-	float: left;
-
-	// spacer class for the rare occasion we have an "empty" column in a responsive grid layout
-	// where the use of .offset is not possible because of realignment of columns
-
-	&.spacer {
-		min-height: 1px;
-		visibility: hidden;
-	}
+.grid-config(@type: 'fluid', @width: 960px, @gutter: 20px, @gutter-type: 'fluid', @cols: 12, @decimals: 3) {
+	@grid-fixed-width: @width;
+	@grid-fixed-gutter: @gutter;
+	@grid-max-cols: @cols;
+	
+	@grid-type: @type;
+	@grid-gutter-type: @gutter-type;
+	
+	@grid-decimal-places: @decimals;
 }
 
-// generate grid classes
+.grid-create() {
+	// set up grid styles depending on an included config
+	.grid();
+	
+	.row {
+		.row-indent(0) !important;
+	}
 
-// Parameters:
-// 1) amount of iterations
-// 2) class selector prefix to generate
-// 3) mixin to apply to each selector
-//
-// Example:
-// #grid > .loop(12, class-prefix, 'mixin');
-//
-// NOTE: you can not use the generated classes themselves as mixins!
+	.col {
+		// one gutter indent for each column
+		.col-indent(0) !important;
+		// columns should per default span the whole width if none is set
+		.grid-col-span(@grid-max-cols);
+	}
+	
+	// generate grid classes
 
-.row {
-	#grid > .loop(@grid-max-cols, col-span, 'grid-span');
-	#grid > .loop(@grid-max-cols - 1, offset, 'grid-offset');
-	#grid > .loop(@grid-max-cols - 1, push, 'grid-push');
-	#grid > .loop(@grid-max-cols - 1, pull, 'grid-pull');
+	// Parameters:
+	// 1) amount of iterations
+	// 2) class selector prefix to generate
+	// 3) mixin to apply to each selector
+	//
+	// Example:
+	// #grid > .loop(12, class-prefix, 'mixin');
+	//
+	// NOTE: you can not use the generated classes themselves as mixins!
+
+	.row {
+		.grid > .loop(@grid-max-cols, col-span, 'grid-span');
+		.grid > .loop(@grid-max-cols - 1, offset, 'grid-offset');
+		.grid > .loop(@grid-max-cols - 1, push, 'grid-push');
+		.grid > .loop(@grid-max-cols - 1, pull, 'grid-pull');
+	}
 }
