@@ -1,8 +1,16 @@
 # Spartan
 
-The next generation less grid system. (This is madness...)
+The next generation less grid system.
 
 This library requires [less](https://github.com/less/less.js) version 1.4.0 or above but currently doesn't work with less version 1.7.0.
+
+## Advantages
+
+- Very small in size: **~11KB** of LessCSS code which per default generates less than **2KB** of minified css (responsive layouts excluded).
+- Supports all features of other common grid systems combined: ([Twitter Bootstrap](http://getbootstrap.com/css/#grid), [Foundation](http://foundation.zurb.com/), [960](http://960.gs/)) and more!
+- With minimal configuration you can quickly set up standard grid layouts using simple, generated classes.
+- Provides LessCSS mixins to easily set up responsive layouts as you need them, instead of generating a whole bunch of classes you might never use.
+- Comes with a simple API to generate grids on demand (and in scopes) instead of defining global variables which would be used right away.
 
 ### Features
 
@@ -11,11 +19,10 @@ This library requires [less](https://github.com/less/less.js) version 1.4.0 or a
 - block gutter possible (fixed gutter in a fluid grid)
 - column reordering through css
 - grid creation API: **make multiple and/or viewport dependent grid setups**
-- simple classes and corresponding less mixins
-- integrated, dynamic class generation
 - custom css prefix
-- define **any** column width through mixins!
-- lightweight (resulting css)
+- short classes and corresponding less mixins
+- integrated, dynamic class generation
+- define **any** column width through mixins
 
 ### Demo
 
@@ -194,7 +201,7 @@ Instead of using the generated grid classes you can also use similar named mixin
 	.grid-pull([columns]), .pull-[columns]
 
 #### grid-col-span
-Used to set the column width, equivalent to `.col-span-[columns]`.
+Override the width of a column (default is full-width), equivalent to `.col-span-[columns]`.
 Although you could just use the generated `.col-span-[columns]` classes as well, this mixin allows you to pass in any floating point number to generate a width,
 which enables you to set up a grid row with for example 5 columns with proper gutter size in a 12 column grid.
 
@@ -243,14 +250,14 @@ With the following example you get a layout where you have one column if the vie
 		}
 	}
 
-Note that you can't make mobile first as you might usually do. You either have to declare a media query or leave the definition out because of the nth-child selector in `col-set-equal`.
+Note: With a mobile first approach you either have to declare a media query or omit the definition because of the nth-child selector in `col-set-equal`.
 
 Another working example of the above:
 
 	.layout-r-1 {
 		// grid maximum columns = 12
 		
-		// leave the default query style out if you'd set it to maximum grid width anyway
+		// omit small query definition if you'd set it to maximum grid width anyway
 		
 		@media (min-width: 40em) and (max-width: 79.99em) {
 			.grid-col-set-equal(6);
@@ -266,13 +273,13 @@ Another working example of the above:
 		// grid maximum columns = 12
 		
 		// "mobile first" without media query will generate an interfering :nth-child selector
-		.grid-col-set-equal(12);
+		.grid-col-set-equal(6);
 		
 		@media (min-width: 40em) and (max-width: 79.99em) {
-			.grid-col-set-equal(6);
+			.grid-col-set-equal(4);
 		}
 		@media (min-width: 80em) {
-			.grid-col-set-equal(4);
+			.grid-col-set-equal(3);
 		}
 	}
 
@@ -303,24 +310,11 @@ Or
 		</div>
 	</div>
 
-## Advantages
-
-- Very small in size: **~11KB** of less code which per default generates less than **2KB** of minified css (responsive layouts excluded).
-- Supports all features of other common grid systems together ([Twitter Bootstrap](http://getbootstrap.com/css/#grid), [Foundation](http://foundation.zurb.com/), [960](http://960.gs/)) and more!
-- With minimal configuration you can swiftly set up standard grid layouts using simple, generated classes.
-- Provides less mixins to easily set up responsive layouts as you need them instead of generating a whole bunch of classes.
-- Uses a simple API to generate the grid, so viewport dependent grid setups are possible!
-- Actually even non-grid layouts are possible using the mixins as the values get calculated in less.
-
-## Caveats
-
-- basic knowledge of less needed to set up responsive grid layouts.
-
 ## Browser Support
 
 **Not** supported:
 
-- IE7-: completely wrong behavior with negative `.row` margin
+- IE7-: wrong behavior with negative `.row` margin and no box-sizing
 
 **Partially** supported:
 
