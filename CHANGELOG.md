@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.0
+
+- pass grid configuration as separate values or in a reusable variable
+
 ## 2.1.0
 
 - custom prefixes for grid class generation
