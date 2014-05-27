@@ -306,15 +306,15 @@
 	}
 }
 
-.grid-unlock(@type: 'fluid', @grid-width: 960px, @gutter: 20px, @gutter-type: 'fluid', @cols: 12, @decimals: 3) {
-	@grid-fixed-width: @grid-width;
-	@grid-fixed-gutter: @gutter;
-	@grid-max-cols: @cols;
+.grid-unlock(@grid-conf...) {
+	@grid-fixed-width: extract(@grid-conf, 2);
+	@grid-fixed-gutter: extract(@grid-conf, 3);
+	@grid-max-cols: extract(@grid-conf, 5);
 
-	@grid-type: @type;
-	@grid-gutter-type: @gutter-type;
+	@grid-type: extract(@grid-conf, 1);
+	@grid-gutter-type: extract(@grid-conf, 4);
 
-	@grid-decimal-places: @decimals;
+	@grid-decimal-places: 3;
 	
 	// set up grid styles depending on an included config
 	.grid();
