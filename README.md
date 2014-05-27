@@ -1,15 +1,15 @@
 # Spartan
 
-The next generation less grid system.
+The next generation LessCSS grid system.
 
-This library requires [less](https://github.com/less/less.js) version 1.4.0 or above but currently doesn't work with less version 1.7.0.
+This library requires [LessCSS](https://github.com/less/less.js) version 1.4.0 or above but currently doesn't work with less version 1.7.0.
 
 ## Advantages
 
 - Very small in size: **~11KB** of LessCSS code which per default generates less than **2KB** of minified css (responsive layouts excluded).
-- Supports all features of other common grid systems combined: ([Twitter Bootstrap](http://getbootstrap.com/css/#grid), [Foundation](http://foundation.zurb.com/), [960](http://960.gs/)) and more!
+- Supports all features of other common grid systems combined ([Twitter Bootstrap](http://getbootstrap.com/css/#grid), [Foundation](http://foundation.zurb.com/), [960](http://960.gs/)) and more!
 - With minimal configuration you can quickly set up standard grid layouts using simple, generated classes.
-- Provides LessCSS mixins to easily set up responsive layouts as you need them, instead of generating a whole bunch of classes you might never use.
+- Provides less mixins to easily set up responsive layouts as you need them, instead of generating a whole bunch of classes you might never use.
 - Comes with a simple API to generate grids on demand (and in scopes) instead of defining global variables which would be used right away.
 
 ### Features
@@ -81,13 +81,13 @@ Just some common grid systems in comparison to Spartan:
 
 ### Grid Setup
 
-Spartan comes with three API mixins to swiftly set up grids:
+Spartan comes with three API mixins to easily set up grids:
 
 	.grid-core([prefix]);
 	.grid-unlock([grid type], [grid width], [gutter width], [gutter type], [grid columns]);
 	.grid-generate([prefix]);
 
-The mixin `.grid-core()` should be executed once in any case, it generates all (prefixed) base classes and styles which are needed for every grid setup.
+The mixin `.grid-core()` should be executed once in most cases, it generates all (prefixed) base classes and styles which are needed for every grid setup.
 
 You can then call `.grid-unlock()` which will unlock all grid variables and mixins in the current [less scope](http://lesscss.org/features/#features-overview-feature-scope), those will be used by `.grid-generate()` to generate the setup specific classes/styles.
 
