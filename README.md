@@ -123,6 +123,13 @@ But since you can call them multiple times this would even allow you to generate
 	// generate grid classes with current scope variables
 	.grid-generate();
 	
+Since v2.2.0 the grid configuration for `.grid-unlock()` can either be passed as separate values or bundled in a reusable variable, like this:
+	
+	@grid-config: 'fluid', 960px, 20px, 'fluid', 12;
+	
+	// unlock grid variables and mixins according to config parameters
+	.grid-unlock(@grid-config);
+	
 **HTML**
 
 	<!-- defining two columns in the current grid (max columns: 12) -->

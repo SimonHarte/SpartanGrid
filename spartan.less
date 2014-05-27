@@ -306,13 +306,13 @@
 	}
 }
 
-.grid-unlock(@grid-config...) {
-	@grid-fixed-width: extract(@grid-config, 2);
-	@grid-fixed-gutter: extract(@grid-config, 3);
-	@grid-max-cols: extract(@grid-config, 5);
+.grid-unlock(@grid-conf...) {
+	@grid-fixed-width: extract(@grid-conf, 2);
+	@grid-fixed-gutter: extract(@grid-conf, 3);
+	@grid-max-cols: extract(@grid-conf, 5);
 
-	@grid-type: extract(@grid-config, 1);
-	@grid-gutter-type: extract(@grid-config, 4);
+	@grid-type: extract(@grid-conf, 1);
+	@grid-gutter-type: extract(@grid-conf, 4);
 
 	@grid-decimal-places: 3;
 	
