@@ -10,9 +10,10 @@ This library requires [less](https://github.com/less/less.js) version 1.4.0 or a
 - fully responsive
 - block gutter possible (fixed gutter in a fluid grid)
 - column reordering through css
+- grid creation API: **make multiple and/or viewport dependent grid setups**
 - simple classes and corresponding less mixins
 - integrated, dynamic class generation
-- grid creation API: build viewport dependent grid setups
+- custom css prefix
 - define **any** column width through mixins!
 - lightweight (resulting css)
 
@@ -48,16 +49,16 @@ Just some common grid systems in comparison to Spartan:
 
 |                   | Spartan | Twitter Bootstrap | Foundation | 960grid |
 |-------------------|:-------:|:-----------------:|:----------:|:-------:|
-| less              | √ | √ | x | x |
-| sass              | x | x | √ | x |
-| fluid             | √ | √ | √ | √ |
-| fixed             | √ | √ | √ | √ |
-| responsive        | √ | √ | √ | ~ |
-| block gutter      | √ | x | √ | x |
-| column ordering   | √ | √ | √ | √ |
-| offsets           | √ | √ | √ | √ |
-| viewport dependent grid setups | √ | ~ | ~ | x |
-| custom prefix     | √ | x | x | x |
+| less              | ✅ | ✅ | ❌ | ❌ |
+| sass              | ❌ | ❌ | ✅ | ❌ |
+| fluid             | ✅ | ✅ | ✅ | ✅ |
+| static            | ✅ | ✅ | ✅ | ✅ |
+| responsive        | ✅ | ✅ | ✅ | ❌ |
+| block gutter      | ✅ | ❌ | ✅ | ❌ |
+| column ordering   | ✅ | ✅ | ✅ | ✅ |
+| offsets           | ✅ | ✅ | ✅ | ✅ |
+| viewport dependent grid setups | ✅ | ❌ | ❌ | ❌ |
+| custom prefix     | ✅ | ❌ | ❌ | ❌ |
 | base css size (min)    | **1.7KB** | **11KB** | **9.5KB** | **2.7KB** |
 
 
@@ -81,15 +82,15 @@ Spartan comes with three API mixins to swiftly set up grids:
 
 The mixin `.grid-core()` should be executed once in any case, it generates all (prefixed) base classes and styles which are needed for every grid setup.
 
-You can then call `.grid-unlock()` which will unlock all grid variables and mixins in the current [less scope](http://lesscss.org/features/#features-overview-feature-scope), these will be used by `.grid-generate` to generate the setup specific classes/styles.
+You can then call `.grid-unlock()` which will unlock all grid variables and mixins in the current [less scope](http://lesscss.org/features/#features-overview-feature-scope), those will be used by `.grid-generate()` to generate the setup specific classes/styles.
 
 This means you can call `.grid-unlock()` and `.grid-generate()` **inside media queries** and thus generate different **grid setups for different viewports**!
 
-You can always use `.grid-unlock()` in any separated media query to unlock the grid mixins with the given parameters.
+You can always use `.grid-unlock()` in any separated media query to unlock grid mixins with the given parameters.
 
 #### Prefixing
 
-`.grid-core()` and `.grid-generate` take one parameter `prefix`, with which you can customize the generated classes.
+`.grid-core()` and `.grid-generate()` take one parameter `prefix`, with which you can customize the generated classes.
  
  So if you set `prefix` to for example `grid-` the generated classes will look like this:
  
@@ -98,7 +99,9 @@ You can always use `.grid-unlock()` in any separated media query to unlock the g
     .grid-col-span
     // etc...
 
-This would even allow you to generate multiple grid systems in one project.
+Note that you must pass the same `prefix` to both mixins to generate a fully working grid.
+
+But since you can call them multiple times this would even allow you to generate multiple grid systems in one project.
 
 ### Example Setup and Usage:
 
@@ -121,7 +124,7 @@ This would even allow you to generate multiple grid systems in one project.
 		<div class="col col-span-6"></div>
 	</div>
 
-- `.row` initializes a grid row and uses [clearfix](https://github.com/h5bp/html5-boilerplate/blob/master/css/main.css#L161) to contain the floating `.col`s.
+- `.row` initializes a grid row and uses [H5BP clearfix](https://github.com/h5bp/html5-boilerplate/blob/master/css/main.css#L161) to contain the floating `.col`s.
 - `.col` applies default column styles like float and padding (gutter).
 - `.col-span-[columns]` applies a column based width according ot the set maximum amount of columns.
 
