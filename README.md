@@ -57,6 +57,7 @@ Just some common grid systems in comparison to Spartan:
 | column ordering   | √ | √ | √ | √ |
 | offsets           | √ | √ | √ | √ |
 | viewport dependent grid setups | √ | ~ | ~ | x |
+| custom prefix     | √ | x | x | x |
 | base css size (min)    | **1.7KB** | **11KB** | **9.5KB** | **2.7KB** |
 
 
@@ -74,17 +75,30 @@ Just some common grid systems in comparison to Spartan:
 
 Spartan comes with three API mixins to swiftly set up grids:
 
-	.grid-core();
+	.grid-core([prefix]);
 	.grid-unlock([grid type], [grid width], [gutter width], [gutter type], [grid columns]);
-	.grid-generate();
+	.grid-generate([prefix]);
 
-The mixin `.grid-core()` generates all base classes and styles which are needed for every grid setup and can be executed once.
+The mixin `.grid-core()` should be executed once in any case, it generates all (prefixed) base classes and styles which are needed for every grid setup.
 
-You can then call `.grid-unlock()` which will unlock all grid variables and mixins in the current [less scope](http://lesscss.org/features/#features-overview-feature-scope), these will be used by `.grid-generate` to generate the setup specific classes.
+You can then call `.grid-unlock()` which will unlock all grid variables and mixins in the current [less scope](http://lesscss.org/features/#features-overview-feature-scope), these will be used by `.grid-generate` to generate the setup specific classes/styles.
 
 This means you can call `.grid-unlock()` and `.grid-generate()` **inside media queries** and thus generate different **grid setups for different viewports**!
 
 You can always use `.grid-unlock()` in any separated media query to unlock the grid mixins with the given parameters.
+
+#### Prefixing
+
+`.grid-core()` and `.grid-generate` take one parameter `prefix`, with which you can customize the generated classes.
+ 
+ So if you set `prefix` to for example `grid-` the generated classes will look like this:
+ 
+    .grid-row
+    .grid-col
+    .grid-col-span
+    // etc...
+
+This would even allow you to generate multiple grid systems in one project.
 
 ### Example Setup and Usage:
 
