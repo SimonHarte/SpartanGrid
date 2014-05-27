@@ -80,7 +80,7 @@ Spartan comes with three API mixins to swiftly set up grids:
 
 The mixin `.grid-core()` generates all base classes and styles which are needed for every grid setup and can be executed once.
 
-You can then call `.grid-unlock()` which will unlock all grid variables and mixins in the current less scope which will be used by `.grid-generate` to generate the setup specifc classes.
+You can then call `.grid-unlock()` which will unlock all grid variables and mixins in the current [less scope](http://lesscss.org/features/#features-overview-feature-scope), these will be used by `.grid-generate` to generate the setup specific classes.
 
 This means you can call `.grid-unlock()` and `.grid-generate()` **inside media queries** and thus generate different **grid setups for different viewports**!
 
@@ -96,7 +96,7 @@ You can always use `.grid-unlock()` in any separated media query to unlock the g
 	// unlock grid variables and mixins according to config parameters
 	.grid-unlock('fluid', 960px, 20px, 'fluid', 12);
 	
-	// generate grid classes according to current scope variables
+	// generate grid classes with current scope variables
 	.grid-generate();
 	
 **HTML**
@@ -125,17 +125,17 @@ Example:
 	}
 	// grid setup for medium screen
 	@media (min-width: 40em) and (max-width: 79.99em) {
-		.grid-unlock('fluid', 960px, 10px, 'fixed', 12);
+		.grid-unlock('fluid', 960px, 15px, 'fixed', 12);
 		.grid-generate();
 	}
 	// grid setup for large screen
 	@media (min-width: 80em) {
-		.grid-unlock('fixed', 960px, 20px, 'fluid', 12);
+		.grid-unlock('fluid', 960px, 30px, 'fluid', 12);
 		.grid-generate();
 	}
 	
 	// unlock mixins in another media query again
-	// no css will be generated but you can reuse the correct grid mixins
+	// no css will be generated but you can correctly reuse the grid mixins
 	@media (min-width: 40em) and (max-width: 79.99em) {
 		.grid-unlock('fluid', 960px, 10px, 'fixed', 12);
 		
