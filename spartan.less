@@ -273,14 +273,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // generate base grid classes valid for every setup
-.grid-core() {
+.grid-core(@prefix: ~'') {
 	// base grid layout styles, valid for every grid setup
-	.row,
-	.col {
+	.@{prefix}row,
+	.@{prefix}col {
 		display: block;
 	}
 
-	.row {
+	.@{prefix}row {
 		.grid-cf();
 		padding-left: 0 !important;
 		padding-right: 0 !important;
@@ -291,7 +291,7 @@
 		}
 	}
 
-	.col {
+	.@{prefix}col {
 		// make sure we have the correct box sizing for fixed gutter grid
 		.grid-box-sizing();
 		float: left;
@@ -320,12 +320,12 @@
 	.grid();
 }
 
-.grid-generate(@prefix: '') {
-	.row {
+.grid-generate(@prefix: ~'') {
+	.@{prefix}row {
 		.row-indent(0) !important;
 	}
 
-	.col {
+	.@{prefix}col {
 		// one gutter indent for each column
 		.col-indent(0) !important;
 		// columns should per default span the whole width if none is set
@@ -343,9 +343,9 @@
 	// .grid > .loop(12, class-prefix, 'mixin');
 	//
 	// NOTE: you can not use the generated classes themselves as mixins!
-
-	.grid > .loop(@grid-max-cols, col-span, 'grid-span');
-	.grid > .loop(@grid-max-cols - 1, offset, 'grid-offset');
-	.grid > .loop(@grid-max-cols - 1, push, 'grid-push');
-	.grid > .loop(@grid-max-cols - 1, pull, 'grid-pull');
+	
+	.grid > .loop(@grid-max-cols, ~'@{prefix}col-span', 'grid-span');
+	.grid > .loop(@grid-max-cols - 1, ~'@{prefix}offset', 'grid-offset');
+	.grid > .loop(@grid-max-cols - 1, ~'@{prefix}push', 'grid-push');
+	.grid > .loop(@grid-max-cols - 1, ~'@{prefix}pull', 'grid-pull');
 }

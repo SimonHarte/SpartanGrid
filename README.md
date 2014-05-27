@@ -2,7 +2,7 @@
 
 The next generation less grid system. (This is madness...)
 
-This library requires [less](https://github.com/less/less.js) version 1.4.0 or above and currently doesn't work with less version 1.7.0.
+This library requires [less](https://github.com/less/less.js) version 1.4.0 or above but currently doesn't work with less version 1.7.0.
 
 ### Features
 
@@ -56,7 +56,8 @@ Just some common grid systems in comparison to Spartan:
 | block gutter      | √ | x | √ | x |
 | column ordering   | √ | √ | √ | √ |
 | offsets           | √ | √ | √ | √ |
-| viewport dependent grid setups | √ | ~ | x | x |
+| viewport dependent grid setups | √ | ~ | ~ | x |
+| custom prefix     | √ | x | x | x |
 | base css size (min)    | **1.7KB** | **11KB** | **9.5KB** | **2.7KB** |
 
 
@@ -74,17 +75,30 @@ Just some common grid systems in comparison to Spartan:
 
 Spartan comes with three API mixins to swiftly set up grids:
 
-	.grid-core();
+	.grid-core([prefix]);
 	.grid-unlock([grid type], [grid width], [gutter width], [gutter type], [grid columns]);
-	.grid-generate();
+	.grid-generate([prefix]);
 
-The mixin `.grid-core()` generates all base classes and styles which are needed for every grid setup and can be executed once.
+The mixin `.grid-core()` should be executed once in any case, it generates all (prefixed) base classes and styles which are needed for every grid setup.
 
-You can then call `.grid-unlock()` which will unlock all grid variables and mixins in the current less scope which will be used by `.grid-generate` to generate the setup specifc classes.
+You can then call `.grid-unlock()` which will unlock all grid variables and mixins in the current [less scope](http://lesscss.org/features/#features-overview-feature-scope), these will be used by `.grid-generate` to generate the setup specific classes/styles.
 
 This means you can call `.grid-unlock()` and `.grid-generate()` **inside media queries** and thus generate different **grid setups for different viewports**!
 
 You can always use `.grid-unlock()` in any separated media query to unlock the grid mixins with the given parameters.
+
+#### Prefixing
+
+`.grid-core()` and `.grid-generate` take one parameter `prefix`, with which you can customize the generated classes.
+ 
+ So if you set `prefix` to for example `grid-` the generated classes will look like this:
+ 
+    .grid-row
+    .grid-col
+    .grid-col-span
+    // etc...
+
+This would even allow you to generate multiple grid systems in one project.
 
 ### Example Setup and Usage:
 
@@ -96,7 +110,7 @@ You can always use `.grid-unlock()` in any separated media query to unlock the g
 	// unlock grid variables and mixins according to config parameters
 	.grid-unlock('fluid', 960px, 20px, 'fluid', 12);
 	
-	// generate grid classes according to current scope variables
+	// generate grid classes with current scope variables
 	.grid-generate();
 	
 **HTML**
@@ -125,17 +139,17 @@ Example:
 	}
 	// grid setup for medium screen
 	@media (min-width: 40em) and (max-width: 79.99em) {
-		.grid-unlock('fluid', 960px, 10px, 'fixed', 12);
+		.grid-unlock('fluid', 960px, 15px, 'fixed', 12);
 		.grid-generate();
 	}
 	// grid setup for large screen
 	@media (min-width: 80em) {
-		.grid-unlock('fixed', 960px, 20px, 'fluid', 12);
+		.grid-unlock('fluid', 960px, 30px, 'fluid', 12);
 		.grid-generate();
 	}
 	
 	// unlock mixins in another media query again
-	// no css will be generated but you can reuse the correct grid mixins
+	// no css will be generated but you can correctly reuse the grid mixins
 	@media (min-width: 40em) and (max-width: 79.99em) {
 		.grid-unlock('fluid', 960px, 10px, 'fixed', 12);
 		

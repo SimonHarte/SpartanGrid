@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.0
+
+- custom prefixes for grid class generation
+
 ## 2.0.0
 
 - responsibly has a new name: Spartan!
