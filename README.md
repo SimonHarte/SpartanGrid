@@ -79,7 +79,7 @@ Just some common grid systems in comparison to Spartan:
 
 ## Details
 
-### Grid Setup
+### Grid Setup API
 
 Spartan comes with three API mixins to easily set up grids:
 
@@ -161,20 +161,19 @@ Example:
 	// unlock mixins in another media query again
 	// no css will be generated but you can correctly reuse the grid mixins
 	@media (min-width: 40em) and (max-width: 79.99em) {
-		.grid-unlock('fluid', 960px, 10px, 'fixed', 12);
-		
+		.grid-unlock('fluid', 960px, 15px, 'fixed', 12);
 		.col {
 			.grid-col-span(6);
 		}
 	}
 
-**Note:** Of course `.grid-generate()` will generate all the grid styles in the given viewport, so with three viewports you'll have three times the normal css. That's why we invested a lot of effort into keeping the base css tiny ;). 
+**Note:** Of course `.grid-generate()` will generate all the grid styles in the given viewport, so with three viewports you'll have three times the normal css. That's why we invested a lot of effort into keeping the base css as tiny as possible ;). 
 
 **Attention:** If you're not using Spartan in less only, it is not recommended to change the column amount, because you then may have missing column classes.
 
 ### Defining the Grid Type
 
-With the first parameter you can define if you either want a fluid or static width grid.
+With the first parameter to `.grid-unlock()` you can define if you either want a fluid or static width grid.
 
 The other grid variables stay the same, Spartan just calculates differently using these values.
 
@@ -182,7 +181,7 @@ The other grid variables stay the same, Spartan just calculates differently usin
 
 ### Defining the Gutter Type
 
-With the fourth parameter you can also define if the gutters between columns should be fluid or fixed, independently of your grid type.
+The fourth parameter of `.grid-unlock()` specifies if the gutters between columns should be fluid or fixed, independently of your grid type (block gutter).
 
 **Note:** This parameter will have no effect if you chose the grid type to be fixed.
 
@@ -190,11 +189,11 @@ With the fourth parameter you can also define if the gutters between columns sho
 
 Spartan comes with a [less loop](http://blog.thehippo.de/2012/04/programming/do-a-loop-with-less-css/) to generate all base classes using your settings.
 
-So if you've set for example `@grid-max-cols: 16`, you'll get class selectors ranging from `.col-span-1` to `.col-span-16` which can be used right away.
+So if you've set the last parameter to `.grid-unlock()` to for example `16`, you'll get class selectors ranging from `.col-span-1` to `.col-span-16` which can be used right away.
 
 ### Grid Classes/Mixins Overview
 
-Instead of using the generated grid classes you can also use similar named mixins to implement the grid with less.
+Instead of using the generated grid classes you can also use similar named mixins to apply the grid in a less style sheet.
 
 	.grid-col-span([columns]), .col-span-[columns]
 	.grid-offset([columns]), .offset-[columns]
