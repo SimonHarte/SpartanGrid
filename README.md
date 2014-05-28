@@ -22,8 +22,6 @@ Spartan arose from a project where we had the need for a fluid responsive grid s
 
 ## Comparison
 
-Just some common grid systems in comparison to Spartan:
-
 |                   | Spartan | Twitter Bootstrap | Foundation | 960grid |
 |-------------------|:-------:|:-----------------:|:----------:|:-------:|
 | less              | ✅ | ✅ | ❌ | ❌ |
