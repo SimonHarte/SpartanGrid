@@ -22,8 +22,6 @@ Spartan arose from a project where we had the need for a fluid responsive grid s
 
 ## Comparison
 
-Just some common grid systems in comparison to Spartan:
-
 |                   | Spartan | Twitter Bootstrap | Foundation | 960grid |
 |-------------------|:-------:|:-----------------:|:----------:|:-------:|
 | less              | ✅ | ✅ | ❌ | ❌ |
@@ -111,28 +109,14 @@ If you are not using a grid prefix, you have to name the config param, so `.grid
 | `gutter-type`  | string  | `'fluid'` or `'fixed'` | Forced to `'fixed'` if `grid-type` is `'fixed'` |
 | `grid-columns` | integer | | | |
 
-#### Example Setup and Usage
+#### Example Setup and Markup
 
 **LessCSS**
 
 ```less
-// generate base grid classes
-.grid-core();
+@grid-config: 'fluid', 960px, 20px, 'fixed', 12;
 
-// unlock grid variables and mixins according to config parameters
-.grid-unlock('fluid', 960px, 20px, 'fluid', 12);
-
-// generate grid classes with current scope variables
-.grid-generate();
-```
-
-Since v2.2.0 the grid configuration for `.grid-unlock()` can either be passed as separate values or bundled in a reusable variable, like this:
-
-```less
-@grid-config: 'fluid', 960px, 20px, 'fluid', 12;
-
-// unlock grid variables and mixins according to config parameters
-.grid-unlock(@grid-config);
+.grid-bundle(@spartan-config: @grid-config);
 ```
 
 **HTML**
