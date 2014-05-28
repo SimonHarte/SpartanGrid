@@ -6,6 +6,20 @@ The next generation LessCSS grid system. Try the [dynamic online grid demo](http
 
 Spartan arose from a project where we had the need for a fluid responsive grid system with both html and less integration possibilities. As we couldn't find anything covering the requirements at that time we simply developed something on our own. Over time the initial idea developed into this vastly enhanced less grid system.
 
+- [Features](#features)
+- [Comparison with other Grids](#comparison)
+- [Getting Started](#getting-started)
+- [Grid Structure](#grid-structure)
+- [Basic Usage](#basic-usage)
+	- [Grid Setup](#grid-setup)
+	- [Grid Classes and Mixins](#grid-classes-and-mixins)
+	- [Responsive Layouts](#responsive-layouts)
+- [Advanced Usage](#advanced-usage)
+	- [Flexible Grid Setups](#flexible-grid-setups)
+	- [Viewport Dependent Setups](#viewport-dependent-setups)
+	- [CSS Prefixing](#css-prefixing)
+	- [Responsive Layout Container](#responsive-layout-container)
+- [Browser Support](#browser-support)
 
 ## Features
 
@@ -74,6 +88,8 @@ Here's a short example of how a Spartan grid looks like with a responsive layout
 }
 ```
 
+Spartan uses a negative left margin on `.row` and left padding (gutter) on `.col`s for having a consistent structure and reduced output css.
+
 Check out [examples](https://github.com/SimonHarte/SpartanGrid/blob/master/examples/responsive-layouts.less) for more responsive layouts.
 
 ## Basic Usage
@@ -133,7 +149,7 @@ If you are not using a grid prefix, you have to name the config param, so `.grid
 - `.col` applies default column styles like float and padding (gutter).
 - `.col-span-[columns]` applies a column based width according ot the set maximum amount of columns.
 
-### Grid Classes/Mixins Overview
+### Grid Classes and Mixins
 
 Instead of using the generated grid classes you can also use similar named mixins to apply the grid in a less style sheet.
 
@@ -164,7 +180,7 @@ Together with the additional class `.ordered` on `.row` you can reorder columns 
 Note that you may run into problems if these are used within certain responsive layouts as they use relative positioning.
 Equivalent to `push-[columns]` and `pull-[columns]`, similar behavior as `.grid-offset()`.
 
-### Setting up Responsive Layouts
+### Responsive Layouts
 
 There are three mixins which will help you create responsive layouts.
 
@@ -225,7 +241,7 @@ Another working example of the above:
 
 ## Advanced Usage
 
-### Flexible Setup Mixins
+### Flexible Grid Setups
 
 You would normally just use `.grid-bundle()` to set up a grid, but you can also use the following mixins to generate even more flexible grids in [less scopes](http://lesscss.org/features/#features-overview-feature-scope), see [Viewport Dependent Setups](#viewport-dependent-setups) and [Prefixing](#prefixing) for use cases.
 
@@ -306,7 +322,7 @@ You can always use `.grid-unlock()` with `.grid-gutter()` in any separated media
 
 > **Hint**: Save different grid setups in global variables to reuse anywhere.
 
-### Prefixing
+### CSS Prefixing
 
 `.grid-core()`, `.grid-gutter()` and `.grid-generate()` take one parameter `prefix`, with which you can customize the generated classes.
 
