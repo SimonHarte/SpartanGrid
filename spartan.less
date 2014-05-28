@@ -74,14 +74,12 @@
 
 		// used only on .col for uniquely applied gutter
 		.col-indent(@num: 0) when (@num >= 0) {
-			padding-left: @gutter*.5 !important;
-			padding-right: @gutter*.5 !important;
+			padding-left: @gutter !important;
 		}
 
 		// used only on .row for proper negative indent in fluid grid
 		.row-indent(@num: 0) {
-			margin-left: -@row-gutter*.5;
-			margin-right: -@row-gutter*.5;
+			margin-left: -@row-gutter;
 		}
 
 		// visually manipulate grid column order with these mixins
@@ -107,14 +105,12 @@
 
 		// used only on .col for uniquely applied gutter
 		.col-indent(@num: 0) {
-			padding-left: @gutter*.5 !important;
-			padding-right: @gutter*.5 !important;
+			padding-left: @gutter !important;
 		}
 
 		// used only on .row for proper negative indents
 		.row-indent(@num: 0) {
-			margin-left: -@gutter*.5;
-			margin-right: -@gutter*.5;
+			margin-left: -@gutter;
 		}
 
 		// visually manipulate grid column order with these mixins
@@ -275,12 +271,13 @@
 	.@{prefix}row,
 	.@{prefix}col {
 		display: block;
+		margin-right: 0 !important;
+		padding-right: 0 !important;
 	}
 
 	.@{prefix}row {
 		.grid-cf();
 		padding-left: 0 !important;
-		padding-right: 0 !important;
 
 		// used to .push and .pull columns
 		&.ordered {
@@ -292,7 +289,7 @@
 		// make sure we have the correct box sizing for fixed gutter grid
 		.grid-box-sizing();
 		float: left;
-		margin-right: 0 !important;
+		margin-left: 0 !important;
 
 		// spacer class for the rare occasion we have an "empty" column in a responsive grid layout
 		// where the use of .offset is not possible because of realignment of columns
