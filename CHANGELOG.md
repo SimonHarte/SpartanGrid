@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.0
+
+- adjusted grid setup api for simple and advanced usage
+- only left margin/padding for reduced css and fix if grid touches window edges
+- docs overhauled
+
 ## 2.2.0
 
 - pass grid configuration as separate values or in a reusable variable
