@@ -240,40 +240,37 @@
 	.grid-col-clear(@clear);
 }
 
-// BASE STYLES
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// prefixed clearfix mixin from h5bp for grid only
-.grid-cf() {
-	&:before,
-	&:after {
-		content: " ";
-		display: table;
-	}
-
-	&:after {
-		clear: both;
-	}
-}
-
-// prefixed twitter bootstrap box sizing mixin
-.grid-box-sizing(@boxmodel: border-box) {
-	-webkit-box-sizing: @boxmodel;
-	-moz-box-sizing: @boxmodel;
-	box-sizing: @boxmodel;
-}
-
-.grid-row-reorder() {
-	> .col {
-		position: relative;
-	}
-}
-
 // GRID CREATION API
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // generate base grid classes valid for every setup
 .grid-core(@prefix: ~'') {
+	// prefixed clearfix mixin from h5bp for grid only
+	.grid-cf() {
+		&:before,
+		&:after {
+			content: " ";
+			display: table;
+		}
+
+		&:after {
+			clear: both;
+		}
+	}
+
+	// prefixed twitter bootstrap box sizing mixin
+	.grid-box-sizing(@boxmodel: border-box) {
+		-webkit-box-sizing: @boxmodel;
+		-moz-box-sizing: @boxmodel;
+		box-sizing: @boxmodel;
+	}
+
+	.grid-row-reorder() {
+		> .col {
+			position: relative;
+		}
+	}
+	
 	// base grid layout styles, valid for every grid setup
 	.@{prefix}row,
 	.@{prefix}col {
@@ -315,7 +312,7 @@
 	@grid-gutter-type: extract(@grid-conf, 4);
 
 	@grid-decimal-places: 3;
-	
+
 	// set up grid styles depending on an included config
 	.grid();
 }
@@ -343,7 +340,7 @@
 	// .grid > .loop(12, class-prefix, 'mixin');
 	//
 	// NOTE: you can not use the generated classes themselves as mixins!
-	
+
 	.grid > .loop(@grid-max-cols, ~'@{prefix}col-span', 'grid-span');
 	.grid > .loop(@grid-max-cols - 1, ~'@{prefix}offset', 'grid-offset');
 	.grid > .loop(@grid-max-cols - 1, ~'@{prefix}push', 'grid-push');
