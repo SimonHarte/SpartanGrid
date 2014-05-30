@@ -36,6 +36,8 @@ Spartan arose from a project where we had the need for a fluid responsive grid s
 
 ## Comparison
 
+> Install [Chromoji](https://chrome.google.com/webstore/detail/chromoji-emoji-for-google/cahedbegdkagmcjfolhdlechbkeaieki?hl=en-GB) if you're using Chrome to see the icons.
+
 |                   | Spartan | Twitter Bootstrap | Foundation | 960grid |
 |-------------------|:-------:|:-----------------:|:----------:|:-------:|
 | less              | ✅ | ✅ | ❌ | ❌ |
