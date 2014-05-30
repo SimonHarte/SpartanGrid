@@ -30,7 +30,7 @@ Spartan arose from a project where we had the need for a fluid responsive grid s
 	- column reordering through css
 	- column offsets
 - grid creation API: **make viewport dependent grid setups**
-- custom css prefix: multiple grid configurations possible
+- custom css prefix
 - short classes and corresponding less mixins
 - tiny: **~11KB** of LessCSS which generates less than **2KB** of minified css
 
