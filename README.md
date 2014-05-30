@@ -340,7 +340,7 @@ You can always use `.grid-unlock()` with `.grid-gutter()` in any separated media
 You can either apply responsive layouts by adding the class to the `.row` directly or make a whole section with multiple `.row`s which use the layout by wrapping them with a container using the layout class.
 
 ```html
-<div class="row layout-r-1>
+<div class="row layout-r-1">
 	<div class="col"></div>
 	<div class="col"></div>
 	<div class="col"></div>
@@ -350,13 +350,13 @@ You can either apply responsive layouts by adding the class to the `.row` direct
 Or
 
 ```html
-<div class="layout-r-1>
-	<div class="row>
+<div class="layout-r-1">
+	<div class="row">
 		<div class="col"></div>
 		<div class="col"></div>
 		<div class="col"></div>
 	</div>
-	<div class="row>
+	<div class="row">
 		<div class="col"></div>
 		<div class="col"></div>
 		<div class="col"></div>
