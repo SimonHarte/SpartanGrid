@@ -324,7 +324,7 @@ You can always use `.grid-unlock()` with `.grid-gutter()` in any separated media
 
 ### CSS Prefixing
 
-`.grid-core()`, `.grid-gutter()` and `.grid-generate()` take one parameter `prefix`, with which you can customize the generated classes.
+`.grid-bundle()` (as well as `.grid-core()`, `.grid-gutter()` and `.grid-generate()`) takes one optional parameter `prefix`, with which you can customize the generated classes.
 
  So if you set `prefix` to for example `grid-` the generated classes will look like this:
 
@@ -334,10 +334,6 @@ You can always use `.grid-unlock()` with `.grid-gutter()` in any separated media
 .grid-col-span
 // etc...
 ```
-
-Note that you must pass the same `prefix` to both mixins to generate a fully working grid.
-
-> Spartan even allows you to generate multiple grid systems in one project with this feature.
 
 ### Responsive Layout Container
 
