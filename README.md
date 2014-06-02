@@ -132,7 +132,7 @@ If you are not using a grid prefix, you have to name the config param, so `.grid
 ```less
 @grid-config: 'fluid', 960px, 20px, 'fixed', 12;
 
-.grid-bundle(@spartan-config: @grid-config);
+.grid-bundle(@config: @grid-config);
 ```
 
 **HTML**

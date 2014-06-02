@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.1
+
+- optimised less code
+- prefix all variable definitions to prevent overwriting
+- remove prefixes where not needed
+
 ## 3.0.0
 
 - adjusted grid setup api for simple and advanced usage
