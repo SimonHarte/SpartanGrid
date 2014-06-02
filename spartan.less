@@ -305,9 +305,9 @@
 	.spartan-grid > .spartan-loop(@spartan-grid-max-cols - 1, ~'@{prefix}pull', 'grid-pull');
 }
 
-.grid-bundle(@prefix: ~'', @spartan-config...) {
+.grid-bundle(@prefix: ~'', @config...) {
 	.grid-core(@prefix);
-	.grid-unlock(@spartan-config);
+	.grid-unlock(@config);
 	.grid-gutter(@prefix);
 	.grid-generate(@prefix);
 }
