@@ -16,7 +16,7 @@ Spartan arose from a project where we had the need for a fluid responsive grid s
 	- [Responsive Layouts](#responsive-layouts)
 - [Advanced Usage](#advanced-usage)
 	- [Flexible Grid Setups](#flexible-grid-setups)
-	- [Viewport Dependent Setups](#viewport-dependent-setups)
+	- [Viewport Dependent Grids](#viewport-dependent-grids)
 	- [CSS Prefixing](#css-prefixing)
 	- [Responsive Layout Container](#responsive-layout-container)
 - [Browser Support](#browser-support)
@@ -48,7 +48,7 @@ Spartan arose from a project where we had the need for a fluid responsive grid s
 | block gutter      | ✅ | ✅ | ✅ | ❌ |
 | column ordering   | ✅ | ✅ | ✅ | ✅ |
 | offsets           | ✅ | ✅ | ✅ | ✅ |
-| viewport dependent grid setups | ✅ | ❌ | ❌ | ❌ |
+| viewport dependent grids | ✅ | ❌ | ❌ | ❌ |
 | custom prefix     | ✅ | ❌ | ❌ | ❌ |
 | base css size (min)    | **1.7KB** | **11KB** | **9.5KB** | **2.7KB** |
 
@@ -111,10 +111,8 @@ The basic grid setup requires you to call just one mixin, pass in a configuratio
 If you are not using a grid prefix, you have to name the config param, so `.grid-bundle()` correctly receives the configuration and doesn't think it's the prefix.
 
 ```less
-.grid-bundle(@spartan-grid: @grid-config);
+.grid-bundle(@config: @grid-config);
 ```
-
-> Instead of using a config variable you could also just pass a comma separated list directly
 
 #### Setup Params
 
@@ -134,7 +132,7 @@ If you are not using a grid prefix, you have to name the config param, so `.grid
 ```less
 @grid-config: 'fluid', 960px, 20px, 'fixed', 12;
 
-.grid-bundle(@spartan-config: @grid-config);
+.grid-bundle(@config: @grid-config);
 ```
 
 **HTML**
@@ -153,7 +151,7 @@ If you are not using a grid prefix, you have to name the config param, so `.grid
 
 ### Grid Classes and Mixins
 
-Instead of using the generated grid classes you can also use similar named mixins to apply the grid in a less style sheet.
+Spartan comes with an integrated LessCSS loop to generate grid classes according to your configuration. Instead of using the generated classes you can also use similar named mixins to apply the grid in a less style sheet.
 
 ```less
 .grid-col-span([columns]), .col-span-[columns]
@@ -164,8 +162,8 @@ Instead of using the generated grid classes you can also use similar named mixin
 
 #### `grid-col-span`
 Override the width of a column (default is full-width), equivalent to `.col-span-[columns]`.
-Although you could just use the generated `.col-span-[columns]` classes, this mixin allows you to pass in any floating point number,
-which enables you to set up a grid row with for example 5 columns with proper gutter size in a 12 column grid.
+Although you could just use the generated `.col-span-[columns]` classes, this mixin allows you to pass in floating point numbers,
+which enables you to define literally **any** width using the mixin.
 
 ```less
 .grid-col-span(12/5);
@@ -175,7 +173,7 @@ which enables you to set up a grid row with for example 5 columns with proper gu
 Indent a column by the defined amount of grid columns, equivalent to `.offset-[columns]`.
 While there are just positive indents in generated classes, you could also call this mixin with negative values.
 
-> **Note:** Negative indents only work properly in static width grids.
+> **Note:** Using negative indents generally only works in static width grids.
 
 #### `grid-push` and `grid-pull`
 Together with the additional class `.ordered` on `.row` you can reorder columns visually without changing the order in HTML.
@@ -222,7 +220,7 @@ With the following example you get a layout where you have one column if the vie
 }
 ```
 
-> **Note**: With a mobile first approach you either have to declare a media query or omit the definition because of the nth-child selector in `col-set-equal`.
+> **Note**: With a mobile first approach you either have to declare a media query or omit the definition because of the nth-child selector from `col-set-equal`.
 
 Another working example of the above:
 
@@ -245,7 +243,7 @@ Another working example of the above:
 
 ### Flexible Grid Setups
 
-You would normally just use `.grid-bundle()` to set up a grid, but you can also use the following mixins to generate even more flexible grids in [less scopes](http://lesscss.org/features/#features-overview-feature-scope), see [Viewport Dependent Setups](#viewport-dependent-setups) and [Prefixing](#prefixing) for use cases.
+You would normally just use `.grid-bundle()` to set up a grid, but you can also use the following mixins to generate even more flexible grids in [less scopes](http://lesscss.org/features/#features-overview-feature-scope), see [Viewport Dependent Grids](#viewport-dependent-grids) and [Prefixing](#prefixing) for use cases.
 
 #### `.grid-core([prefix])`
 
@@ -266,8 +264,6 @@ Pass in your grid configuration like with `.grid-bundle()`. This will unlock all
 }
 ```
 
-> `config` can be either a comma separated list of configuration parameters or a variable containing the same.
-
 #### `.grid-gutter([prefix])`
 
 Used to set column gutters with the given configuration. While you don't need to `.grid-generate()` all classes anew when unlocking a certain grid configuration and using the grid mixins, you always need to adjust the gutters.
@@ -276,7 +272,7 @@ Used to set column gutters with the given configuration. While you don't need to
 
 This mixin will generate all configuration sensitive classes like `.col-span-`, `.offset` etc. in the current scope.
 
-### Viewport Dependent Setups
+### Viewport Dependent Grids
 
 You can call `.grid-unlock()`, `.grid-gutter()` and `.grid-generate()` **inside media queries** to generate different grid setups for different viewports like so:
 
