@@ -239,6 +239,9 @@ Another working example of the above:
 }
 ```
 
+> You can optimise the output css by wrapping all your layouts in the media queries once and define the viewport 
+dependent styles to reduce duplication of media queries in the css, but this is probably harder to maintain
+
 ## Advanced Usage
 
 ### Flexible Grid Setups
