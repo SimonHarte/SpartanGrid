@@ -48,7 +48,7 @@
 
 	// unlock grid mixins with modified variables
 	.spartan-grid-mixins(@width, @row-gutter, @col-gutter, @one-col) {
-		.spartan-span-width(@num) when (@num > 0) {
+		.spartan-span-width(@num) {
 			width: round((@one-col * @num), @spartan-grid-precision);
 		}
 
@@ -72,11 +72,11 @@
 		}
 
 		// visually manipulate grid column order with these mixins
-		.spartan-push(@num) when (@num >= 0) {
+		.spartan-push(@num) {
 			left: round((@one-col * @num), @spartan-grid-precision);
 		}
 
-		.spartan-pull(@num) when (@num >= 0) {
+		.spartan-pull(@num) {
 			right: round((@one-col * @num), @spartan-grid-precision);
 		}
 	}
@@ -99,7 +99,7 @@
 	// use standardized global mixins - because we have them...
 
 	.spartan-apply('grid-span', @index) {
-		.grid-col-span(@index);
+		.grid-span(@index);
 	}
 
 	.spartan-apply('grid-offset', @index) {
@@ -122,7 +122,7 @@
 // values will depend on grid type
 // (either percentage or pixel)
 
-.grid-col-span(@num: 0) when (@num >= 0) {
+.grid-span(@num: 0) when (@num >= 0) {
 	.spartan-span-width(@num);
 }
 
@@ -171,7 +171,7 @@
 	// apply styles to child columns directly or to columns within child rows
 	> .row > .@{col-name},
 	> .@{col-name} {
-		.grid-col-span(@col-span);
+		.grid-span(@col-span);
 	}
 }
 
@@ -179,7 +179,7 @@
 	// apply styles to child columns directly or to columns within child rows
 	> .row > .@{col-name},
 	> .@{col-name} {
-		.grid-col-span(@col-span);
+		.grid-span(@col-span);
 		.grid-offset(@offset);
 	}
 }
