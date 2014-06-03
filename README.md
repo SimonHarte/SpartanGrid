@@ -171,7 +171,7 @@ point numbers, which enables you to define literally **any** width using the mix
 ```
 
 #### `grid-offset`
-Indent a column by the defined amount of grid columns, equivalent to `.offset-[columns]`.
+Indent a column by the defined amount of grid columns, equivalent to `.g-offset-[columns]`.
 While there are just positive indents in generated classes, you could also call this mixin with negative values.
 
 > **Note:** Using negative indents generally only works in static width grids.
@@ -179,7 +179,7 @@ While there are just positive indents in generated classes, you could also call 
 #### `grid-push` and `grid-pull`
 Together with the additional class `.g-reorder` on `.g-row` you can reorder columns visually without changing the 
 order in HTML. Note that you may run into problems if these are used within certain responsive layouts as they use 
-relative positioning. Equivalent to `push-[columns]` and `pull-[columns]`, similar behavior as `.grid-offset()`.
+relative positioning. Equivalent to `.g-push-[columns]` and `.g-pull-[columns]`, similar behavior as `.grid-offset()`.
 
 ### Responsive Layouts
 
@@ -242,7 +242,7 @@ Another working example of the above:
 ```
 
 > You can optimise the output css by wrapping all your layouts in the media queries once and define the viewport 
-dependent styles to reduce duplication of media queries in the css, but this is probably harder to maintain
+dependent styles to reduce duplication of media queries in the css, but this is probably harder to maintain.
 
 ## Advanced Usage
 
@@ -338,7 +338,8 @@ You can always use `.grid-unlock()` in any separated media query to unlock grid 
 
 ### Responsive Layout Container
 
-You can either apply responsive layouts by adding the class to the `.g-row` directly or make a whole section with multiple `.g-row`s which use the layout by wrapping them with a container using the layout class.
+You can either apply responsive layouts by adding the class to the `.g-row` directly or build a whole section with 
+multiple `.g-row`s which use the layout by wrapping them with a container using the layout class.
 
 ```html
 <div class="g-row layout-r-1">
