@@ -162,23 +162,24 @@
 // This ensures that a grid layout can have only [colums per line] columns on one horizontal grid line.
 
 .grid-col-clear(@columns) when (isnumber(@columns)) {
-	> .col:nth-child(@{columns}n+1) {
+	> .@{spartan-namespace}row > .@{spartan-namespace}col:nth-child(@{columns}n+1),
+	> .@{spartan-namespace}col:nth-child(@{columns}n+1) {
 		clear: left;
 	}
 }
 
 .grid-col-set(@col-name; @col-span) {
 	// apply styles to child columns directly or to columns within child rows
-	> .row > .@{col-name},
-	> .@{col-name} {
+	> .@{spartan-namespace}row > .@{spartan-namespace}@{col-name},
+	> .@{spartan-namespace}@{col-name} {
 		.grid-span(@col-span);
 	}
 }
 
 .grid-col-set(@col-name; @col-span; @offset) {
 	// apply styles to child columns directly or to columns within child rows
-	> .row > .@{col-name},
-	> .@{col-name} {
+	> .@{spartan-namespace}row > .@{spartan-namespace}@{col-name},
+	> .@{spartan-namespace}@{col-name} {
 		.grid-span(@col-span);
 		.grid-offset(@offset);
 	}
@@ -198,7 +199,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // generate base grid classes valid for every setup
-.grid-core(@prefix: ~'') {
+.grid-core(@prefix: g-) {
+	@spartan-namespace: @prefix;
+	
 	// prefixed clearfix mixin from h5bp for grid only
 	.grid-cf() {
 		&:before,
@@ -226,14 +229,14 @@
 	}
 	
 	// base grid layout styles, valid for every grid setup
-	.@{prefix}row,
-	.@{prefix}col {
+	.@{spartan-namespace}row,
+	.@{spartan-namespace}col {
 		display: block;
 		margin-right: 0 !important;
 		padding-right: 0 !important;
 	}
 
-	.@{prefix}row {
+	.@{spartan-namespace}row {
 		.grid-cf();
 		padding-left: 0 !important;
 
@@ -243,7 +246,7 @@
 		}
 	}
 
-	.@{prefix}col {
+	.@{spartan-namespace}col {
 		// make sure we have the correct box sizing for fixed gutter grid
 		.grid-box-sizing();
 		float: left;
@@ -287,8 +290,7 @@
 	.grid-gutter();
 }
 
-
-.grid-generate(@prefix: ~'') {
+.grid-generate() {
 	// generate grid classes
 
 	// Parameters:
@@ -301,15 +303,15 @@
 	//
 	// NOTE: you can not use the generated classes themselves as mixins!
 
-	.spartan-grid > .spartan-loop(@spartan-grid-max-cols, ~'@{prefix}col-span', 'grid-span');
-	.spartan-grid > .spartan-loop(@spartan-grid-max-cols - 1, ~'@{prefix}offset', 'grid-offset');
-	.spartan-grid > .spartan-loop(@spartan-grid-max-cols - 1, ~'@{prefix}push', 'grid-push');
-	.spartan-grid > .spartan-loop(@spartan-grid-max-cols - 1, ~'@{prefix}pull', 'grid-pull');
+	.spartan-grid > .spartan-loop(@spartan-grid-max-cols, ~'@{spartan-namespace}span', 'grid-span');
+	.spartan-grid > .spartan-loop(@spartan-grid-max-cols - 1, ~'@{spartan-namespace}offset', 'grid-offset');
+	.spartan-grid > .spartan-loop(@spartan-grid-max-cols - 1, ~'@{spartan-namespace}push', 'grid-push');
+	.spartan-grid > .spartan-loop(@spartan-grid-max-cols - 1, ~'@{spartan-namespace}pull', 'grid-pull');
 }
 
-.grid-bundle(@prefix: ~'', @config...) {
+.grid-bundle(@prefix: g-, @config...) {
 	.grid-core(@prefix);
 	.grid-unlock(@config);
-	.grid-gutter(@prefix);
-	.grid-generate(@prefix);
+	.grid-gutter();
+	.grid-generate();
 }
