@@ -2,7 +2,7 @@
 
 The next generation LessCSS grid system. Try the [dynamic online grid demo](http://spartan-grid.herokuapp.com/).
 
-> Requires [LessCSS](https://github.com/less/less.js) version 1.4.0 or above. Currently **does not** work with less version 1.7.0.
+> Requires [LessCSS](https://github.com/less/less.js) version 1.4.0 or above.
 
 Spartan arose from a project where we had the need for a fluid responsive grid system with both html and less integration possibilities. As we couldn't find anything covering the requirements at that time we simply developed something on our own. Over time the initial idea developed into this vastly enhanced less grid system.
 
@@ -32,7 +32,7 @@ Spartan arose from a project where we had the need for a fluid responsive grid s
 - grid creation API: **make viewport dependent grid setups**
 - custom css prefix
 - short classes and corresponding less mixins
-- tiny: **~11KB** of LessCSS which generates less than **2KB** of minified css
+- tiny: **~10KB** of LessCSS which generates less than **2KB** of minified css
 
 ## Comparison
 
@@ -50,7 +50,7 @@ Spartan arose from a project where we had the need for a fluid responsive grid s
 | offsets           | ✅ | ✅ | ✅ | ✅ |
 | viewport dependent grids | ✅ | ❌ | ❌ | ❌ |
 | custom prefix     | ✅ | ❌ | ❌ | ❌ |
-| base css size (min)    | **1.7KB** | **11KB** | **9.5KB** | **2.7KB** |
+| base css size (min)    | **1.8KB** | **11KB** | **9.5KB** | **2.7KB** |
 
 ## Getting Started
 
