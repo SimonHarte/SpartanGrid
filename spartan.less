@@ -259,6 +259,20 @@
 }
 
 .grid-unlock(@config...) {
+	.grid-gutter() {
+		// base row and gutter styles must be set anew
+		.@{spartan-namespace}row {
+			.spartan-row-indent(0) !important;
+		}
+	
+		.@{spartan-namespace}col {
+			// one gutter indent for each column
+			.spartan-col-indent(0) !important;
+			// columns should per default span the whole width if none is set
+			.grid-span(@spartan-grid-max-cols);
+		}
+	}
+	
 	@spartan-grid-fixed-width: extract(@config, 2);
 	@spartan-grid-fixed-gutter: extract(@config, 3);
 	@spartan-grid-max-cols: extract(@config, 5);
@@ -267,24 +281,12 @@
 	@spartan-grid-gutter-type: extract(@config, 4);
 
 	@spartan-grid-precision: 4;
-
+	
 	// set up grid styles depending on an included config
 	.spartan-grid();
+	.grid-gutter();
 }
 
-.grid-gutter(@prefix: ~'') {
-	// base row and gutter styles must be set anew
-	.@{prefix}row {
-		.spartan-row-indent(0) !important;
-	}
-
-	.@{prefix}col {
-		// one gutter indent for each column
-		.spartan-col-indent(0) !important;
-		// columns should per default span the whole width if none is set
-		.grid-col-span(@spartan-grid-max-cols);
-	}
-}
 
 .grid-generate(@prefix: ~'') {
 	// generate grid classes
