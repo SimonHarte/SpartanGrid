@@ -223,7 +223,7 @@
 	}
 
 	.grid-row-reorder() {
-		> .col {
+		> .@{spartan-namespace}col {
 			position: relative;
 		}
 	}
@@ -241,7 +241,7 @@
 		padding-left: 0 !important;
 
 		// used to .push and .pull columns
-		&.ordered {
+		&.@{spartan-namespace}reorder {
 			.grid-row-reorder();
 		}
 	}
@@ -254,7 +254,7 @@
 
 		// spacer class for the rare occasion we have an "empty" column in a responsive grid layout
 		// where the use of .offset is not possible because of realignment of columns
-		&.spacer {
+		&.@{spartan-namespace}spacer {
 			min-height: 1px;
 			visibility: hidden;
 		}
@@ -312,6 +312,5 @@
 .grid-bundle(@prefix: g-, @config...) {
 	.grid-core(@prefix);
 	.grid-unlock(@config);
-	.grid-gutter();
 	.grid-generate();
 }

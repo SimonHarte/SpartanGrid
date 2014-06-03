@@ -90,7 +90,7 @@ Here's a short example of how a Spartan grid looks like with a responsive layout
 }
 ```
 
-Spartan uses a negative left margin on `.row` and left padding (gutter) on `.col`s for having a consistent structure and reduced output css.
+Spartan uses a negative left margin on `.g-row` and left padding (gutter) on `.g-col`s for having a consistent structure and reduced output css.
 
 Check out [examples](https://github.com/SimonHarte/SpartanGrid/blob/master/examples/responsive-layouts.less) for more responsive layouts.
 
@@ -118,7 +118,7 @@ If you are not using a grid prefix, you have to name the config param, so `.grid
 
 | Param | Type | Value | Comment |
 |-------|:-----|:------|:--------|
-| `prefix`       | expression | | Example: `grid-` (without single quotes) |
+| `prefix`       | expression | `~''` or custom | Example: `grid-` (without single quotes) |
 | `grid-type`    | string  | `'fluid'` or `'fixed'` | Single quotes mandatory |
 | `grid-width`   | pixel   | | |
 | `gutter-width` | pixel   | | |
@@ -145,7 +145,8 @@ If you are not using a grid prefix, you have to name the config param, so `.grid
 </div>
 ```
 
-- `.g-row` initializes a grid row and uses [H5BP clearfix](https://github.com/h5bp/html5-boilerplate/blob/master/css/main.css#L161) to contain the floating `.col`s.
+- `.g-row` initializes a grid row and uses [H5BP clearfix](https://github
+.com/h5bp/html5-boilerplate/blob/master/css/main.css#L161) to contain the floating `.g-col`s.
 - `.g-col` applies default column styles like float and padding (gutter).
 - `.g-span-[columns]` applies a column based width according ot the set maximum amount of columns.
 
@@ -176,9 +177,9 @@ While there are just positive indents in generated classes, you could also call 
 > **Note:** Using negative indents generally only works in static width grids.
 
 #### `grid-push` and `grid-pull`
-Together with the additional class `.ordered` on `.row` you can reorder columns visually without changing the order in HTML.
-Note that you may run into problems if these are used within certain responsive layouts as they use relative positioning.
-Equivalent to `push-[columns]` and `pull-[columns]`, similar behavior as `.grid-offset()`.
+Together with the additional class `.g-reorder` on `.g-row` you can reorder columns visually without changing the 
+order in HTML. Note that you may run into problems if these are used within certain responsive layouts as they use 
+relative positioning. Equivalent to `push-[columns]` and `pull-[columns]`, similar behavior as `.grid-offset()`.
 
 ### Responsive Layouts
 
@@ -196,7 +197,8 @@ Generate a class `.[col-name]` with `[columns]` width and `[offset]` indent as d
 > We use direct child selectors so different responsive layouts cannot interfere with each other.
 
 #### `grid-col-set-equal`
-Generate a `.g-col` selector as direct child of `.g-row` with the given width and also properly clear columns every nth child element using the `.col-clear()` mixin.
+Generate a `.g-col` selector as direct child of `.g-row` with the given width and also properly clear columns every 
+nth child element using the `.grid-col-clear()` mixin.
 
 #### `grid-col-clear`
 Clear the float every nth+1 columns if columns differ in height, so if you have 3 columns per line, clear the 4th, the 7th, the 10th etc.
@@ -309,7 +311,7 @@ You can always use `.grid-unlock()` in any separated media query to unlock grid 
 @media (min-width: 40em) and (max-width: 79.99em) {
 	.grid-unlock('fluid', 960px, 15px, 'fixed', 12);
 	
-	.col {
+	.g-col {
 		.grid-col-span(6);
 	}
 }
