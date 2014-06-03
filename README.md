@@ -67,11 +67,11 @@ Here's a short example of how a Spartan grid looks like with a responsive layout
 **HTML**
 
 ```html
-<div class="row layout-r-1">
-	<div class="col"></div>
-	<div class="col"></div>
-	<div class="col"></div>
-	<div class="col"></div>
+<div class="g-row layout-r-1">
+	<div class="g-col"></div>
+	<div class="g-col"></div>
+	<div class="g-col"></div>
+	<div class="g-col"></div>
 </div>
 ```
 
@@ -139,31 +139,31 @@ If you are not using a grid prefix, you have to name the config param, so `.grid
 
 ```html
 <!-- defining two columns in the current grid (max columns: 12) -->
-<div class="row">
-	<div class="col col-span-6"></div>
-	<div class="col col-span-6"></div>
+<div class="g-row">
+	<div class="g-col g-span-6"></div>
+	<div class="g-col g-span-6"></div>
 </div>
 ```
 
-- `.row` initializes a grid row and uses [H5BP clearfix](https://github.com/h5bp/html5-boilerplate/blob/master/css/main.css#L161) to contain the floating `.col`s.
-- `.col` applies default column styles like float and padding (gutter).
-- `.col-span-[columns]` applies a column based width according ot the set maximum amount of columns.
+- `.g-row` initializes a grid row and uses [H5BP clearfix](https://github.com/h5bp/html5-boilerplate/blob/master/css/main.css#L161) to contain the floating `.col`s.
+- `.g-col` applies default column styles like float and padding (gutter).
+- `.g-span-[columns]` applies a column based width according ot the set maximum amount of columns.
 
 ### Grid Classes and Mixins
 
 Spartan comes with an integrated LessCSS loop to generate grid classes according to your configuration. Instead of using the generated classes you can also use similar named mixins to apply the grid in a less style sheet.
 
 ```less
-.grid-col-span([columns]), .col-span-[columns]
-.grid-offset([columns]), .offset-[columns]
-.grid-push([columns]), .push-[columns]
-.grid-pull([columns]), .pull-[columns]
+.grid-col-span([columns]), .g-span-[columns]
+.grid-offset([columns]), .g-offset-[columns]
+.grid-push([columns]), .g-push-[columns]
+.grid-pull([columns]), .g-pull-[columns]
 ```
 
 #### `grid-col-span`
-Override the width of a column (default is full-width), equivalent to `.col-span-[columns]`.
-Although you could just use the generated `.col-span-[columns]` classes, this mixin allows you to pass in floating point numbers,
-which enables you to define literally **any** width using the mixin.
+Override the width of a column (default is full-width), equivalent to `.g-span-[columns]`.
+Although you could just use the generated `.g-span-[columns]` classes, this mixin allows you to pass in floating 
+point numbers, which enables you to define literally **any** width using the mixin.
 
 ```less
 .grid-col-span(12/5);
@@ -191,12 +191,12 @@ There are three mixins which will help you create responsive layouts.
 ```
 
 #### `grid-col-set`
-Generate a class `.[col-name]` with `[columns]` width and `[offset]` indent as direct child of `.row` with the given width.
+Generate a class `.[col-name]` with `[columns]` width and `[offset]` indent as direct child of `.g-row` with the given width.
 
 > We use direct child selectors so different responsive layouts cannot interfere with each other.
 
 #### `grid-col-set-equal`
-Generate a `.col` selector as direct child of `.row` with the given width and also properly clear columns every nth child element using the `.col-clear()` mixin.
+Generate a `.g-col` selector as direct child of `.g-row` with the given width and also properly clear columns every nth child element using the `.col-clear()` mixin.
 
 #### `grid-col-clear`
 Clear the float every nth+1 columns if columns differ in height, so if you have 3 columns per line, clear the 4th, the 7th, the 10th etc.
@@ -251,12 +251,12 @@ This will generate the core selectors and styles needed for any grid setup, e.g.
 
 #### `.grid-unlock([config])`
 
-Pass in your grid configuration like with `.grid-bundle()`. This will unlock all the grid mixins using the given configuration within the current scope.
+Pass in your grid configuration like with `.grid-bundle()`. This will unlock all the grid mixins using the given 
+configuration within the current scope and adjust the gutters.
 
 ```less
 #my-scope {
 	.grid-unlock(@scope-config);
-	.grid-gutter();
 	
 	.custom-column {
 		.grid-col-span(5);
@@ -264,17 +264,14 @@ Pass in your grid configuration like with `.grid-bundle()`. This will unlock all
 }
 ```
 
-#### `.grid-gutter([prefix])`
+#### `.grid-generate()`
 
-Used to set column gutters with the given configuration. While you don't need to `.grid-generate()` all classes anew when unlocking a certain grid configuration and using the grid mixins, you always need to adjust the gutters.
-
-#### `.grid-generate([prefix])`
-
-This mixin will generate all configuration sensitive classes like `.col-span-`, `.offset` etc. in the current scope.
+This mixin will generate all configuration sensitive classes like `.g-span-`, `.g-offset` etc. in the current scope.
 
 ### Viewport Dependent Grids
 
-You can call `.grid-unlock()`, `.grid-gutter()` and `.grid-generate()` **inside media queries** to generate different grid setups for different viewports like so:
+You can call `.grid-unlock()` and `.grid-generate()` **inside media queries** to generate different grid setups for 
+different viewports like so:
 
 ```less
 // generate base grid styles
@@ -283,34 +280,31 @@ You can call `.grid-unlock()`, `.grid-gutter()` and `.grid-generate()` **inside 
 // grid setup for small screen
 @media (max-width: 39.99em) {
 	.grid-unlock('fluid', 960px, 5px, 'fixed', 12);
-	.grid-gutter();
 	.grid-generate();
 }
 // grid setup for medium screen
 @media (min-width: 40em) and (max-width: 79.99em) {
 	.grid-unlock('fluid', 960px, 15px, 'fixed', 12);
-	.grid-gutter();
 	.grid-generate();
 }
 // grid setup for large screen
 @media (min-width: 80em) {
 	.grid-unlock('fluid', 960px, 30px, 'fluid', 12);
-	.grid-gutter();
 	.grid-generate();
 }
 ```
 
-Note that you cannot make a mobile first, global configuration because the global mixins seem to overwrite the ones inside the media queries.
+Note that you cannot make a mobile first, global configuration because the global mixins can not be reassigned inside
+ the media queries.
 
 > Of course `.grid-generate()` will generate all the grid styles in the given viewport, so with three viewports you'll have three times the normal css. That's why we invested a lot of effort into keeping the base css as tiny as possible ;).
 
-You can always use `.grid-unlock()` with `.grid-gutter()` in any separated media query to unlock grid mixins again.
+You can always use `.grid-unlock()` in any separated media query to unlock grid mixins again.
 
 ```less
 // unlock mixins in another media query again
 @media (min-width: 40em) and (max-width: 79.99em) {
 	.grid-unlock('fluid', 960px, 15px, 'fixed', 12);
-	.grid-gutter();
 	
 	.col {
 		.grid-col-span(6);
@@ -322,26 +316,30 @@ You can always use `.grid-unlock()` with `.grid-gutter()` in any separated media
 
 ### CSS Prefixing
 
-`.grid-bundle()` (as well as `.grid-core()`, `.grid-gutter()` and `.grid-generate()`) takes one optional parameter `prefix`, with which you can customize the generated classes.
+`.grid-bundle()` (as well as `.grid-core()`) takes one optional parameter `prefix`, with which you can customize the generated classes.
 
- So if you set `prefix` to for example `grid-` the generated classes will look like this:
+ This prefix is per default set to `g-`, but you can simply just change it, so if you set `prefix` to for example 
+ `grid-` the generated classes will look like this:
 
 ```less
 .grid-row
 .grid-col
-.grid-col-span
+.grid-span
+.grid-offset
 // etc...
 ```
 
+> You can also omit the prefix by passing `~''` instead.
+
 ### Responsive Layout Container
 
-You can either apply responsive layouts by adding the class to the `.row` directly or make a whole section with multiple `.row`s which use the layout by wrapping them with a container using the layout class.
+You can either apply responsive layouts by adding the class to the `.g-row` directly or make a whole section with multiple `.g-row`s which use the layout by wrapping them with a container using the layout class.
 
 ```html
-<div class="row layout-r-1">
-	<div class="col"></div>
-	<div class="col"></div>
-	<div class="col"></div>
+<div class="g-row layout-r-1">
+	<div class="g-col"></div>
+	<div class="g-col"></div>
+	<div class="g-col"></div>
 </div>
 ```
 
@@ -349,15 +347,15 @@ Or
 
 ```html
 <div class="layout-r-1">
-	<div class="row">
-		<div class="col"></div>
-		<div class="col"></div>
-		<div class="col"></div>
+	<div class="g-row">
+		<div class="g-col"></div>
+		<div class="g-col"></div>
+		<div class="g-col"></div>
 	</div>
-	<div class="row">
-		<div class="col"></div>
-		<div class="col"></div>
-		<div class="col"></div>
+	<div class="g-row">
+		<div class="g-col"></div>
+		<div class="g-col"></div>
+		<div class="g-col"></div>
 	</div>
 </div>
 ```
@@ -366,12 +364,14 @@ Or
 
 **Not** supported:
 
-- IE7-: wrong behavior with negative `.row` margin and no box-sizing
+- **IE7-**
 
 **Partially** supported:
 
-- IE8: basic grid working, no media query support and :nth-child clearing, **Note:** fully supported with [respond.js](https://github.com/scottjehl/Respond) and [selectivizr.js](http://selectivizr.com/) polyfills
-- Safari: wrong measures with lots of small columns caused by rounding to integer when converting percentage values to rendered pixels
+- **IE8**: basic grid working, no media query support and :nth-child clearing, **Note:** fully supported with [respond
+.js](https://github.com/scottjehl/Respond) and [selectivizr.js](http://selectivizr.com/) polyfills
+- **Safari**: wrong measures with lots of small columns caused by rounding to integer when converting percentage values 
+to rendered pixels
 
 ## Contributors
 

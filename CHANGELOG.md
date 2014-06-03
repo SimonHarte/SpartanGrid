@@ -1,15 +1,13 @@
 # Changelog
 
-## 3.0.1
-
-- optimised less code
-- prefix all variable definitions to prevent overwriting
-- remove prefixes where not needed
-
 ## 3.0.0
 
 - adjusted grid setup api for simple and advanced usage
 - only left margin/padding for reduced css and fix if grid touches window edges
+- grid default namespace "g-"
+- merge `.grid-gutter()` into `.grid-unlock()`
+- optimise prefixing of all grid variable definitions to prevent overwriting
+- more consistent grid classes
 - docs overhauled
 
 ## 2.2.0
