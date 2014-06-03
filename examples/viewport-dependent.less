@@ -23,29 +23,25 @@
 
 @media @m-small {
 	.grid-unlock(@grid-config-s);
-	.grid-gutter();
 	.grid-generate();
 }
 
 @media @m-medium {
 	.grid-unlock(@grid-config-m);
-	.grid-gutter();
 	.grid-generate();
 }
 
 @media @m-large {
 	.grid-unlock(@grid-config-l);
-	.grid-gutter();
 	.grid-generate();
 }
 
 // separated media query has to unlock config again and set gutter
 @media @m-medium {
 	.grid-unlock(@grid-config-m);
-	.grid-gutter();
 	// no generate needed here
 	
 	.my-col {
-		.grid-col-span(4.5);
+		.grid-span(4.5);
 	}
 }
