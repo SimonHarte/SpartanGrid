@@ -155,19 +155,19 @@ If you are not using a grid prefix, you have to name the config param, so `.grid
 Spartan comes with an integrated LessCSS loop to generate grid classes according to your configuration. Instead of using the generated classes you can also use similar named mixins to apply the grid in a less style sheet.
 
 ```less
-.grid-col-span([columns]), .g-span-[columns]
+.grid-span([columns]), .g-span-[columns]
 .grid-offset([columns]), .g-offset-[columns]
 .grid-push([columns]), .g-push-[columns]
 .grid-pull([columns]), .g-pull-[columns]
 ```
 
-#### `grid-col-span`
+#### `grid-span`
 Override the width of a column (default is full-width), equivalent to `.g-span-[columns]`.
 Although you could just use the generated `.g-span-[columns]` classes, this mixin allows you to pass in floating 
 point numbers, which enables you to define literally **any** width using the mixin.
 
 ```less
-.grid-col-span(12/5);
+.grid-span(12/5);
 ```
 
 #### `grid-offset`
@@ -192,19 +192,38 @@ There are three mixins which will help you create responsive layouts.
 ```
 
 #### `grid-col-set`
-Generate a class `.[col-name]` with `[columns]` width and `[offset]` indent as direct child of `.g-row` with the given width.
+Generate a class `.[col-name]` with `[columns]` width and `[offset]` indent as direct child of `.g-row` with the 
+given width. Note that `[offset]` is an optional parameter and can be omitted if not used.
 
 > We use direct child selectors so different responsive layouts cannot interfere with each other.
 
+This mixin is used to define different columns inside a layout, so if one column takes 2/3 of the grid and the other 
+1/3 you'd use the mixin twice like this:
+
+	.layout-r-2 {
+		// max columns: 12
+		.grid-set(col-1, 8);
+		.grid-set(col-2, 4);
+	}
+
+Which will enable you to use `.g-col-1` and `.g-col-2` as classes:
+
+	<div class="g-row layout-r-2">
+		<div class="g-col g-col-1"></div>
+		<div class="g-col g-col-2"></div>
+	</div>
+	
 #### `grid-col-set-equal`
 Generate a `.g-col` selector as direct child of `.g-row` with the given width and also properly clear columns every 
 nth child element using the `.grid-col-clear()` mixin.
 
 #### `grid-col-clear`
-Clear the float every nth+1 columns if columns differ in height, so if you have 3 columns per line, clear the 4th, the 7th, the 10th etc.
+Clear the float every nth+1 child so columns align properly if they differ in height. So if you have 3 columns per 
+line, clear the 4th, the 7th, the 10th etc.
 
 ### Responsive Layout Example
-With the following example you get a layout where you have one column if the viewport is smaller than 40em, 2 columns if it's between 40em and 80em and 3 columns if its above 80em.
+With the following example you get a layout where you have **one column** if the viewport is **smaller than 40em**, 
+**two columns** if it's **between 40em and 80em** and **three columns** if its **above 80em**.
 
 ```less
 .layout-r-1 {
@@ -264,7 +283,7 @@ configuration within the current scope and adjust the gutters.
 	.grid-unlock(@scope-config);
 	
 	.custom-column {
-		.grid-col-span(5);
+		.grid-span(5);
 	}
 }
 ```
@@ -312,7 +331,7 @@ You can always use `.grid-unlock()` in any separated media query to unlock grid 
 	.grid-unlock('fluid', 960px, 15px, 'fixed', 12);
 	
 	.g-col {
-		.grid-col-span(6);
+		.grid-span(6);
 	}
 }
 ```
