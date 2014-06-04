@@ -58,7 +58,7 @@
 		}
 
 		.spartan-indent(@num: 0) when (@num < 0) {
-			margin-left: -round((@one-col * @num), @spartan-grid-precision);
+			margin-left: round((@one-col * @num), @spartan-grid-precision);
 		}
 
 		// used only on .col for uniquely applied gutter
@@ -161,7 +161,7 @@
 // Use this to manually clear every nth column if columns differ in height.
 // This ensures that a grid layout can have only [colums per line] columns on one horizontal grid line.
 
-.grid-col-clear(@columns) when (isnumber(@columns)) {
+.grid-col-clear(@columns) when (@columns >= 0) {
 	> .@{spartan-namespace}row > .@{spartan-namespace}col:nth-child(@{columns}n+1),
 	> .@{spartan-namespace}col:nth-child(@{columns}n+1) {
 		clear: left;
@@ -176,7 +176,7 @@
 	}
 }
 
-.grid-col-set(@col-name; @col-span; @offset) {
+.grid-col-set(@col-name; @col-span; @offset) when (@col-span >= 0) {
 	// apply styles to child columns directly or to columns within child rows
 	> .@{spartan-namespace}row > .@{spartan-namespace}@{col-name},
 	> .@{spartan-namespace}@{col-name} {
@@ -185,7 +185,7 @@
 	}
 }
 
-.grid-col-set-equal(@col-span) when (isnumber(@col-span)) {
+.grid-col-set-equal(@col-span) {
 	@spartan-clear: @spartan-grid-max-cols / @col-span;
 
 	// use default col-set mixin to generate selector
