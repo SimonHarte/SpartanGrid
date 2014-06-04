@@ -155,19 +155,19 @@ If you are not using a grid prefix, you have to name the config param, so `.grid
 Spartan comes with an integrated LessCSS loop to generate grid classes according to your configuration. Instead of using the generated classes you can also use similar named mixins to apply the grid in a less style sheet.
 
 ```less
-.grid-col-span([columns]), .g-span-[columns]
+.grid-span([columns]), .g-span-[columns]
 .grid-offset([columns]), .g-offset-[columns]
 .grid-push([columns]), .g-push-[columns]
 .grid-pull([columns]), .g-pull-[columns]
 ```
 
-#### `grid-col-span`
+#### `grid-span`
 Override the width of a column (default is full-width), equivalent to `.g-span-[columns]`.
 Although you could just use the generated `.g-span-[columns]` classes, this mixin allows you to pass in floating 
 point numbers, which enables you to define literally **any** width using the mixin.
 
 ```less
-.grid-col-span(12/5);
+.grid-span(12/5);
 ```
 
 #### `grid-offset`
@@ -264,7 +264,7 @@ configuration within the current scope and adjust the gutters.
 	.grid-unlock(@scope-config);
 	
 	.custom-column {
-		.grid-col-span(5);
+		.grid-span(5);
 	}
 }
 ```
@@ -312,7 +312,7 @@ You can always use `.grid-unlock()` in any separated media query to unlock grid 
 	.grid-unlock('fluid', 960px, 15px, 'fixed', 12);
 	
 	.g-col {
-		.grid-col-span(6);
+		.grid-span(6);
 	}
 }
 ```
