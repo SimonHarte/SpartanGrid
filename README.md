@@ -192,19 +192,38 @@ There are three mixins which will help you create responsive layouts.
 ```
 
 #### `grid-col-set`
-Generate a class `.[col-name]` with `[columns]` width and `[offset]` indent as direct child of `.g-row` with the given width.
+Generate a class `.[col-name]` with `[columns]` width and `[offset]` indent as direct child of `.g-row` with the 
+given width. Note that `[offset]` is an optional parameter and can be omitted if not used.
 
 > We use direct child selectors so different responsive layouts cannot interfere with each other.
 
+This mixin is used to define different columns inside a layout, so if one column takes 2/3 of the grid and the other 
+1/3 you'd use the mixin twice like this:
+
+	.layout-r-2 {
+		// max columns: 12
+		.grid-set(col-1, 8);
+		.grid-set(col-2, 4);
+	}
+
+Which will enable you to use `.g-col-1` and `.g-col-2` as classes:
+
+	<div class="g-row layout-r-2">
+		<div class="g-col g-col-1"></div>
+		<div class="g-col g-col-2"></div>
+	</div>
+	
 #### `grid-col-set-equal`
 Generate a `.g-col` selector as direct child of `.g-row` with the given width and also properly clear columns every 
 nth child element using the `.grid-col-clear()` mixin.
 
 #### `grid-col-clear`
-Clear the float every nth+1 columns if columns differ in height, so if you have 3 columns per line, clear the 4th, the 7th, the 10th etc.
+Clear the float every nth+1 child so columns align properly if they differ in height. So if you have 3 columns per 
+line, clear the 4th, the 7th, the 10th etc.
 
 ### Responsive Layout Example
-With the following example you get a layout where you have one column if the viewport is smaller than 40em, 2 columns if it's between 40em and 80em and 3 columns if its above 80em.
+With the following example you get a layout where you have **one column** if the viewport is **smaller than 40em**, 
+**two columns** if it's **between 40em and 80em** and **three columns** if its **above 80em**.
 
 ```less
 .layout-r-1 {
