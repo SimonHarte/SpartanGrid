@@ -2,7 +2,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Note: We use !important statements for grid layout critical styles.
-//       Like this you can define for example margin shorthands on a columns without affecting the grid indentation.
+//       Like this you can define for example margin and padding shorthands without affecting the grid.
 
 .spartan-grid() {
 	// multiple mixins switch according to passed types
@@ -12,13 +12,16 @@
 		@spartan-width: 100%;
 
 		// take negative row indent into account
-		@spartan-gutter: round(percentage(@fixed-gutter / @fixed-width), @spartan-grid-precision);
+		@spartan-row-gutter: round(percentage(@fixed-gutter / @fixed-width), 3);
+		
+		// take negative row indent into account
+		@spartan-col-gutter: round(percentage(@fixed-gutter / (@fixed-width + @fixed-gutter)), 3);
 
 		// calculate the width of one grid column
 		@spartan-one-col: (@spartan-width / @cols);
 
 		// implement grid mixins with type dependent variables
-		.spartan-grid > .spartan-grid-mixins(@spartan-width, @spartan-gutter, @spartan-one-col);
+		.spartan-grid > .spartan-grid-mixins(@spartan-width, @spartan-row-gutter, @spartan-col-gutter, @spartan-one-col);
 	}
 
 	// mixin for fluid grid and fixed gutter
@@ -29,7 +32,7 @@
 		@spartan-one-col: (@spartan-width / @cols);
 
 		// implement grid mixins with type dependent variables
-		.spartan-grid > .spartan-grid-mixins(@spartan-width, @fixed-gutter, @spartan-one-col);
+		.spartan-grid > .spartan-grid-mixins(@spartan-width, @fixed-gutter, @fixed-gutter, @spartan-one-col);
 	}
 
 	// only one mixin for fixed grid needed because we cannot make fluid gutters in static grid
@@ -38,40 +41,40 @@
 		@spartan-one-col: ((@fixed-width + @fixed-gutter) / @cols);
 
 		// implement grid mixins with type dependent variables
-		.spartan-grid > .spartan-grid-mixins(@fixed-width, @fixed-gutter, @spartan-one-col);
+		.spartan-grid > .spartan-grid-mixins(@fixed-width, @fixed-gutter, @fixed-gutter, @spartan-one-col);
 	}
 
 	// call switch mixin to calculate variables depending on grid configuration
 	.spartan-grid > .spartan-create(@spartan-grid-type, @spartan-grid-gutter-type, @spartan-grid-fixed-width, @spartan-grid-fixed-gutter, @spartan-grid-max-cols);
 
 	// unlock grid mixins with modified variables
-	.spartan-grid-mixins(@width, @gutter, @one-col) {
+	.spartan-grid-mixins(@width, @row-gutter, @col-gutter, @one-col) {
 		.spartan-span-width(@num) {
-			width: round((@one-col * @num), @spartan-grid-precision);
+			width: round((@one-col * @num), 4);
 		}
 
 		// indent grid columns either way with these mixins
 		.spartan-indent(@num: 0) {
-			margin-left: round((@one-col * @num), @spartan-grid-precision);
+			margin-left: round((@one-col * @num), 3);
 		}
 
 		// used only on .g-col for uniquely applied gutter
 		.spartan-gutter(@num: 0) when (@num >= 0) {
-			padding-left: @gutter;
+			padding-left: @col-gutter;
 		}
 
 		// used only on .g-row for proper negative indents
 		.spartan-gutter(@num: 0) when (@num < 0) {
-			margin-left: -@gutter;
+			margin-left: -@row-gutter;
 		}
 
 		// visually manipulate grid column order with these mixins
 		.spartan-push(@num) {
-			left: round((@one-col * @num), @spartan-grid-precision);
+			left: round((@one-col * @num), 3);
 		}
 
 		.spartan-pull(@num) {
-			right: round((@one-col * @num), @spartan-grid-precision);
+			right: round((@one-col * @num), 3);
 		}
 	}
 
@@ -276,8 +279,6 @@
 
 	@spartan-grid-type: extract(@config, 1);
 	@spartan-grid-gutter-type: extract(@config, 4);
-
-	@spartan-grid-precision: 4;
 	
 	// set up grid styles depending on an included config
 	.spartan-grid();
