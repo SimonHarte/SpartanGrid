@@ -53,11 +53,7 @@
 		}
 
 		// indent grid columns either way with these mixins
-		.spartan-indent(@num: 0) when (@num >= 0) {
-			margin-left: round((@one-col * @num), @spartan-grid-precision);
-		}
-
-		.spartan-indent(@num: 0) when (@num < 0) {
+		.spartan-indent(@num: 0) {
 			margin-left: round((@one-col * @num), @spartan-grid-precision);
 		}
 
@@ -68,7 +64,7 @@
 
 		// used only on .row for proper negative indents
 		.spartan-row-indent(@num: 0) {
-			margin-left: -@col-gutter;
+			margin-left: -@row-gutter;
 		}
 
 		// visually manipulate grid column order with these mixins
