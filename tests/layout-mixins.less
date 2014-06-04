@@ -1,0 +1,27 @@
+#layout-mixins {
+	.grid-unlock('fluid', 960px, 20px, 'fluid', 12;);
+	
+	.test-1 {
+		.grid-col-set-equal(4);
+	}
+	
+	.test-2 {
+		.grid-col-set-equal(-4);
+	}
+	
+	.test-3 {
+		.grid-col-set(col, 4);
+	}
+	
+	.test-4 {
+		.grid-col-set(col, 4, 6);
+	}
+	
+	.test-5 {
+		.grid-col-set(col, -4);
+	}
+	
+	.test-6 {
+		.grid-col-set(col, -4, -6);
+	}
+}
