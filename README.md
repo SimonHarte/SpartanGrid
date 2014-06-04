@@ -38,19 +38,19 @@ Spartan arose from a project where we had the need for a fluid responsive grid s
 
 > Install [Chromoji](https://chrome.google.com/webstore/detail/chromoji-emoji-for-google/cahedbegdkagmcjfolhdlechbkeaieki?hl=en-GB) if you're using Chrome to see the icons.
 
-|                   | Spartan | Twitter Bootstrap | Foundation | 960grid |
-|-------------------|:-------:|:-----------------:|:----------:|:-------:|
-| less              | ✅ | ✅ | ❌ | ❌ |
-| sass              | ❌ | ❌ | ✅ | ❌ |
-| fluid             | ✅ | ✅ | ✅ | ✅ |
-| static            | ✅ | ✅ | ✅ | ✅ |
-| responsive        | ✅ | ✅ | ✅ | ❌ |
-| block gutter      | ✅ | ✅ | ✅ | ❌ |
-| column ordering   | ✅ | ✅ | ✅ | ✅ |
-| offsets           | ✅ | ✅ | ✅ | ✅ |
-| viewport dependent grids | ✅ | ❌ | ❌ | ❌ |
-| custom prefix     | ✅ | ❌ | ❌ | ❌ |
-| base css size (min)    | **1.8KB** | **11KB** | **9.5KB** | **2.7KB** |
+|                           | Spartan | Twitter Bootstrap | Foundation | 960grid |
+|---------------------------|:-------:|:-----------------:|:----------:|:-------:|
+| less                      | ✅ | ✅ | ❌ | ❌ |
+| sass                      | ❌ | ❌ | ✅ | ❌ |
+| fluid                     | ✅ | ✅ | ✅ | ✅ |
+| static                    | ✅ | ✅ | ✅ | ✅ |
+| responsive                | ✅ | ✅ | ✅ | ❌ |
+| block gutter              | ✅ | ✅ | ✅ | ❌ |
+| column ordering           | ✅ | ✅ | ✅ | ✅ |
+| offsets                   | ✅ | ✅ | ✅ | ✅ |
+| viewport dependent grids  | ✅ | ❌ | ❌ | ❌ |
+| custom prefix             | ✅ | ❌ | ❌ | ❌ |
+| base css size (min)       | **1.8KB** | **11KB** | **9.5KB** | **2.7KB** |
 
 ## Getting Started
 
