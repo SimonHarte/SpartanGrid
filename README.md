@@ -199,8 +199,8 @@ There are three mixins which will help you create responsive layouts.
 ```
 
 #### `grid-col-set`
-Generate a class `.[col-name]` with `[columns]` width and `[offset]` indent as direct child of `.g-row` with the 
-given width. Note that `[offset]` is an optional parameter and can be omitted if not used.
+Generate a class `.[col-name]` with `[columns]` width and `[offset]` indent as direct child of `.g-row`. Note that 
+`[offset]` is an optional parameter and can be omitted if not used.
 
 > We use direct child selectors so different responsive layouts cannot interfere with each other.
 
@@ -229,7 +229,7 @@ Clear the float every nth+1 child so columns align properly if they differ in he
 line, clear the 4th, the 7th, the 10th etc.
 
 ### Responsive Layout Example
-With the following example you get a layout where you have **one column** if the viewport is **smaller than 40em**, 
+With the following example you'd get a layout where you have **one column** if the viewport is **smaller than 40em**, 
 **two columns** if it's **between 40em and 80em** and **three columns** if its **above 80em**.
 
 ```less
@@ -267,8 +267,8 @@ Another working example of the above:
 }
 ```
 
-> You can optimise the output css by wrapping all your layouts in the media queries once and define the viewport 
-dependent styles to reduce duplication of media queries in the css, but this is probably harder to maintain.
+> You can optimise the output css by wrapping all your layouts with media queries once to reduce duplication of media
+ query definitions in the css, but this is probably harder to maintain.
 
 ## Advanced Usage
 
