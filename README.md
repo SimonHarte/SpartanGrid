@@ -32,25 +32,27 @@ Spartan arose from a project where we had the need for a fluid responsive grid s
 - grid creation API: **make viewport dependent grid setups**
 - custom css prefix
 - short classes and corresponding less mixins
-- tiny: **~10KB** of LessCSS which generates less than **2KB** of minified css
+- tiny: **~10KB** of LessCSS which generates less than **2KB** of css (minified)
 
 ## Comparison
 
 > Install [Chromoji](https://chrome.google.com/webstore/detail/chromoji-emoji-for-google/cahedbegdkagmcjfolhdlechbkeaieki?hl=en-GB) if you're using Chrome to see the icons.
 
-|                           | Spartan | Twitter Bootstrap | Foundation | 960grid |
+|                           | [Spartan](http://spartan-grid.herokuapp.com) | [Bootstrap](http://getbootstrap.com/css/#grid) | [Foundation]
+(http://foundation.zurb.com/) | [Profound]
+(http://www.profoundgrid.com/) |
 |---------------------------|:-------:|:-----------------:|:----------:|:-------:|
 | less                      | ✅ | ✅ | ❌ | ❌ |
-| sass                      | ❌ | ❌ | ✅ | ❌ |
+| sass                      | ❌ | ❌ | ✅ | ✅ |
 | fluid                     | ✅ | ✅ | ✅ | ✅ |
 | static                    | ✅ | ✅ | ✅ | ✅ |
-| responsive                | ✅ | ✅ | ✅ | ❌ |
+| responsive                | ✅ | ✅ | ✅ | ✅ |
 | block gutter              | ✅ | ✅ | ✅ | ❌ |
 | column ordering           | ✅ | ✅ | ✅ | ✅ |
 | offsets                   | ✅ | ✅ | ✅ | ✅ |
-| viewport dependent grids  | ✅ | ❌ | ❌ | ❌ |
-| custom prefix             | ✅ | ❌ | ❌ | ❌ |
-| base css size (min)       | **1.8KB** | **11KB** | **9.5KB** | **2.7KB** |
+| multiple grids            | ✅ | ❌ | ❌ | ✅ |
+| custom prefix             | ✅ | ❌ | ❌ | ✅ |
+| base css size (min)       | **1.8KB** | **11KB** | **9.5KB** | **10KB** |
 
 ## Getting Started
 
@@ -137,7 +139,7 @@ If you are not using a grid prefix, you have to name the config param, so `.grid
 **LessCSS**
 
 ```less
-@grid-config: 'fluid', 960px, 20px, 'fixed', 12;
+@grid-config: 'fluid', 940px, 20px, 'fixed', 12;
 
 .grid-bundle(@config: @grid-config);
 ```
@@ -207,19 +209,23 @@ Generate a class `.[col-name]` with `[columns]` width and `[offset]` indent as d
 This mixin is used to define different columns inside a layout, so if one column takes 2/3 of the grid and the other 
 1/3 you'd use the mixin twice like this:
 
-	.g-layout-2 {
-		// max columns: 12
-		.grid-set(col-1, 8);
-		.grid-set(col-2, 4);
-	}
+```less
+.g-layout-2 {
+	// max columns: 12
+	.grid-set(col-1, 8);
+	.grid-set(col-2, 4);
+}
+```
 
 Which will enable you to use `.g-col-1` and `.g-col-2` as classes:
 
-	<div class="g-row g-layout-2">
-		<div class="g-col g-col-1"></div>
-		<div class="g-col g-col-2"></div>
-	</div>
-	
+```html
+<div class="g-row g-layout-2">
+	<div class="g-col g-col-1"></div>
+	<div class="g-col g-col-2"></div>
+</div>
+```
+
 #### `grid-col-set-equal`
 Generate a `.g-col` selector as direct child of `.g-row` with the given width and also properly clear columns every 
 nth child element using the `.grid-col-clear()` mixin.
@@ -310,17 +316,17 @@ different viewports like so:
 
 // grid setup for small screen
 @media (max-width: 39.99em) {
-	.grid-unlock('fluid', 960px, 5px, 'fixed', 12);
+	.grid-unlock('fluid', 940px, 5px, 'fixed', 12);
 	.grid-generate();
 }
 // grid setup for medium screen
 @media (min-width: 40em) and (max-width: 79.99em) {
-	.grid-unlock('fluid', 960px, 15px, 'fixed', 12);
+	.grid-unlock('fluid', 940px, 15px, 'fixed', 12);
 	.grid-generate();
 }
 // grid setup for large screen
 @media (min-width: 80em) {
-	.grid-unlock('fluid', 960px, 30px, 'fluid', 12);
+	.grid-unlock('fluid', 940px, 30px, 'fluid', 12);
 	.grid-generate();
 }
 ```
@@ -335,7 +341,7 @@ You can always use `.grid-unlock()` in any separated media query to unlock grid 
 ```less
 // unlock mixins in another media query again
 @media (min-width: 40em) and (max-width: 79.99em) {
-	.grid-unlock('fluid', 960px, 15px, 'fixed', 12);
+	.grid-unlock('fluid', 940px, 15px, 'fixed', 12);
 	
 	.g-col {
 		.grid-span(6);
