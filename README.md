@@ -393,10 +393,11 @@ Or
 
 **Partially** supported:
 
-- **IE8**: basic grid working, no media query support and :nth-child clearing, **Note:** fully supported with [respond
-.js](https://github.com/scottjehl/Respond) and [selectivizr.js](http://selectivizr.com/) polyfills
-- **Safari**: wrong measures with lots of small columns caused by rounding to integer when converting percentage values 
-to rendered pixels
+- **IE8**: basic grid working properly, no media query support and :nth-child clearing, 
+**Note:** fully supported with [respond.js](https://github.com/scottjehl/Respond) and [selectivizr.js]
+(http://selectivizr.com/) polyfills
+- **Safari**: wrong measures with lots of small columns caused by safari always rounding down to integer when
+calculating rendered pixels. Note that other grid systems suffer from this issue as well.
 
 ## Contributors
 
