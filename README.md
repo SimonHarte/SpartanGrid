@@ -67,7 +67,7 @@ Here's a short example of how a Spartan grid looks like with a responsive layout
 **HTML**
 
 ```html
-<div class="g-row layout-r-1">
+<div class="g-row g-layout-1">
 	<div class="g-col"></div>
 	<div class="g-col"></div>
 	<div class="g-col"></div>
@@ -78,7 +78,7 @@ Here's a short example of how a Spartan grid looks like with a responsive layout
 **LessCSS**
 
 ```less
-.layout-r-1 {
+.g-layout-1 {
 	// maximum columns: 12
 	// omit small media definition as it uses full width anyway
 	@media @medium {
@@ -200,7 +200,7 @@ given width. Note that `[offset]` is an optional parameter and can be omitted if
 This mixin is used to define different columns inside a layout, so if one column takes 2/3 of the grid and the other 
 1/3 you'd use the mixin twice like this:
 
-	.layout-r-2 {
+	.g-layout-2 {
 		// max columns: 12
 		.grid-set(col-1, 8);
 		.grid-set(col-2, 4);
@@ -208,7 +208,7 @@ This mixin is used to define different columns inside a layout, so if one column
 
 Which will enable you to use `.g-col-1` and `.g-col-2` as classes:
 
-	<div class="g-row layout-r-2">
+	<div class="g-row g-layout-2">
 		<div class="g-col g-col-1"></div>
 		<div class="g-col g-col-2"></div>
 	</div>
@@ -226,7 +226,7 @@ With the following example you get a layout where you have **one column** if the
 **two columns** if it's **between 40em and 80em** and **three columns** if its **above 80em**.
 
 ```less
-.layout-r-1 {
+.g-layout-1 {
 	// grid maximum columns = 12
 
 	@media (max-width: 39.99em) {
@@ -246,7 +246,7 @@ With the following example you get a layout where you have **one column** if the
 Another working example of the above:
 
 ```less
-.layout-r-1 {
+.g-layout-1 {
 	// grid maximum columns = 12
 
 	// omit small query definition if you'd set it to maximum grid width anyway
@@ -361,7 +361,7 @@ You can either apply responsive layouts by adding the class to the `.g-row` dire
 multiple `.g-row`s which use the layout by wrapping them with a container using the layout class.
 
 ```html
-<div class="g-row layout-r-1">
+<div class="g-row g-layout-1">
 	<div class="g-col"></div>
 	<div class="g-col"></div>
 	<div class="g-col"></div>
@@ -371,7 +371,7 @@ multiple `.g-row`s which use the layout by wrapping them with a container using 
 Or
 
 ```html
-<div class="layout-r-1">
+<div class="g-layout-1">
 	<div class="g-row">
 		<div class="g-col"></div>
 		<div class="g-col"></div>
