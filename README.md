@@ -137,7 +137,7 @@ If you are not using a grid prefix, you have to name the config param, so `.grid
 **LessCSS**
 
 ```less
-@grid-config: 'fluid', 960px, 20px, 'fixed', 12;
+@grid-config: 'fluid', 940px, 20px, 'fixed', 12;
 
 .grid-bundle(@config: @grid-config);
 ```
@@ -310,17 +310,17 @@ different viewports like so:
 
 // grid setup for small screen
 @media (max-width: 39.99em) {
-	.grid-unlock('fluid', 960px, 5px, 'fixed', 12);
+	.grid-unlock('fluid', 940px, 5px, 'fixed', 12);
 	.grid-generate();
 }
 // grid setup for medium screen
 @media (min-width: 40em) and (max-width: 79.99em) {
-	.grid-unlock('fluid', 960px, 15px, 'fixed', 12);
+	.grid-unlock('fluid', 940px, 15px, 'fixed', 12);
 	.grid-generate();
 }
 // grid setup for large screen
 @media (min-width: 80em) {
-	.grid-unlock('fluid', 960px, 30px, 'fluid', 12);
+	.grid-unlock('fluid', 940px, 30px, 'fluid', 12);
 	.grid-generate();
 }
 ```
@@ -335,7 +335,7 @@ You can always use `.grid-unlock()` in any separated media query to unlock grid 
 ```less
 // unlock mixins in another media query again
 @media (min-width: 40em) and (max-width: 79.99em) {
-	.grid-unlock('fluid', 960px, 15px, 'fixed', 12);
+	.grid-unlock('fluid', 940px, 15px, 'fixed', 12);
 	
 	.g-col {
 		.grid-span(6);
