@@ -38,19 +38,19 @@ Spartan arose from a project where we had the need for a fluid responsive grid s
 
 > Install [Chromoji](https://chrome.google.com/webstore/detail/chromoji-emoji-for-google/cahedbegdkagmcjfolhdlechbkeaieki?hl=en-GB) if you're using Chrome to see the icons.
 
-|                   | Spartan | Twitter Bootstrap | Foundation | 960grid |
-|-------------------|:-------:|:-----------------:|:----------:|:-------:|
-| less              | ✅ | ✅ | ❌ | ❌ |
-| sass              | ❌ | ❌ | ✅ | ❌ |
-| fluid             | ✅ | ✅ | ✅ | ✅ |
-| static            | ✅ | ✅ | ✅ | ✅ |
-| responsive        | ✅ | ✅ | ✅ | ❌ |
-| block gutter      | ✅ | ✅ | ✅ | ❌ |
-| column ordering   | ✅ | ✅ | ✅ | ✅ |
-| offsets           | ✅ | ✅ | ✅ | ✅ |
-| viewport dependent grids | ✅ | ❌ | ❌ | ❌ |
-| custom prefix     | ✅ | ❌ | ❌ | ❌ |
-| base css size (min)    | **1.8KB** | **11KB** | **9.5KB** | **2.7KB** |
+|                           | Spartan | Twitter Bootstrap | Foundation | 960grid |
+|---------------------------|:-------:|:-----------------:|:----------:|:-------:|
+| less                      | ✅ | ✅ | ❌ | ❌ |
+| sass                      | ❌ | ❌ | ✅ | ❌ |
+| fluid                     | ✅ | ✅ | ✅ | ✅ |
+| static                    | ✅ | ✅ | ✅ | ✅ |
+| responsive                | ✅ | ✅ | ✅ | ❌ |
+| block gutter              | ✅ | ✅ | ✅ | ❌ |
+| column ordering           | ✅ | ✅ | ✅ | ✅ |
+| offsets                   | ✅ | ✅ | ✅ | ✅ |
+| viewport dependent grids  | ✅ | ❌ | ❌ | ❌ |
+| custom prefix             | ✅ | ❌ | ❌ | ❌ |
+| base css size (min)       | **1.8KB** | **11KB** | **9.5KB** | **2.7KB** |
 
 ## Getting Started
 
@@ -58,7 +58,14 @@ Spartan arose from a project where we had the need for a fluid responsive grid s
 - Install [Node](http://nodejs.org/) and then LessCSS: `npm install -g less@1.6.3`
 - Adjust the params in `grid-setup.less`
 - Execute: `lessc compile.less grid.css`
-- Use the given classes in your markup or set up responsive layouts as needed
+- Use the generated classes in your markup or set up responsive layouts as needed
+
+**Or**
+
+- Integrate [`spartan.less`](https://github.com/SimonHarte/SpartanGrid/blob/master/spartan.less) in your project with
+ a less build
+- Call [`.grid-bundle()`](#grid-setup) with your configuration
+- Use the generated classes in your markup or set up responsive layouts as needed
 
 ## Grid Structure
 
@@ -67,7 +74,7 @@ Here's a short example of how a Spartan grid looks like with a responsive layout
 **HTML**
 
 ```html
-<div class="g-row layout-r-1">
+<div class="g-row g-layout-1">
 	<div class="g-col"></div>
 	<div class="g-col"></div>
 	<div class="g-col"></div>
@@ -78,7 +85,7 @@ Here's a short example of how a Spartan grid looks like with a responsive layout
 **LessCSS**
 
 ```less
-.layout-r-1 {
+.g-layout-1 {
 	// maximum columns: 12
 	// omit small media definition as it uses full width anyway
 	@media @medium {
@@ -192,15 +199,15 @@ There are three mixins which will help you create responsive layouts.
 ```
 
 #### `grid-col-set`
-Generate a class `.[col-name]` with `[columns]` width and `[offset]` indent as direct child of `.g-row` with the 
-given width. Note that `[offset]` is an optional parameter and can be omitted if not used.
+Generate a class `.[col-name]` with `[columns]` width and `[offset]` indent as direct child of `.g-row`. Note that 
+`[offset]` is an optional parameter and can be omitted if not used.
 
 > We use direct child selectors so different responsive layouts cannot interfere with each other.
 
 This mixin is used to define different columns inside a layout, so if one column takes 2/3 of the grid and the other 
 1/3 you'd use the mixin twice like this:
 
-	.layout-r-2 {
+	.g-layout-2 {
 		// max columns: 12
 		.grid-set(col-1, 8);
 		.grid-set(col-2, 4);
@@ -208,7 +215,7 @@ This mixin is used to define different columns inside a layout, so if one column
 
 Which will enable you to use `.g-col-1` and `.g-col-2` as classes:
 
-	<div class="g-row layout-r-2">
+	<div class="g-row g-layout-2">
 		<div class="g-col g-col-1"></div>
 		<div class="g-col g-col-2"></div>
 	</div>
@@ -222,11 +229,11 @@ Clear the float every nth+1 child so columns align properly if they differ in he
 line, clear the 4th, the 7th, the 10th etc.
 
 ### Responsive Layout Example
-With the following example you get a layout where you have **one column** if the viewport is **smaller than 40em**, 
+With the following example you'd get a layout where you have **one column** if the viewport is **smaller than 40em**, 
 **two columns** if it's **between 40em and 80em** and **three columns** if its **above 80em**.
 
 ```less
-.layout-r-1 {
+.g-layout-1 {
 	// grid maximum columns = 12
 
 	@media (max-width: 39.99em) {
@@ -246,7 +253,7 @@ With the following example you get a layout where you have **one column** if the
 Another working example of the above:
 
 ```less
-.layout-r-1 {
+.g-layout-1 {
 	// grid maximum columns = 12
 
 	// omit small query definition if you'd set it to maximum grid width anyway
@@ -260,8 +267,8 @@ Another working example of the above:
 }
 ```
 
-> You can optimise the output css by wrapping all your layouts in the media queries once and define the viewport 
-dependent styles to reduce duplication of media queries in the css, but this is probably harder to maintain.
+> You can optimise the output css by wrapping all your layouts with media queries once to reduce duplication of media
+ query definitions in the css, but this is probably harder to maintain.
 
 ## Advanced Usage
 
@@ -361,7 +368,7 @@ You can either apply responsive layouts by adding the class to the `.g-row` dire
 multiple `.g-row`s which use the layout by wrapping them with a container using the layout class.
 
 ```html
-<div class="g-row layout-r-1">
+<div class="g-row g-layout-1">
 	<div class="g-col"></div>
 	<div class="g-col"></div>
 	<div class="g-col"></div>
@@ -371,7 +378,7 @@ multiple `.g-row`s which use the layout by wrapping them with a container using 
 Or
 
 ```html
-<div class="layout-r-1">
+<div class="g-layout-1">
 	<div class="g-row">
 		<div class="g-col"></div>
 		<div class="g-col"></div>
@@ -393,10 +400,11 @@ Or
 
 **Partially** supported:
 
-- **IE8**: basic grid working, no media query support and :nth-child clearing, **Note:** fully supported with [respond
-.js](https://github.com/scottjehl/Respond) and [selectivizr.js](http://selectivizr.com/) polyfills
-- **Safari**: wrong measures with lots of small columns caused by rounding to integer when converting percentage values 
-to rendered pixels
+- **IE8**: basic grid working properly, no media query support and :nth-child clearing, 
+**Note:** fully supported with [respond.js](https://github.com/scottjehl/Respond) and [selectivizr.js]
+(http://selectivizr.com/) polyfills
+- **Safari**: wrong measures with lots of small columns caused by safari always rounding down to integer when
+calculating rendered pixels. Note that other grid systems suffer from this issue as well.
 
 ## Contributors
 
