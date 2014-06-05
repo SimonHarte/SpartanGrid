@@ -58,7 +58,14 @@ Spartan arose from a project where we had the need for a fluid responsive grid s
 - Install [Node](http://nodejs.org/) and then LessCSS: `npm install -g less@1.6.3`
 - Adjust the params in `grid-setup.less`
 - Execute: `lessc compile.less grid.css`
-- Use the given classes in your markup or set up responsive layouts as needed
+- Use the generated classes in your markup or set up responsive layouts as needed
+
+**Or**
+
+- Integrate [`spartan.less`](https://github.com/SimonHarte/SpartanGrid/blob/master/spartan.less) in your project with
+ a less build
+- Call [`.grid-bundle()`](#grid-setup) with your configuration
+- Use the generated classes in your markup or set up responsive layouts as needed
 
 ## Grid Structure
 
