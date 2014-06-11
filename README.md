@@ -213,8 +213,8 @@ This mixin is used to define different columns inside a layout, so if one column
 ```less
 .g-layout-2 {
 	// max columns: 12
-	.grid-set(col-1, 8);
-	.grid-set(col-2, 4);
+	.grid-col-set(col-1, 8);
+	.grid-col-set(col-2, 4);
 }
 ```
 
