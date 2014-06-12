@@ -191,21 +191,35 @@ Together with the additional class `.g-reorder` on `.g-row` you can reorder colu
 order in HTML. Note that you may run into problems if these are used within certain responsive layouts as they use 
 relative positioning. Equivalent to `.g-push-[columns]` and `.g-pull-[columns]`, similar behavior as `.grid-offset()`.
 
+##### `grid-reorder`
+
+You can alternatively use `.grid-reorder()` and pass in any number. If the passed number is positive or zero, it will
+simply call `.grid-push()` and if the number is negative `.grid-pull()` instead with the absolute value of the number.
+
 ### Responsive Layouts
 
 There are three mixins which will help you create responsive layouts.
 
 ```less
-.grid-col-set([col-name], [columns], [offset]);
+.grid-col-set([col-name], [columns], [offset], [reorder]);
 .grid-col-set-equal([columns]);
 .grid-col-clear([column-count]);
 ```
 
 #### `grid-col-set`
-Generate a class `.[col-name]` with `[columns]` width and `[offset]` indent as direct child of `.g-row`. Note that 
-`[offset]` is an optional parameter and can be omitted if not used.
+Generate a class `.[col-name]` as direct child of `.g-row`. Note that `[offset]` and `[reorder]` are optional parameters
+and can be omitted if not used.
 
 > We use direct child selectors so different responsive layouts cannot interfere with each other.
+
+**Params**
+
+| Param | Type | Value | Comment |
+|-------|:-----|:------|:--------|
+| `col-name`    | expression | | Example: `col-1` (without single quotes) |
+| `columns`     | number | only positive | |
+| `offset`      | number | positive or negative | optional, uses `.grid-offset()` to apply indents |
+| `order`       | number | positive or negatve | optional, uses `.grid-reorder()` to reposition a column |
 
 This mixin is used to define different columns inside a layout, so if one column takes 2/3 of the grid and the other 
 1/3 you'd use the mixin twice like this:
@@ -225,6 +239,16 @@ Which will enable you to use `.g-col-1` and `.g-col-2` as classes:
 	<div class="g-col g-col-1"></div>
 	<div class="g-col g-col-2"></div>
 </div>
+```
+
+Example with reordered columns:
+
+```less
+.g-layout-3 {
+	// switch positions of columns
+	.grid-col-set(col-1, 6, 0, 6);
+	.grid-col-set(col-2, 6, 0, -6);
+}
 ```
 
 #### `grid-col-set-equal`
