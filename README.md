@@ -219,7 +219,7 @@ and can be omitted if not used.
 | `col-name`    | expression | | Example: `col-1` (without single quotes) |
 | `columns`     | number | only positive | |
 | `offset`      | number | positive or negative | optional, uses `.grid-offset()` to apply indents |
-| `order`       | number | positive or negatve | optional, uses `.grid-reorder()` to reposition a column |
+| `reorder`       | number | positive or negative | optional, uses `.grid-reorder()` to reposition a column |
 
 This mixin is used to define different columns inside a layout, so if one column takes 2/3 of the grid and the other 
 1/3 you'd use the mixin twice like this:
