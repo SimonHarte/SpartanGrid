@@ -323,7 +323,7 @@
 	//
 	// NOTE: you can not use the generated classes themselves as mixins!
 
-	.spartan-grid > .spartan-loop(@spartan-grid-max-cols, ~'@{spartan-namespace}span', 'grid-span');
+	.spartan-grid > .spartan-loop(@spartan-grid-max-cols - 1, ~'@{spartan-namespace}span', 'grid-span');
 	.spartan-grid > .spartan-loop(@spartan-grid-max-cols - 1, ~'@{spartan-namespace}offset', 'grid-offset');
 	.spartan-grid > .spartan-loop(@spartan-grid-max-cols - 1, ~'@{spartan-namespace}push', 'grid-push');
 	.spartan-grid > .spartan-loop(@spartan-grid-max-cols - 1, ~'@{spartan-namespace}pull', 'grid-pull');
