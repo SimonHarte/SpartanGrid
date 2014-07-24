@@ -162,7 +162,8 @@ If you are not using a grid prefix, you have to name the config param, so `.grid
 
 ### Grid Classes and Mixins
 
-Spartan comes with an integrated LessCSS loop to generate grid classes according to your configuration. Instead of using the generated classes you can also use similar named mixins to apply the grid in a less style sheet.
+Spartan comes with an integrated LessCSS loop to generate grid classes according to your configuration. Instead of using
+the generated classes you can also use similar named mixins to apply the grid in a less style sheet.
 
 ```less
 .grid-span([columns]), .g-span-[columns]
@@ -172,9 +173,8 @@ Spartan comes with an integrated LessCSS loop to generate grid classes according
 ```
 
 #### `grid-span`
-Override the width of a column (default is full-width), equivalent to `.g-span-[columns]`.
-Although you could just use the generated `.g-span-[columns]` classes, this mixin allows you to pass in floating 
-point numbers, which enables you to define literally **any** width using the mixin.
+Override the width of a column (default is full-width), equivalent to `.g-span-[columns]`. This mixin allows you to pass
+in floating point numbers, which enables you to define literally **any** width using the mixin.
 
 ```less
 .grid-span(12/5);
@@ -207,7 +207,7 @@ There are three mixins which will help you create responsive layouts.
 ```
 
 #### `grid-col-set`
-Generate a class `.[col-name]` as direct child of `.g-row`. Note that `[offset]` and `[reorder]` are optional parameters
+Generate a prefixed class `.[col-name]` as direct child of `.g-row`. Note that `[offset]` and `[reorder]` are optional parameters
 and can be omitted if not used.
 
 > We use direct child selectors so different responsive layouts cannot interfere with each other.
@@ -245,6 +245,8 @@ Example with reordered columns:
 
 ```less
 .g-layout-3 {
+	&:extend(.g-reorder);
+	
 	// switch positions of columns
 	.grid-col-set(col-1, 6, 0, 6);
 	.grid-col-set(col-2, 6, 0, -6);
@@ -300,6 +302,22 @@ Another working example of the above:
 
 > You can optimise the output css by wrapping all your layouts with media queries once to reduce duplication of media
  query definitions in the css, but this is probably harder to maintain.
+
+### The Safari Problem
+
+Unfortunately all Safari browsers up to the latest version have a bad subpixel rendering for widths and always round 
+values down to the next integer when calculating rendered pixels. So a width declaration of for example `88.333px` or
+ even `88.666px` will always be rendered as `88px`. This of course presents an issue when your grid configuration 
+ leads to such values or when you use a fluid grid, because we get a small displacement of columns.
+
+There's an [article from John Resig](http://ejohn.org/blog/sub-pixel-problems-in-css/) about this subject.
+
+Note that all grid systems suffer from this issue and merely provide workarounds. Spartan does not try to do that but
+ instead there is an alternate grid style pattern with [Spartan 2](https://github.com/SimonHarte/Spartan2) which uses
+  the same techniques as Profound to position each grid column independently with margins because they are not 
+  affected by this subpixel rendering issue. This pattern has its own advantages and caveats and is not as 
+  convenient as the original Spartan grid but can be used when layouting specifically for devices which use Safari 
+  (such as iPhone and iPad).
 
 ## Advanced Usage
 
@@ -381,13 +399,13 @@ You can always use `.grid-unlock()` in any separated media query to unlock grid 
 `.grid-bundle()` (as well as `.grid-core()`) takes one optional parameter `prefix`, with which you can customize the generated classes.
 
  This prefix is per default set to `g-`, but you can simply just change it, so if you set `prefix` to for example 
- `grid-` the generated classes will look like this:
+ `spartan-` the generated classes will look like this:
 
 ```less
-.grid-row
-.grid-col
-.grid-span
-.grid-offset
+.spartan-row
+.spartan-col
+.spartan-span
+.spartan-offset
 // etc...
 ```
 
@@ -423,6 +441,8 @@ Or
 </div>
 ```
 
+This is especially useful when layouting forms.
+
 ## Browser Support
 
 **Not** supported:
@@ -434,8 +454,7 @@ Or
 - **IE8**: basic grid working properly, no media query support and :nth-child clearing, 
 **Note:** fully supported with [respond.js](https://github.com/scottjehl/Respond) and [selectivizr.js]
 (http://selectivizr.com/) polyfills
-- **Safari**: wrong measures with lots of small columns caused by safari always rounding down to integer when
-calculating rendered pixels. Note that other grid systems suffer from this issue as well.
+- **Safari**: as explained in [The Safari Problem](#the-safari-problem)
 
 ## Contributors
 
