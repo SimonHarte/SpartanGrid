@@ -170,7 +170,6 @@
 // This ensures that a grid layout can have only [colums per line] columns on one horizontal grid line.
 
 .grid-col-clear(@columns) when (@columns >= 0) {
-	> .@{spartan-namespace}row > .@{spartan-namespace}col:nth-child(@{columns}n+1),
 	> .@{spartan-namespace}col:nth-child(@{columns}n+1) {
 		clear: left;
 	}
@@ -178,7 +177,6 @@
 
 .grid-col-set(@col-name, @col-span) when (@col-span >= 0) {
 	// apply styles to child columns directly or to columns within child rows
-	> .@{spartan-namespace}row > .@{spartan-namespace}@{col-name},
 	> .@{spartan-namespace}@{col-name} {
 		.grid-span(@col-span);
 	}
@@ -186,7 +184,6 @@
 
 .grid-col-set(@col-name, @col-span, @offset) when (@col-span >= 0) {
 	// apply styles to child columns directly or to columns within child rows
-	> .@{spartan-namespace}row > .@{spartan-namespace}@{col-name},
 	> .@{spartan-namespace}@{col-name} {
 		.grid-span(@col-span);
 		.grid-offset(@offset);
@@ -196,7 +193,6 @@
 // only apply reordering when offset is zero
 .grid-col-set(@col-name, @col-span, @offset, @reorder) when (@col-span >= 0) and (@offset = 0) {
 	// apply styles to child columns directly or to columns within child rows
-	> .@{spartan-namespace}row > .@{spartan-namespace}@{col-name},
 	> .@{spartan-namespace}@{col-name} {
 		.grid-span(@col-span);
 		.grid-reorder(@reorder);
@@ -206,7 +202,6 @@
 // apply offset and reorder if offset is not zero
 .grid-col-set(@col-name, @col-span, @offset, @reorder) when (@col-span >= 0) and (abs(@offset) > 0) {
 	// apply styles to child columns directly or to columns within child rows
-	> .@{spartan-namespace}row > .@{spartan-namespace}@{col-name},
 	> .@{spartan-namespace}@{col-name} {
 		.grid-span(@col-span);
 		.grid-offset(@offset);
