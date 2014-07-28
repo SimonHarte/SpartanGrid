@@ -57,7 +57,7 @@ Spartan arose from a project where we had the need for a fluid responsive grid s
 ## Getting Started
 
 - Download Spartan
-- Install [Node](http://nodejs.org/) and then LessCSS: `npm install -g less@1.6.3`
+- Install [Node](http://nodejs.org/) and then LessCSS: `npm install -g less`
 - Adjust the params in `grid-setup.less`
 - Execute: `lessc compile.less grid.css`
 - Use the generated classes in your markup or set up responsive layouts as needed
