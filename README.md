@@ -21,7 +21,6 @@ Spartan arose from a project where we had the need for a fluid responsive grid s
 	- [Flexible Grid Setups](#flexible-grid-setups)
 	- [Viewport Dependent Grids](#viewport-dependent-grids)
 	- [CSS Prefixing](#css-prefixing)
-	- [Responsive Layout Container](#responsive-layout-container)
 - [Browser Support](#browser-support)
 
 ## Features
@@ -410,38 +409,6 @@ You can always use `.grid-unlock()` in any separated media query to unlock grid 
 ```
 
 > You can also omit the prefix by passing `~''` instead.
-
-### Responsive Layout Container
-
-You can either apply responsive layouts by adding the class to the `.g-row` directly or build a whole section with 
-multiple `.g-row`s which use the layout by wrapping them with a container using the layout class.
-
-```html
-<div class="g-row g-layout-1">
-	<div class="g-col"></div>
-	<div class="g-col"></div>
-	<div class="g-col"></div>
-</div>
-```
-
-Or
-
-```html
-<div class="g-layout-1">
-	<div class="g-row">
-		<div class="g-col"></div>
-		<div class="g-col"></div>
-		<div class="g-col"></div>
-	</div>
-	<div class="g-row">
-		<div class="g-col"></div>
-		<div class="g-col"></div>
-		<div class="g-col"></div>
-	</div>
-</div>
-```
-
-This is especially useful when layouting forms.
 
 ## Browser Support
 
