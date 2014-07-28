@@ -12,13 +12,13 @@
 		@spartan-width: 100%;
 
 		// take negative row indent into account
-		@spartan-row-gutter: round(percentage(@fixed-gutter / @fixed-width), @spartan-precision);
+		@spartan-row-gutter: percentage(@fixed-gutter / @fixed-width);
 		
 		// take negative row indent into account
-		@spartan-col-gutter: round(percentage(@fixed-gutter / (@fixed-width + @fixed-gutter)), @spartan-precision);
+		@spartan-col-gutter: percentage(@fixed-gutter / (@fixed-width + @fixed-gutter));
 
 		// calculate the width of one grid column
-		@spartan-one-col: round((@spartan-width / @cols), @spartan-precision);
+		@spartan-one-col: ceil((@spartan-width / @cols) * pow(10, @spartan-precision)) / pow(10, @spartan-precision);
 
 		// implement grid mixins with type dependent variables
 		.spartan-grid > .spartan-grid-mixins(@spartan-width, @spartan-row-gutter, @spartan-col-gutter, @spartan-one-col);
