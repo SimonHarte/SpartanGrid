@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.1.0
+
+- optimised grid precision, especially for safari
+- no layout containers anymore -> reduced css output
+- smaller fixes
+
 ## 3.0.0
 
 - adjusted grid setup api for simple and advanced usage
