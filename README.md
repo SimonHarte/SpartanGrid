@@ -54,7 +54,7 @@ Spartan arose from a project where we had the need for a fluid responsive grid s
 | offsets                   | ✅ | ✅ | ✅ | ✅ |
 | multiple grids            | ✅ | ❌ | ❌ | ✅ |
 | custom prefix             | ✅ | ❌ | ❌ | ✅ |
-| base css size (min)       | **1.8KB** | **11KB** | **9.5KB** | **10KB** |
+| base css size (min)       | **1.8KB** | **8.4KB** | **15.1KB** | **10KB** |
 
 ## Getting Started
 
