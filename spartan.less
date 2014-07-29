@@ -37,11 +37,13 @@
 
 	// only one mixin for fixed grid needed because we cannot make fluid gutters in static grid
 	.spartan-create('fixed', @gutter-type, @fixed-width, @fixed-gutter, @cols) {
+		@spartan-width: @fixed-width;
+		
 		// calculate the width of one grid column
 		@spartan-one-col: round(((@fixed-width + @fixed-gutter) / @cols), @spartan-precision);
 
 		// implement grid mixins with type dependent variables
-		.spartan-grid > .spartan-grid-mixins(@fixed-width, @fixed-gutter, @fixed-gutter, @spartan-one-col);
+		.spartan-grid > .spartan-grid-mixins(@spartan-width, @fixed-gutter, @fixed-gutter, @spartan-one-col);
 	}
 
 	// call switch mixin to calculate variables depending on grid configuration
@@ -60,7 +62,7 @@
 
 		// used only on .g-col for uniquely applied gutter
 		.spartan-gutter(@num: 0) when (@num >= 0) {
-			padding-left: @col-gutter;
+			padding-left: ceil(@col-gutter * pow(10, @spartan-precision)) / pow(10, @spartan-precision);
 		}
 
 		// used only on .g-row for proper negative indents
@@ -289,7 +291,7 @@
 			// one gutter indent for each column
 			.spartan-gutter(1) !important;
 			// columns should per default span the whole width if none is set
-			.grid-span(@spartan-grid-max-cols);
+			width: @spartan-width;
 		}
 	}
 	
@@ -300,7 +302,7 @@
 	@spartan-grid-type: extract(@config, 1);
 	@spartan-grid-gutter-type: extract(@config, 4);
 	
-	@spartan-precision: 4;
+	@spartan-precision: 6;
 	
 	// set up grid styles depending on an included config
 	.spartan-grid();
