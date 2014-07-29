@@ -18,7 +18,7 @@
 		@spartan-col-gutter: percentage(@fixed-gutter / (@fixed-width + @fixed-gutter));
 
 		// calculate the width of one grid column
-		@spartan-one-col: ceil((@spartan-width / @cols) * pow(10, @spartan-precision)) / pow(10, @spartan-precision);
+		@spartan-one-col: (@spartan-width / @cols);
 
 		// implement grid mixins with type dependent variables
 		.spartan-grid > .spartan-grid-mixins(@spartan-width, @spartan-row-gutter, @spartan-col-gutter, @spartan-one-col);
@@ -29,7 +29,7 @@
 		@spartan-width: 100%;
 
 		// calculate the width of one grid column
-		@spartan-one-col: ceil((@spartan-width / @cols) * pow(10, @spartan-precision)) / pow(10, @spartan-precision);
+		@spartan-one-col: (@spartan-width / @cols);
 		
 		// implement grid mixins with type dependent variables
 		.spartan-grid > .spartan-grid-mixins(@spartan-width, @fixed-gutter, @fixed-gutter, @spartan-one-col);
@@ -40,7 +40,7 @@
 		@spartan-width: @fixed-width;
 		
 		// calculate the width of one grid column
-		@spartan-one-col: round(((@fixed-width + @fixed-gutter) / @cols), @spartan-precision);
+		@spartan-one-col: ((@fixed-width + @fixed-gutter) / @cols);
 
 		// implement grid mixins with type dependent variables
 		.spartan-grid > .spartan-grid-mixins(@spartan-width, @fixed-gutter, @fixed-gutter, @spartan-one-col);
@@ -52,7 +52,7 @@
 	// unlock grid mixins with modified variables
 	.spartan-grid-mixins(@width, @row-gutter, @col-gutter, @one-col) {
 		.spartan-span-width(@num) {
-			width: round((@one-col * @num), @spartan-precision);
+			width: ceil((@one-col * @num) * pow(10, @spartan-precision)) / pow(10, @spartan-precision);
 		}
 
 		// indent grid columns either way with these mixins
@@ -67,7 +67,7 @@
 
 		// used only on .g-row for proper negative indents
 		.spartan-gutter(@num: 0) when (@num < 0) {
-			margin-left: -@row-gutter;
+			margin-left: round(-@row-gutter, @spartan-precision);
 		}
 
 		// visually manipulate grid column order with these mixins
@@ -291,7 +291,7 @@
 			// one gutter indent for each column
 			.spartan-gutter(1) !important;
 			// columns should per default span the whole width if none is set
-			width: @spartan-width;
+			.grid-span(@spartan-grid-max-cols);
 		}
 	}
 	
