@@ -2,10 +2,6 @@
 
 The next generation LessCSS grid system. Try the [dynamic online grid demo](http://spartan-grid.herokuapp.com/).
 
-> There is a more Safari compatible version of this grid system: [Spartan 2](https://github.com/SimonHarte/Spartan2). 
-Note that this (original) version is way more convenient in usage but has limited support for Safari browsers because
- of a certain [rendering issue](#the-safari-problem).
-
 > Requires [LessCSS](https://github.com/less/less.js) version 1.4.0 or above. Does **not** work with v1.7.0 
 because of [this bug](https://github.com/less/less.js/pull/1929#issuecomment-45307325) (fixed in v1.7.1).
 
