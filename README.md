@@ -14,7 +14,6 @@ Spartan arose from a project where we had the need for a fluid responsive grid s
 - [Basic Usage](#basic-usage)
 	- [Grid Setup](#grid-setup)
 	- [Grid Classes and Mixins](#grid-classes-and-mixins)
-	- [Responsive Layouts](#responsive-layouts)
 - [Responsiveness and Customization](#responsiveness-and-customization)
 - [Browser Support](#browser-support)
 	- [The Safari Problem](#the-safari-problem)
@@ -29,7 +28,6 @@ Spartan arose from a project where we had the need for a fluid responsive grid s
 	- column offsets
 - grid creation API for maximum flexibility
 - customizable css classes
-- semantic grid through mixins
 - tiny: **~11KB** of LessCSS which generates less than **2KB** of base css (minified)
 
 ## Comparison
