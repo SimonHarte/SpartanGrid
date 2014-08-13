@@ -216,16 +216,14 @@ There's a detailed [documentation](https://github.com/SimonHarte/SpartanGrid/blo
 Unfortunately all Safari browsers up to the latest version have a bad subpixel rendering for widths and always round 
 values down to the next integer when calculating rendered pixels. So a width declaration of for example `88.333px` or
  even `88.666px` will always be rendered as `88px`. This of course presents an issue when your grid configuration 
- leads to such values or when you use a fluid grid, because we get a small displacement of columns.
+ leads to such values or in general when you use a fluid grid, because we get a small displacement of columns.
 
 There's an [article from John Resig](http://ejohn.org/blog/sub-pixel-problems-in-css/) about this subject.
 
-Note that all grid systems suffer from this issue and merely provide workarounds. Spartan does not try to do that but
- instead there is an alternate grid style pattern with [Spartan 2](https://github.com/SimonHarte/Spartan2) which uses
-  the same techniques as Profound to position each grid column independently with margins because they are not 
-  affected by this subpixel rendering issue. This pattern has its own advantages and caveats and is not as 
-  convenient as the original Spartan grid but can be used when layouting specifically for devices which use Safari 
-  (such as iPhone and iPad).
+Note that all grid systems suffer from this issue and merely provide workarounds in some cases. Spartan does not try to do that
+~~but instead there is an alternate grid style pattern with [Spartan 2](https://github.com/SimonHarte/Spartan2) which
+uses the same techniques as Profound to position each grid column independently with margins because they are not
+affected by this subpixel rendering issue.~~ (not maintained since v3.0.0)
 
 ## Contributors
 
