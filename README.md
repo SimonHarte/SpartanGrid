@@ -30,7 +30,7 @@ Spartan arose from a project where we had the need for a fluid responsive grid s
 - grid creation API for maximum flexibility
 - customizable css classes
 - semantic grid through mixins
-- tiny: **~10KB** of LessCSS which generates less than **2KB** of base css (minified)
+- tiny: **~11KB** of LessCSS which generates less than **2KB** of base css (minified)
 
 ## Comparison
 
@@ -47,23 +47,15 @@ Spartan arose from a project where we had the need for a fluid responsive grid s
 | column ordering           | ✅ | ✅ | ✅ | ✅ |
 | offsets                   | ✅ | ✅ | ✅ | ✅ |
 | multiple grids            | ✅ | ❌ | ❌ | ✅ |
-| custom prefix             | ✅ | ❌ | ❌ | ✅ |
-| output css (min)          | **1.8KB** | **8.4KB** | **15.1KB** | **~10KB** |
+| custom classes            | ✅ | ❌ | ❌ | ✅ |
+| output css (min)          | **1.8-5KB** | **8.3KB** | **15.1KB** | **~10KB** |
 
 ## Getting Started
 
 - Download Spartan
 - Install [Node](http://nodejs.org/) and then LessCSS: `npm install -g less`
-- Adjust the params in `grid-setup.less`
+- Adjust `grid-setup.less`
 - Execute: `lessc compile.less grid.css`
-- Use the generated classes in your markup or set up responsive layouts as needed
-
-**Or**
-
-- Integrate [`spartan.less`](https://github.com/SimonHarte/SpartanGrid/blob/master/spartan.less) in your project with
- a less build
-- Call [`.grid-bundle()`](#grid-setup) with your configuration
-- Use the generated classes in your markup or set up responsive layouts as needed
 
 ## Grid Structure
 
