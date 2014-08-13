@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.3.0
+
+- enable prefixed configuration sensitive classes
+- restructure readme and documentation
+
 ## 3.1.0
 
 - optimised grid precision, especially for safari
