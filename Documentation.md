@@ -108,10 +108,10 @@ You can always use `.grid-unlock()` in any separated media query to unlock grid 
 
 > You can also remove the namespace by passing `~''` instead.
 
-#### Custom Classes
+#### Additional Prefix
 
 You can further customize the generated classes through an optional parameter to `.grid-generate()`.
-See it as an addition to the namespace which counts for all generated classes while this prefix only adjusts the configuration sensitive classes.
+See it as an addition to the namespace which counts for all generated classes while this one only adjusts the configuration sensitive classes.
 Lets assume the following setup:
 
 ```less

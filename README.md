@@ -1,6 +1,6 @@
 # Spartan
 
-A highly customizable LessCSS grid system. Try the [dynamic online demo](http://spartan-grid.herokuapp.com/).
+A highly customizable, standalone LessCSS grid system. Try the [dynamic online demo](http://spartan-grid.herokuapp.com/).
 
 > Requires [LessCSS](https://github.com/less/less.js) version 1.4.0 or above. Does **not** work with v1.7.0 
 because of [this bug](https://github.com/less/less.js/pull/1929#issuecomment-45307325) (fixed in v1.7.1).
@@ -98,9 +98,9 @@ Check out [examples](https://github.com/SimonHarte/SpartanGrid/blob/master/examp
 
 ### Grid Setup
 
-There are two ways to set up a grid with Spartan, within the basic usage we only explain the simpler one. If you need more flexibility, to set up viewport dependent grids etc. go to the [advanced usage](#flexible-setup-mixins) section.
+There are two ways to set up a grid with Spartan, within the basic usage we only explain the simpler one. If you need more flexibility, to set up viewport dependent grids etc. go to the [advanced usage](#responsiveness-and-customization) section.
 
-The basic grid setup requires you to call just one mixin, pass in a configuration and an optional prefix (read more about [prefixing](#prefixing)).
+The basic grid setup requires you to call just one mixin, pass in a configuration and an optional prefix (read more about custom classes in the [documentation](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#custom-classes)).
 
 ```less
 @grid-config: [grid-type], [grid-width], [gutter-width], [grid-type], [grid-columns];
