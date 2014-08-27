@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.3.1
+
+- added bower installation
+
 ## 3.3.0
 
 - enable prefixed configuration sensitive classes
