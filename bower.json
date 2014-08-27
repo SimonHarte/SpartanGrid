@@ -16,6 +16,7 @@
 	"ignore": [
 		"examples/",
 		"tests/",
+		".gitignore",
 		"compile.less",
 		"grid-setup.less"
 	],
