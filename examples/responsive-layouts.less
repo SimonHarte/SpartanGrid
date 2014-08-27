@@ -1,12 +1,11 @@
 // Content oriented media queries //
-
 @reading-length: 40em;
 
 // breakpoints
-@m-small-max: (@reading-length - .01);
-@m-medium-min: @reading-length;
-@m-medium-max: (@reading-length*2 - .01);
-@m-large-min: (@reading-length*2);
+@m-small-max: @reading-length;
+@m-medium-min: (@reading-length + .01);
+@m-medium-max: (@reading-length*2);
+@m-large-min: (@reading-length*2 + .01);
 
 // queries
 @m-small: ~"(max-width: @{m-small-max})";

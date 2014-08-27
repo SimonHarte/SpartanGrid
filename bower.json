@@ -1,0 +1,31 @@
+{
+	"name": "spartan-grid",
+	"description": "A standalone, highly flexible but tiny LessCSS grid system",
+	"main": "spartan.less",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Simon Harte",
+			"email": "s.harte@gmx.ch"
+		}
+	],
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/SimonHarte/SpartanGrid.git"
+	},
+	"ignore": [
+		"examples/",
+		"tests/",
+		"compile.less",
+		"grid-setup.less"
+	],
+	"keywords": [
+		"spartan",
+		"grid",
+		"LessCSS",
+		"less",
+		"tiny",
+		"flexible",
+		"standalone"
+	]
+}

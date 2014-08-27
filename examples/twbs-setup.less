@@ -14,33 +14,19 @@
 @m-medium-down: ~"(max-width: @{m-medium-max})";
 @m-large: ~"(min-width: @{m-large-min})";
 
+// set up twitter bootstrap like grid classes for every viewport
+@grid-config: 'fluid', 940px, 20px, 'fixed', 12;
+
 .grid-core();
+.grid-unlock(@config: @grid-config);
 
-@grid-config-s: 'fluid', 720px, 5px, 'fixed', 12;
-@grid-config-m: 'fluid', 940px, 15px, 'fluid', 12;
-@grid-config-l: 'fluid', 1040px, 20px, 'fixed', 12;
-
-@media @m-small {
-	.grid-unlock(@grid-config-s);
-	.grid-generate();
-}
+// generate mobile first grid classes
+.grid-generate(sm);
 
 @media @m-medium {
-	.grid-unlock(@grid-config-m);
-	.grid-generate();
+	.grid-generate(md);
 }
 
 @media @m-large {
-	.grid-unlock(@grid-config-l);
-	.grid-generate();
-}
-
-// separated media query has to unlock config again
-@media @m-medium {
-	.grid-unlock(@grid-config-m);
-	// no generate needed here
-	
-	.my-col {
-		.grid-span(4.5);
-	}
+	.grid-generate(lg);
 }
