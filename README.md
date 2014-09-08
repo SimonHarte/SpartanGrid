@@ -39,7 +39,7 @@ Spartan arose from a project where we had the need for a fluid responsive grid s
 |                           | [Spartan](http://spartan-grid.herokuapp.com) | [Bootstrap](http://getbootstrap.com/css/#grid) | [Foundation](http://foundation.zurb.com/) | [Profound](http://www.profoundgrid.com/) |
 |---------------------------|:-------:|:-----------------:|:----------:|:-------:|
 | less                      | ✅ | ✅ | ❌ | ❌ |
-| sass                      | ❌ | ❌ | ✅ | ✅ |
+| sass                      | ❌ | ✅ | ✅ | ✅ |
 | fluid                     | ✅ | ✅ | ✅ | ✅ |
 | static                    | ✅ | ✅ | ✅ | ✅ |
 | responsive                | ✅ | ✅ | ✅ | ✅ |
