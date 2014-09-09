@@ -88,11 +88,11 @@ Here's a short example of how a Spartan grid looks like with a responsive layout
 	// omit small media definition as it uses full width anyway
 	
 	// 2 columns in medium screen
-	@media @medium {
+	@media (min-width: 40.01em) and (max-width: 65em) {
 		.grid-col-set-equal(6);
 	}
 	// 3 columns in large screen
-	@media @large {
+	@media (min-width: 65.01em) {
 		.grid-col-set-equal(4);
 	}
 }

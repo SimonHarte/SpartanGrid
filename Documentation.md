@@ -53,17 +53,17 @@ different viewports like so:
 
 // adjusting the gutter width and type over different viewports
 
-@media (max-width: 39.99em) {
+@media (max-width: 40em) {
 	// grid setup for small screen
 	.grid-unlock(@config: 'fluid', 940px, 5px, 'fixed', 12;);
 	.grid-generate();
 }
-@media (min-width: 40em) and (max-width: 64.99em) {
+@media (min-width: 40.01em) and (max-width: 65em) {
 	// grid setup for medium screen
 	.grid-unlock(@config: 'fluid', 940px, 15px, 'fixed', 12;);
 	.grid-generate();
 }
-@media (min-width: 65em) {
+@media (min-width: 65.01em) {
 	// grid setup for large screen
 	.grid-unlock(@config: 'fluid', 940px, 30px, 'fluid', 12;);
 	.grid-generate();
@@ -78,7 +78,7 @@ You can always use `.grid-unlock()` in any separated media query to unlock grid 
 
 ```less
 // unlock mixins in another media query again
-@media (min-width: 40em) and (max-width: 64.99em) {
+@media (min-width: 40.01em) and (max-width: 65em) {
 	.grid-unlock('fluid', 940px, 15px, 'fixed', 12);
 	
 	.g-col {
@@ -219,11 +219,11 @@ line, clear the 4th, the 7th, the 10th etc.
 
 	// 1 column in small screen -> no declaration needed
 
-	@media (min-width: 40em) and (max-width: 64.99em) {
+	@media (min-width: 40.01em) and (max-width: 65em) {
 		// 2 columns in medium screen
 		.grid-col-set-equal(6);
 	}
-	@media (min-width: 65em) {
+	@media (min-width: 65.01em) {
 		// 3 columns in large screen
 		.grid-col-set-equal(4);
 	}
@@ -251,12 +251,12 @@ Simply make use of the optional parameter to [`.grid-generate()`](#custom-classe
 .grid-generate(sm);
 
 // generate medium screen classes
-@media (min-width: 40em) and (max-width: 64.99em) {
+@media (min-width: 40.01em) and (max-width: 65em) {
 	.grid-generate(md);
 }
 
 // generate large screen classes
-@media (min-width: 65em) {
+@media (min-width: 65.01em) {
 	.grid-generate(lg);
 }
 ```
