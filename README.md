@@ -98,6 +98,8 @@ Here's a short example of how a Spartan grid looks like with a responsive layout
 }
 ```
 
+> Watch out not to use overlapping media queries!
+
 Spartan uses a negative left margin on `.g-row` and left padding (gutter) on `.g-col`s for having a consistent structure and reduced output css.
 
 Check out [examples](https://github.com/SimonHarte/SpartanGrid/blob/master/examples/responsive-layouts.less) for more responsive layouts.
