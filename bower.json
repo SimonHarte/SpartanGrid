@@ -1,7 +1,7 @@
 {
 	"name": "spartan-grid",
 	"description": "A standalone, highly flexible but tiny LessCSS grid system",
-	"main": "spartan.less",
+	"main": "lib/spartan.less",
 	"license": "MIT",
 	"authors": [
 		{
