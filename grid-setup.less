@@ -1,3 +1,9 @@
 @grid-config: 'fluid', 940px, 20px, 'fluid', 12;
+@mq-desktop: ~'(min-width: 1040px)';
 
-.grid-bundle(@config: @grid-config);
+.grid-core();
+.grid-unlock(@grid-config);
+
+@media @mq-desktop {
+	.grid-generate();
+}

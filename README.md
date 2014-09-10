@@ -56,10 +56,10 @@ Spartan arose from a project where we had the need for a fluid responsive grid s
 
 ### Have a Project at the Ready?
 
-- Integrate `spartan.less` in your project
+- Integrate [`lib/spartan.less`](https://github.com/SimonHarte/SpartanGrid/blob/master/lib/spartan.less) in your project
 - Use the [API mixin(s)](#grid-setup) to set up your grid
 
-> Spartan will not generate any CSS until you use the setup API, so you can include `spartan.less` as a library.
+> Spartan will not generate any CSS until you use the setup API.
 
 ### Just want to fiddle around?
 
