@@ -113,7 +113,7 @@ There are two ways to set up a grid with Spartan, within the basic usage we only
 The basic grid setup requires you to call just one mixin, pass in a configuration and an optional prefix (read more about custom classes in the [documentation](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#custom-classes)).
 
 ```less
-@grid-config: [grid-type], [grid-width], [gutter-width], [grid-type], [grid-columns];
+@grid-config: [grid-type], [grid-width], [gutter-width], [gutter-type], [grid-columns];
 
 .grid-bundle([prefix], @grid-config);
 ```
@@ -177,6 +177,7 @@ Override the width of a column (default is full-width), equivalent to `.g-span-[
 in floating point numbers, which enables you to define literally **any** width using the mixin.
 
 ```less
+// 5 columns per line in a 12 column grid
 .grid-span(12/5);
 ```
 
@@ -188,13 +189,14 @@ While there are just positive indents in generated classes, you could also call 
 
 #### `grid-push` and `grid-pull`
 Together with the additional class `.g-reorder` on `.g-row` you can reorder columns visually without changing the 
-order in HTML. Note that you may run into problems if these are used within certain responsive layouts as they use 
-relative positioning. Equivalent to `.g-push-[columns]` and `.g-pull-[columns]`, similar behavior as `.grid-offset()`.
+order in HTML. Equivalent to `.g-push-[columns]` and `.g-pull-[columns]`, similar behavior as `.grid-offset()`.
+
+> Note that you may run into problems if these are used within certain responsive layouts as they use relative positioning.
 
 ##### `grid-reorder`
 
 You can alternatively use `.grid-reorder()` and pass in any number. If the passed number is positive or zero, it will
-simply call `.grid-push()` and if the number is negative `.grid-pull()` instead with the absolute value of the number.
+simply call `.grid-push()` and if the number is negative `.grid-pull()` instead.
 
 ## Responsiveness and Customization
 
@@ -208,7 +210,7 @@ There's a detailed [documentation](https://github.com/SimonHarte/SpartanGrid/blo
 
 **Partially** supported:
 
-- **IE8**: basic grid working properly, no media query support and :nth-child clearing, 
+- **IE8**: basic grid working properly, no media query support and `:nth-child` clearing, 
 **Note:** fully supported with [respond.js](https://github.com/scottjehl/Respond) and [selectivizr.js]
 (http://selectivizr.com/) polyfills
 - **Safari**: as explained [below](#the-safari-problem)
@@ -226,8 +228,3 @@ Note that all grid systems suffer from this issue and merely provide workarounds
 ~~but instead there is an alternate grid style pattern with [Spartan 2](https://github.com/SimonHarte/Spartan2) which
 uses the same techniques as Profound to position each grid column independently with margins because they are not
 affected by this subpixel rendering issue.~~ (not maintained since v3.0.0)
-
-## Contributors
-
-- Simon Harte (s.harte@gmx.ch)
-- Marc Diethelm (marc@web5.me)
