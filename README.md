@@ -113,7 +113,7 @@ There are two ways to set up a grid with Spartan, within the basic usage we only
 The basic grid setup requires you to call just one mixin, pass in a configuration and an optional prefix (read more about custom classes in the [documentation](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#custom-classes)).
 
 ```less
-@grid-config: [grid-type], [grid-width], [gutter-width], [grid-type], [grid-columns];
+@grid-config: [grid-type], [grid-width], [gutter-width], [gutter-type], [grid-columns];
 
 .grid-bundle([prefix], @grid-config);
 ```
