@@ -298,7 +298,37 @@
 	@spartan-grid-max-cols: extract(@config, 5);
 	@spartan-grid-type: extract(@config, 1);
 	@spartan-grid-gutter-type: extract(@config, 4);
-	@spartan-precision: 6;
+	
+	/*
+	Float precision used for rounding is the most important variable because we get different behaviours over browsers
+	and certain grid container widths. Note that rounding issues only exist for width and padding style properties.
+	
+	There are two factors to consider when adjusting the precision:
+	- precision value itself
+	- using round(), floor() or ceil() to calculate width and padding (column gutter)
+	
+	Tests have shown these behaviours:
+	
+	- Using precision < 3:
+		- We get inaccurate values with round(), floor(), and ceil()
+	- Using precision = 3:
+		- We get inaccurate values in Safari when using floor(),
+		- We get inaccurate values with round() and ceil() which leads to jumping columns,
+		  with round() starting in containers larger than ~800px (FF)
+	- Using precision = 4:
+		- We get inaccurate values in Safari when using round() and floor()
+		- We get an overall good behaviour when using ceil(),
+		  columns will start jumping in containers larger than ~2200px (FF)
+	- Using precision > 4:
+		- We get inaccurate values in Safari with round() and floor()
+		- We get an overall good behaviour when using ceil()
+	
+	Recommendation:
+	Using a float precision of 5 together with ceil() seems to be the smallest possible,
+	most accurate amount for a future-proof grid system.
+	*/
+	
+	@spartan-precision: 5;
 
 	// set up grid styles depending on an included config
 	.spartan-grid();
