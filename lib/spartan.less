@@ -223,9 +223,16 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // generate base grid classes valid for every setup
-.grid-core(@ns: g-) {
-	@spartan-namespace: @ns;
+.grid-core(@ns: g) {
+	.set-namespace(@ns) when not (@ns = '') {
+		@spartan-namespace: ~'@{ns}-';
+	}
+	.set-namespace(@ns) when (default()) {
+		@spartan-namespace: ~'@{ns}';
+	}
 
+	.set-namespace(@ns);
+	
 	// prefixed clearfix mixin from h5bp for grid only
 	.grid-cf() {
 		&:before,
@@ -278,64 +285,70 @@
 	}
 }
 
-.grid-unlock(@config...) {
-	.grid-gutter() {
-		// base row and gutter styles must be set anew
-		.@{spartan-namespace}row {
-			.spartan-gutter(-1) !important;
-		}
-
-		.@{spartan-namespace}col {
-			// one gutter indent for each column
-			.spartan-gutter(1) !important;
-			// columns should per default span the whole width if none is set
-			.grid-span(@spartan-grid-max-cols);
-		}
+.grid-gutter() {
+	// base row and gutter styles must be set anew
+	.@{spartan-namespace}row {
+		.spartan-gutter(-1) !important;
 	}
 
+	.@{spartan-namespace}col {
+		// one gutter indent for each column
+		.spartan-gutter(1) !important;
+		// columns should per default span the whole width if none is set
+		.grid-span(@spartan-grid-max-cols);
+	}
+}
+
+.grid-unlock(@config...) {
 	@spartan-grid-fixed-width: extract(@config, 2);
 	@spartan-grid-fixed-gutter: extract(@config, 3);
 	@spartan-grid-max-cols: extract(@config, 5);
 	@spartan-grid-type: extract(@config, 1);
 	@spartan-grid-gutter-type: extract(@config, 4);
 	
-	/*
-	Float precision used for rounding is the most important variable because we get different behaviours over browsers
-	and certain grid container widths. Note that rounding issues only exist for width and padding style properties.
-	
-	There are two factors to consider when adjusting the precision:
-	- precision value itself
-	- using round(), floor() or ceil() to calculate width and padding (column gutter)
-	
-	Tests have shown these behaviours:
-	
-	- Using precision < 3:
-		- We get inaccurate values with round(), floor(), and ceil()
-	- Using precision = 3:
-		- We get inaccurate values in Safari when using floor(),
-		- We get inaccurate values with round() and ceil() which leads to jumping columns,
-		  with round() starting in containers larger than ~800px (FF)
-	- Using precision = 4:
-		- We get inaccurate values in Safari when using round() and floor()
-		- We get an overall good behaviour when using ceil(),
-		  columns will start jumping in containers larger than ~2200px (FF)
-	- Using precision > 4:
-		- We get inaccurate values in Safari with round() and floor()
-		- We get an overall good behaviour when using ceil()
-	
-	Recommendation:
-	Using a float precision of 5 together with ceil() seems to be the smallest possible,
-	most accurate amount for a future-proof grid system.
-	*/
+	// Float precision used for rounding is the most important variable because we get different behaviours over browsers
+	// and certain grid container widths. Note that rounding issues only exist for width and padding style properties.
+	// 
+	// There are two factors to consider when adjusting the precision:
+	// - precision value itself
+	// - using round(), floor() or ceil() to calculate width and padding (column gutter)
+	// 
+	// Tests have shown these behaviours:
+	// 
+	// - Using precision < 3:
+	//     - We get inaccurate values with round(), floor(), and ceil()
+	// - Using precision = 3:
+	//     - We get inaccurate values in Safari when using floor(),
+	//     - We get inaccurate values with round() and ceil() which leads to jumping columns,
+	//       with round() starting in containers larger than ~800px (FF)
+	// - Using precision = 4:
+	//     - We get inaccurate values in Safari when using round() and floor()
+	//     - We get an overall good behaviour when using ceil(),
+	//       columns will start jumping in containers larger than ~2200px (FF)
+	// - Using precision > 4:
+	//     - We get inaccurate values in Safari with round() and floor()
+	//     - We get an overall good behaviour when using ceil()
+	// 
+	// Recommendation:
+	// Using a float precision of 5 together with ceil() seems to be the smallest possible,
+	// most accurate amount for a future-proof grid system.
 	
 	@spartan-precision: 5;
 
 	// set up grid styles depending on an included config
 	.spartan-grid();
-	.grid-gutter();
 }
 
-.grid-generate() {
+.grid-generate(@prefix: '') {
+	.set-prefix(@prefix) when not (@prefix = '') {
+		@spartan-prefix: ~'@{prefix}-';
+	}
+	.set-prefix(@prefix) when (default()) {
+		@spartan-prefix: ~'@{prefix}';
+	}
+
+	.set-prefix(@prefix);
+	
 	// generate grid classes
 	// Parameters:
 	// 1) amount of iterations
@@ -346,21 +359,18 @@
 	// .grid > .loop(12, class-prefix, 'mixin');
 	//
 	// NOTE: you can not use the generated classes themselves as mixins!
-	.spartan-grid > .spartan-loop(@spartan-grid-max-cols - 1, ~'@{spartan-namespace}span', 'grid-span');
-	.spartan-grid > .spartan-loop(@spartan-grid-max-cols - 1, ~'@{spartan-namespace}offset', 'grid-offset');
-	.spartan-grid > .spartan-loop(@spartan-grid-max-cols - 1, ~'@{spartan-namespace}push', 'grid-push');
-	.spartan-grid > .spartan-loop(@spartan-grid-max-cols - 1, ~'@{spartan-namespace}pull', 'grid-pull');
+	
+	@spartan-classname: ~'@{spartan-namespace}@{spartan-prefix}';
+	
+	.spartan-grid > .spartan-loop(@spartan-grid-max-cols - 1, ~'@{spartan-classname}span', 'grid-span');
+	.spartan-grid > .spartan-loop(@spartan-grid-max-cols - 1, ~'@{spartan-classname}offset', 'grid-offset');
+	.spartan-grid > .spartan-loop(@spartan-grid-max-cols - 1, ~'@{spartan-classname}push', 'grid-push');
+	.spartan-grid > .spartan-loop(@spartan-grid-max-cols - 1, ~'@{spartan-classname}pull', 'grid-pull');
 }
 
-.grid-generate(@prefix) {
-	.spartan-grid > .spartan-loop(@spartan-grid-max-cols - 1, ~'@{spartan-namespace}@{prefix}-span', 'grid-span');
-	.spartan-grid > .spartan-loop(@spartan-grid-max-cols - 1, ~'@{spartan-namespace}@{prefix}-offset', 'grid-offset');
-	.spartan-grid > .spartan-loop(@spartan-grid-max-cols - 1, ~'@{spartan-namespace}@{prefix}-push', 'grid-push');
-	.spartan-grid > .spartan-loop(@spartan-grid-max-cols - 1, ~'@{spartan-namespace}@{prefix}-pull', 'grid-pull');
-}
-
-.grid-bundle(@ns: g-, @config...) {
+.grid-bundle(@ns: g, @config...) {
 	.grid-core(@ns);
 	.grid-unlock(@config);
+	.grid-gutter();
 	.grid-generate();
 }
