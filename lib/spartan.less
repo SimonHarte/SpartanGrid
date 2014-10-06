@@ -300,10 +300,10 @@
 }
 
 .grid-unlock(@config...) {
-	@spartan-grid-fixed-width: extract(@config, 2);
+	@spartan-grid-fixed-width: extract(@config, 1);
 	@spartan-grid-fixed-gutter: extract(@config, 3);
 	@spartan-grid-max-cols: extract(@config, 5);
-	@spartan-grid-type: extract(@config, 1);
+	@spartan-grid-type: extract(@config, 2);
 	@spartan-grid-gutter-type: extract(@config, 4);
 	
 	// Float precision used for rounding is the most important variable because we get different behaviours over browsers
