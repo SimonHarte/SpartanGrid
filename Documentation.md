@@ -38,9 +38,78 @@ configuration within the current scope and adjust the gutters.
 }
 ```
 
+#### `.grid-gutter()`
+
+Generate only gutter styles. Especially useful if you have grid setups which only differ in the gutter, so you don't have to generate gutter styles anew.
+
+*Example old*:
+
+```less
+.grid-core();
+
+// grid configurations have different gutters only
+@grid-config-1: 940px, 'fluid', 20px, 'fixed', 12;
+@grid-config-2: 940px, 'fluid', 15px, 'fluid', 12;
+
+// unlock and use spartan in one scope (layout)
+.some-scope {
+	// every unlock generated gutter styles
+	.grid-unlock(@grid-config-1);
+	
+	// etc...
+}
+
+// unlock differing config in another scope
+.alternate-scope {
+	// every unlock generated gutter styles
+	.grid-unlock(@grid-config-2);
+	
+	// etc...
+}
+
+// unlock first config again in a new scope
+.last-scope {
+	// every unlock generated gutter styles
+	.grid-unlock(@grid-config-1);
+	
+	// etc...
+}
+```
+
+*Example NEW*:
+
+```less
+.grid-core();
+
+// same grid configs as above
+// generate gutter styles once for different scopes
+
+.some-scope {
+	.grid-unlock(@grid-config-1);
+	.grid-gutter();
+}
+
+.alternate-scope {
+	.grid-unlock(@grid-config-2);
+	.grid-gutter();
+}
+
+.last-scope {
+	// get gutter styles from one scope
+	&:extend(.some-scope all);
+	
+	// unlock does not generate gutters again
+	.grid-unlock(@grid-config-1);
+	
+	// etc...
+}
+```
+
 #### `.grid-generate([prefix])`
 
 This mixin will generate all configuration sensitive classes like `.g-span-`, `.g-offset` etc. in the current scope.
+
+> [Read about prefixing](#additional-prefix)
 
 ### Viewport Dependent Grids
 
@@ -56,16 +125,19 @@ different viewports like so:
 @media (max-width: 40em) {
 	// grid setup for small screen
 	.grid-unlock(@config: 'fluid', 940px, 5px, 'fixed', 12;);
+	.grid-gutter();
 	.grid-generate();
 }
 @media (min-width: 40.01em) and (max-width: 65em) {
 	// grid setup for medium screen
 	.grid-unlock(@config: 'fluid', 940px, 15px, 'fixed', 12;);
+	.grid-gutter();
 	.grid-generate();
 }
 @media (min-width: 65.01em) {
 	// grid setup for large screen
 	.grid-unlock(@config: 'fluid', 940px, 30px, 'fluid', 12;);
+	.grid-gutter();
 	.grid-generate();
 }
 ```
