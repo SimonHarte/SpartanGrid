@@ -23,10 +23,12 @@ You would normally just use `.grid-bundle()` to set up a grid, but you can also 
 
 This will generate the core selectors and styles needed for any grid setup, e.g. clearing on the row, float of columns etc. No matter how much you customize your grid, this mixin has to be called only once in your project.
 
+> [Read about namespacing](#namespace)
+
 #### `.grid-unlock([config])`
 
 Pass in your grid configuration like with `.grid-bundle()`. This will unlock all the grid mixins using your 
-configuration within the current scope and adjust the gutters.
+configuration within the current scope.
 
 ```less
 #my-scope {
@@ -142,7 +144,7 @@ different viewports like so:
 }
 ```
 
-Note that you cannot make a mobile first, global configuration because the global mixins like `.grid-span()` can not be reassigned inside media queries.
+Note that you cannot make a mobile first, global configuration because unlocked mixins like `.grid-span()` can not be reassigned inside media queries and will use global values.
 
 > Of course `.grid-generate()` will generate all the grid styles in the given viewport, so with three viewports you'll have three times the normal css. That's why we invested a lot of effort into keeping the base css as tiny as possible ;).
 
@@ -167,8 +169,8 @@ You can always use `.grid-unlock()` in any separated media query to unlock grid 
 
 `.grid-bundle()` (as well as `.grid-core()`) takes one optional parameter `namespace`, with which you can customize the generated classes.
 
- This namespace is per default set to `g-`, but you can simply just change it, so if you set `namespace` to for example 
- `grid-` the generated classes will look like this:
+ This namespace is per default set to `g`, but you can simply just change it, so if you set `namespace` to for example 
+ `grid` the generated classes will look like this:
 
 ```less
 .grid-row
@@ -178,16 +180,16 @@ You can always use `.grid-unlock()` in any separated media query to unlock grid 
 // etc...
 ```
 
-> You can also remove the namespace by passing `~''` instead.
+> You can also remove the namespace by passing an empty string (`''`) instead.
 
 #### Additional Prefix
 
-You can further customize the generated classes through an optional parameter to `.grid-generate()`.
+You can further customize the generated classes through an optional parameter to `.grid-generate()` which per default is empty (`''`).
 See it as an addition to the namespace which counts for all generated classes while this one only adjusts the configuration sensitive classes.
 Lets assume the following setup:
 
 ```less
-.grid-core(grid-);
+.grid-core(grid);
 .grid-unlock(@grid-config);
 .grid-generate(test);
 ```
@@ -222,6 +224,8 @@ There are three mixins which will help you create responsive layouts.
 .grid-col-clear([column-count]);
 ```
 
+> If your project only consists of layouts and you never use classes like `.grid-span-xx` you don't even have to use `.grid-generate()`.
+
 #### `grid-col-set`
 
 Generate a namespaced class `.[col-name]` as direct child of `.g-row`. Note that `[offset]` and `[reorder]` are optional parameters
@@ -233,7 +237,7 @@ and can be omitted if not used.
 
 | Param | Type | Value | Comment |
 |-------|:-----|:------|:--------|
-| `col-name`    | expression | | Example: `col-1` (without single quotes) |
+| `col-name`    | string | | unquoted, example: `col-1` |
 | `columns`     | number | only positive | |
 | `offset`      | number | positive or negative | optional, uses `.grid-offset()` to apply indents |
 | `reorder`     | number | positive or negative | optional, uses `.grid-reorder()` to reposition a column |
@@ -314,7 +318,7 @@ Simply make use of the optional parameter to [`.grid-generate()`](#custom-classe
 
 ```less
 // grid configuration
-@grid-config: 'fluid', 940px, 20px, 'fixed', 12;
+@grid-config: 940px, 'fluid', 20px, 'fixed', 12;
 
 .grid-core(); // base classes, no change in namespace
 .grid-unlock(@grid-config);

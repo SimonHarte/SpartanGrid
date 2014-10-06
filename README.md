@@ -30,7 +30,7 @@ Spartan arose from a project where we had the need for a fluid responsive grid s
 	- column offsets
 - grid creation API for maximum flexibility
 - customizable css classes
-- tiny: **~11KB** of LessCSS which generates less than **2KB** of base css (minified)
+- tiny: around **1.8KB** of minified base css
 
 ## Comparison
 
@@ -115,7 +115,7 @@ There are two ways to set up a grid with Spartan, within the basic usage we only
 The basic grid setup requires you to call just one mixin, pass in a configuration and an optional prefix (read more about custom classes in the [documentation](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#custom-classes)).
 
 ```less
-@grid-config: [grid-type], [grid-width], [gutter-width], [gutter-type], [grid-columns];
+@grid-config: [grid-width], [grid-type], [gutter-width], [gutter-type], [grid-columns];
 
 .grid-bundle([prefix], @grid-config);
 ```
@@ -130,11 +130,11 @@ If you are not using a grid prefix, you have to name the config param, so `.grid
 
 | Param | Type | Value | Comment |
 |-------|:-----|:------|:--------|
-| `prefix`       | expression | `~''` or custom | Example: `grid-` (without single quotes) |
-| `grid-type`    | string  | `'fluid'` or `'fixed'` | Single quotes mandatory |
+| `prefix`       | string | `''` or custom | quoted or unquoted, example: `grid` |
 | `grid-width`   | pixel   | | |
+| `grid-type`    | string  | `'fluid'` or `'fixed'` | quotes mandatory |
 | `gutter-width` | pixel   | | |
-| `gutter-type`  | string  | `'fluid'` or `'fixed'` | Forced to `'fixed'` if `grid-type` is `'fixed'` |
+| `gutter-type`  | string  | `'fluid'` or `'fixed'` | forced to `'fixed'` if `grid-type` is `'fixed'` |
 | `grid-columns` | integer | | | |
 
 #### Example Setup and Markup
@@ -142,7 +142,7 @@ If you are not using a grid prefix, you have to name the config param, so `.grid
 **LessCSS**
 
 ```less
-@grid-config: 'fluid', 940px, 20px, 'fixed', 12;
+@grid-config: 940px, 'fluid', 20px, 'fixed', 12;
 
 .grid-bundle(@config: @grid-config);
 ```
