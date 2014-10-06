@@ -20,7 +20,7 @@
 		@spartan-one-col: (@spartan-width / @cols);
 
 		// implement grid mixins with type dependent variables
-		.spartan-grid > .spartan-grid-mixins(@spartan-width, @spartan-row-gutter, @spartan-col-gutter, @spartan-one-col);
+		.spartan-grid > .spartan-grid-mixins(@spartan-row-gutter, @spartan-col-gutter, @spartan-one-col);
 	}
 
 	// mixin for fluid grid and fixed gutter
@@ -31,25 +31,23 @@
 		@spartan-one-col: (@spartan-width / @cols);
 
 		// implement grid mixins with type dependent variables
-		.spartan-grid > .spartan-grid-mixins(@spartan-width, @fixed-gutter, @fixed-gutter, @spartan-one-col);
+		.spartan-grid > .spartan-grid-mixins(@fixed-gutter, @fixed-gutter, @spartan-one-col);
 	}
 
 	// only one mixin for fixed grid needed because we cannot make fluid gutters in static grid
 	.spartan-create('fixed', @gutter-type, @fixed-width, @fixed-gutter, @cols) {
-		@spartan-width: @fixed-width;
-
 		// calculate the width of one grid column
 		@spartan-one-col: ((@fixed-width + @fixed-gutter) / @cols);
 
 		// implement grid mixins with type dependent variables
-		.spartan-grid > .spartan-grid-mixins(@spartan-width, @fixed-gutter, @fixed-gutter, @spartan-one-col);
+		.spartan-grid > .spartan-grid-mixins(@fixed-gutter, @fixed-gutter, @spartan-one-col);
 	}
 
 	// call switch mixin to calculate variables depending on grid configuration
 	.spartan-grid > .spartan-create(@spartan-grid-type, @spartan-grid-gutter-type, @spartan-grid-fixed-width, @spartan-grid-fixed-gutter, @spartan-grid-max-cols);
 
 	// unlock grid mixins with modified variables
-	.spartan-grid-mixins(@width, @row-gutter, @col-gutter, @one-col) {
+	.spartan-grid-mixins(@row-gutter, @col-gutter, @one-col) {
 		.spartan-span-width(@num) {
 			width: ceil((@one-col * @num) * pow(10, @spartan-precision)) / pow(10, @spartan-precision);
 		}
