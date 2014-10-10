@@ -237,7 +237,7 @@ and can be omitted if not used.
 
 | Param | Type | Value | Comment |
 |-------|:-----|:------|:--------|
-| `col-name`    | string | | unquoted, example: `col-1` |
+| `col-name`    | string | | quoted or unquoted, example: `col-1` |
 | `columns`     | number | only positive | |
 | `offset`      | number | positive or negative | optional, uses `.grid-offset()` to apply indents |
 | `reorder`     | number | positive or negative | optional, uses `.grid-reorder()` to reposition a column |
