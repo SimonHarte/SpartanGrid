@@ -20,7 +20,7 @@
 		@spartan-one-col: (@spartan-width / @cols);
 
 		// implement grid mixins with type dependent variables
-		.spartan-grid > .spartan-grid-mixins(@spartan-row-gutter, @spartan-col-gutter, @spartan-one-col);
+		.spartan-grid-mixins(@spartan-row-gutter, @spartan-col-gutter, @spartan-one-col);
 	}
 
 	// mixin for fluid grid and fixed gutter
@@ -31,7 +31,7 @@
 		@spartan-one-col: (@spartan-width / @cols);
 
 		// implement grid mixins with type dependent variables
-		.spartan-grid > .spartan-grid-mixins(@fixed-gutter, @fixed-gutter, @spartan-one-col);
+		.spartan-grid-mixins(@fixed-gutter, @fixed-gutter, @spartan-one-col);
 	}
 
 	// only one mixin for fixed grid needed because we cannot make fluid gutters in static grid
@@ -40,11 +40,11 @@
 		@spartan-one-col: ((@fixed-width + @fixed-gutter) / @cols);
 
 		// implement grid mixins with type dependent variables
-		.spartan-grid > .spartan-grid-mixins(@fixed-gutter, @fixed-gutter, @spartan-one-col);
+		.spartan-grid-mixins(@fixed-gutter, @fixed-gutter, @spartan-one-col);
 	}
 
 	// call switch mixin to calculate variables depending on grid configuration
-	.spartan-grid > .spartan-create(@spartan-grid-type, @spartan-grid-gutter-type, @spartan-grid-fixed-width, @spartan-grid-fixed-gutter, @spartan-grid-max-cols);
+	.spartan-create(@spartan-grid-type, @spartan-grid-gutter-type, @spartan-grid-fixed-width, @spartan-grid-fixed-gutter, @spartan-grid-max-cols);
 
 	// unlock grid mixins with modified variables
 	.spartan-grid-mixins(@row-gutter, @col-gutter, @one-col) {
@@ -81,11 +81,11 @@
 	.spartan-loop (@index, @class: item, @mixin: '') when (@index > 0) {
 		// create the actual css selector
 		.@{class}-@{index} {
-			.spartan-grid > .spartan-apply(@mixin, @index);
+			.spartan-apply(@mixin, @index);
 		}
 
 		// next iteration
-		.spartan-grid > .spartan-loop(@index - 1, @class, @mixin);
+		.spartan-loop(@index - 1, @class, @mixin);
 	}
 
 	// GRID CLASS GENERATOR
@@ -174,15 +174,17 @@
 }
 
 .grid-col-set(@col-name, @col-span) when (@col-span >= 0) {
-	// apply styles to child columns directly or to columns within child rows
-	> .@{spartan-namespace}@{col-name} {
+	@column-fullname: ~'.@{spartan-namespace}@{col-name}';
+	
+	> @{column-fullname} {
 		.grid-span(@col-span);
 	}
 }
 
 .grid-col-set(@col-name, @col-span, @offset) when (@col-span >= 0) {
-	// apply styles to child columns directly or to columns within child rows
-	> .@{spartan-namespace}@{col-name} {
+	@column-fullname: ~'.@{spartan-namespace}@{col-name}';
+	
+	> @{column-fullname} {
 		.grid-span(@col-span);
 		.grid-offset(@offset);
 	}
@@ -190,8 +192,9 @@
 
 // only apply reordering when offset is zero
 .grid-col-set(@col-name, @col-span, @offset, @reorder) when (@col-span >= 0) and (@offset = 0) {
-	// apply styles to child columns directly or to columns within child rows
-	> .@{spartan-namespace}@{col-name} {
+	@column-fullname: ~'.@{spartan-namespace}@{col-name}';
+	
+	> @{column-fullname} {
 		.grid-span(@col-span);
 		.grid-reorder(@reorder);
 	}
@@ -199,8 +202,9 @@
 
 // apply offset and reorder if offset is not zero
 .grid-col-set(@col-name, @col-span, @offset, @reorder) when (@col-span >= 0) and (abs(@offset) > 0) {
-	// apply styles to child columns directly or to columns within child rows
-	> .@{spartan-namespace}@{col-name} {
+	@column-fullname: ~'.@{spartan-namespace}@{col-name}';
+	
+	> @{column-fullname} {
 		.grid-span(@col-span);
 		.grid-offset(@offset);
 		.grid-reorder(@reorder);
