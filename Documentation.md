@@ -25,7 +25,7 @@ This will generate the core selectors and styles needed for any grid setup, e.g.
 
 > [Read about namespacing](#namespace)
 
-#### `.grid-unlock([config])`
+#### `.grid-unlock(<config>)`
 
 Pass in your grid configuration like with `.grid-bundle()`. This will unlock all the grid mixins using your 
 configuration within the current scope.
@@ -109,7 +109,7 @@ Generate only gutter styles. Especially useful if you have grid setups which onl
 
 #### `.grid-generate([prefix])`
 
-This mixin will generate all configuration sensitive classes like `.g-span-`, `.g-offset` etc. in the current scope.
+This mixin will generate all configuration sensitive classes like `.g-span-{xx}`, `.g-offset-{xx}` etc. in the current scope.
 
 > [Read about prefixing](#additional-prefix)
 
@@ -219,16 +219,16 @@ Our idea and recommended way to implement a responsive grid in your project is t
 There are three mixins which will help you create responsive layouts.
 
 ```less
-.grid-col-set([col-name], [columns], [offset], [reorder]);
-.grid-col-set-equal([columns]);
-.grid-col-clear([column-count]);
+.grid-col-set(<col-name>, <columns>, [offset], [reorder]);
+.grid-col-set-equal(<columns>);
+.grid-col-clear(<column-count>);
 ```
 
-> If your project only consists of layouts and you never use classes like `.grid-span-xx` you don't even have to use `.grid-generate()`.
+> If your project only consists of layouts and you never use classes like `.grid-span-{xx}` you don't even have to use `.grid-generate()`.
 
 #### `grid-col-set`
 
-Generate a namespaced class `.[col-name]` as direct child of `.g-row`. Note that `[offset]` and `[reorder]` are optional parameters
+Generate a namespaced class `.{col-name}` as direct child of `.g-row`. Note that `[offset]` and `[reorder]` are optional parameters
 and can be omitted if not used.
 
 > We use direct child selectors so different responsive layouts cannot interfere with each other.

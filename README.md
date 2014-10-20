@@ -115,7 +115,7 @@ There are two ways to set up a grid with Spartan, within the basic usage we only
 The basic grid setup requires you to call just one mixin, pass in a configuration and an optional prefix (read more about custom classes in the [documentation](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#custom-classes)).
 
 ```less
-@grid-config: [grid-width], [grid-type], [gutter-width], [gutter-type], [grid-columns];
+@grid-config: <grid-width>, <grid-type>, <gutter-width>, <gutter-type>, <grid-columns>;
 
 .grid-bundle([prefix], @grid-config);
 ```
@@ -160,7 +160,7 @@ If you are not using a grid prefix, you have to name the config param, so `.grid
 - `.g-row` initializes a grid row and uses [H5BP clearfix](https://github
 .com/h5bp/html5-boilerplate/blob/master/css/main.css#L161) to contain the floating `.g-col`s.
 - `.g-col` applies default column styles like float and padding (gutter).
-- `.g-span-[columns]` applies a column based width according ot the set maximum amount of columns.
+- `.g-span-<columns>` applies a column based width according ot the set maximum amount of columns.
 
 ### Grid Classes and Mixins
 
@@ -168,14 +168,14 @@ Spartan comes with an integrated LessCSS loop to generate grid classes according
 the generated classes you can also use similar named mixins to apply the grid in a less style sheet.
 
 ```less
-.grid-span([columns]), .g-span-[columns]
-.grid-offset([columns]), .g-offset-[columns]
-.grid-push([columns]), .g-push-[columns]
-.grid-pull([columns]), .g-pull-[columns]
+.grid-span(<columns>), .g-span-{columns}
+.grid-offset(<columns>), .g-offset-{columns}
+.grid-push(<columns>), .g-push-{columns}
+.grid-pull(<columns>), .g-pull-{columns}
 ```
 
 #### `grid-span`
-Override the width of a column (default is full-width), equivalent to `.g-span-[columns]`. This mixin allows you to pass
+Override the width of a column (default is full-width), equivalent to `.g-span-<columns>`. This mixin allows you to pass
 in floating point numbers, which enables you to define literally **any** width using the mixin.
 
 ```less
@@ -184,14 +184,14 @@ in floating point numbers, which enables you to define literally **any** width u
 ```
 
 #### `grid-offset`
-Indent a column by the defined amount of grid columns, equivalent to `.g-offset-[columns]`.
+Indent a column by the defined amount of grid columns, equivalent to `.g-offset-{columns}`.
 While there are just positive indents in generated classes, you could also call this mixin with negative values.
 
 > **Note:** Using negative indents generally only works in static width grids.
 
 #### `grid-push` and `grid-pull`
 Together with the additional class `.g-reorder` on `.g-row` you can reorder columns visually without changing the 
-order in HTML. Equivalent to `.g-push-[columns]` and `.g-pull-[columns]`, similar behavior as `.grid-offset()`.
+order in HTML. Equivalent to `.g-push-{columns}` and `.g-pull-{columns}`, similar behavior as `.grid-offset()`.
 
 > Note that you may run into problems if these are used within certain responsive layouts as they use relative positioning.
 
