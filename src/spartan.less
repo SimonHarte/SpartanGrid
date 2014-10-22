@@ -1,5 +1,9 @@
-// GRID CALCULATIONS
+/*
+Spartan grid version 3.4.0: https://github.com/SimonHarte/SpartanGrid
+*/
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// GRID CALCULATIONS
 
 // Note: We use !important statements for grid layout critical styles.
 //       Like this you can define for example margin and padding shorthands without affecting the grid.
@@ -50,16 +54,6 @@
 			margin-left: round((@one-col * @num), @precision);
 		}
 
-		// used only on .g-col for uniquely applied gutter
-		.spartan-gutter(@num: 0) when (@num >= 0) {
-			padding-left: ceil(@col-gutter * pow(10, @precision)) / pow(10, @precision);
-		}
-
-		// used only on .g-row for proper negative indents
-		.spartan-gutter(@num: 0) when (@num < 0) {
-			margin-left: round(-@row-gutter, @precision);
-		}
-
 		// visually manipulate grid column order with these mixins
 		.spartan-push(@num) {
 			left: round((@one-col * @num), @precision);
@@ -103,8 +97,8 @@
 	}
 }
 
-// GLOBAL MIXINS
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// GLOBAL STYLE MIXINS
 
 // provide standardized, prefixed mixins
 // values will depend on grid type
@@ -137,8 +131,8 @@
 	.grid-pull(abs(@num));
 }
 
-// LAYOUT SETUP HELPERS
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// LAYOUT SETUP HELPERS
 
 // You can use the following mixins to easily set up responsive layouts.
 // For grid layouts with non-equal span sizes use incrementing col-[integer] classes and apply sizes to each of these classes.
@@ -214,11 +208,42 @@
 	.grid-col-clear(@spartan-clear);
 }
 
-// GRID CREATION API
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// GRID CREATION API
 
-// generate base grid classes valid for every setup
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// CORE STYLES
+
 .grid-core(@ns: g) {
+	// Float precision used for rounding is the most important variable because we get different behaviours over browsers
+	// and certain grid container widths. Note that rounding issues only exist for width and padding style properties.
+	// 
+	// There are two factors to consider when adjusting the precision:
+	// - precision value itself
+	// - using round(), floor() or ceil() to calculate width and padding (column gutter)
+	// 
+	// Tests have shown these behaviours:
+	// 
+	// - Using precision < 3:
+	//     - We get inaccurate values with round(), floor(), and ceil()
+	// - Using precision = 3:
+	//     - We get inaccurate values in Safari when using floor(),
+	//     - We get inaccurate values with round() and ceil() which leads to jumping columns,
+	//       with round() starting in containers larger than ~800px (FF)
+	// - Using precision = 4:
+	//     - We get inaccurate values in Safari when using round() and floor()
+	//     - We get an overall good behaviour when using ceil(),
+	//       columns will start jumping in containers larger than ~2200px (FF)
+	// - Using precision > 4:
+	//     - We get inaccurate values in Safari with round() and floor()
+	//     - We get an overall good behaviour when using ceil()
+	// 
+	// Recommendation:
+	// Using a float precision of 5 together with ceil() seems to be the smallest possible,
+	// most accurate amount for a future-proof grid system.
+	
+	@spartan-grid-precision: 5;
+	
 	.set-namespace(@ns) when not (@ns = '') {
 		@spartan-namespace: ~'@{ns}-';
 	}
@@ -277,10 +302,25 @@
 		.grid-box-sizing();
 		float: left;
 		margin-left: 0 !important;
+		// columns should per default span the whole width if none is set
+		width: 100%;
 	}
 }
 
-.grid-gutter() {
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// GRID GUTTER
+
+.spartan-gutter-styles(@row-gutter, @col-gutter, @precision) {
+	// used only on .g-col for uniquely applied gutter
+	.spartan-gutter(@num: 0) when (@num >= 0) {
+		padding-left: ceil(@col-gutter * pow(10, @precision)) / pow(10, @precision);
+	}
+
+	// used only on .g-row for proper negative indents
+	.spartan-gutter(@num: 0) when (@num < 0) {
+		margin-left: round(-@row-gutter, @precision);
+	}
+	
 	// base row and gutter styles must be set anew
 	.@{spartan-namespace}row {
 		.spartan-gutter(-1) !important;
@@ -289,10 +329,57 @@
 	.@{spartan-namespace}col {
 		// one gutter indent for each column
 		.spartan-gutter(1) !important;
-		// columns should per default span the whole width if none is set
-		.grid-span(@spartan-grid-max-cols);
 	}
 }
+
+// passing no argument
+.grid-gutter() when (default()) {
+	.grid-gutter(@spartan-grid-fixed-width, @spartan-grid-fixed-gutter);
+}
+.grid-gutter() when (@spartan-grid-gutter-type = 'fixed') {
+	.grid-gutter(@spartan-grid-fixed-gutter);
+}
+
+// passing one argument
+.grid-gutter(@gutter-width) when (default()) {
+	.spartan-gutter-styles(
+		@gutter-width, // row gutter
+		@gutter-width, // column gutter
+		@spartan-grid-precision
+	);
+}
+.grid-gutter(@gutter-width) when (ispercentage(@gutter-width)) {
+	.spartan-gutter-styles(
+		@gutter-width, // row gutter
+		percentage(@gutter-width / (100% + @gutter-width)), // column gutter
+		@spartan-grid-precision
+	);
+}
+
+// passing two arguments
+.grid-gutter(@grid-width, @gutter-width) when (default()) {
+	.grid-gutter(@grid-width, unit(@gutter-width, px));
+}
+.grid-gutter(@grid-width, @gutter-width) when (ispixel(@gutter-width)) {
+	.spartan-gutter-styles(
+		percentage(@gutter-width / @grid-width), // row gutter
+		percentage(@gutter-width / (@grid-width + @gutter-width)), // column gutter
+		@spartan-grid-precision
+	);
+}
+.grid-gutter(@grid-width, @gutter-width) when (isem(@gutter-width)) {
+	.spartan-gutter-styles(
+		percentage((@gutter-width*16) / @grid-width), // row gutter
+		percentage((@gutter-width*16) / (@grid-width + (@gutter-width*16))), // column gutter
+		@spartan-grid-precision
+	);
+}
+.grid-gutter(@grid-width, @gutter-width) when (ispercentage(@gutter-width)) {
+	.grid-gutter(@gutter-width);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// UNLOCK GRID CONFIGURATION
 
 .grid-unlock(@config...) {
 	@spartan-grid-fixed-width: extract(@config, 1);
@@ -300,35 +387,6 @@
 	@spartan-grid-max-cols: extract(@config, 5);
 	@spartan-grid-type: extract(@config, 2);
 	@spartan-grid-gutter-type: extract(@config, 4);
-	
-	// Float precision used for rounding is the most important variable because we get different behaviours over browsers
-	// and certain grid container widths. Note that rounding issues only exist for width and padding style properties.
-	// 
-	// There are two factors to consider when adjusting the precision:
-	// - precision value itself
-	// - using round(), floor() or ceil() to calculate width and padding (column gutter)
-	// 
-	// Tests have shown these behaviours:
-	// 
-	// - Using precision < 3:
-	//     - We get inaccurate values with round(), floor(), and ceil()
-	// - Using precision = 3:
-	//     - We get inaccurate values in Safari when using floor(),
-	//     - We get inaccurate values with round() and ceil() which leads to jumping columns,
-	//       with round() starting in containers larger than ~800px (FF)
-	// - Using precision = 4:
-	//     - We get inaccurate values in Safari when using round() and floor()
-	//     - We get an overall good behaviour when using ceil(),
-	//       columns will start jumping in containers larger than ~2200px (FF)
-	// - Using precision > 4:
-	//     - We get inaccurate values in Safari with round() and floor()
-	//     - We get an overall good behaviour when using ceil()
-	// 
-	// Recommendation:
-	// Using a float precision of 5 together with ceil() seems to be the smallest possible,
-	// most accurate amount for a future-proof grid system.
-	
-	@spartan-grid-precision: 5;
 
 	// set up grid styles depending on an included config
 	.spartan-grid(
@@ -340,6 +398,9 @@
 		@spartan-grid-precision
 	);
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// GENERATE BASE CLASSES
 
 .grid-generate(@prefix: '') {
 	.set-prefix(@prefix) when not (@prefix = '') {
@@ -370,9 +431,12 @@
 	.spartan-loop(@spartan-grid-max-cols - 1, ~'@{spartan-selector}pull', 'grid-pull');
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// DO EVERYTHING AT ONCE
+
 .grid-bundle(@ns: g, @config...) {
 	.grid-core(@ns);
 	.grid-unlock(@config);
-	.grid-gutter(extract(@config, 3), extract(@config, 4));
+	.grid-gutter();
 	.grid-generate();
 }
