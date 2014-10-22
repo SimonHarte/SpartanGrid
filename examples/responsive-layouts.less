@@ -1,6 +1,8 @@
 // Content oriented media queries //
 @reading-length: 40em;
 
+@grid-max-cols: 12;
+
 // breakpoints
 @m-small-max: @reading-length;
 @m-medium-min: (@reading-length + .01);
@@ -18,21 +20,21 @@
 * You can use the following mixins to easily set up responsive layouts.
 * For grid layouts with non-equal span sizes use incrementing col-[integer] classes and apply sizes to each of these classes:
 *
-* .grid-col-set([column name], [column span width], [column offset]):
+* .grid-col-set(<column name>, <column width>, [column offset], [column reordering]):
 * Standard mixin to set up a column in a responsive layout
 *
 * To set up layouts with equal width columns you only specify the width in `.col-set-equal`.
 *
-* .grid-col-set-equal([column span width]):
+* .grid-col-set-equal(<column width>):
 * Extended mixin to set up equal width columns and properly clear them at the same time
 *
 * Note: Every use of .col-set-equal() must be wrapped in a media query (even for smallest "mobile first" viewport).
 * Because else the `nth-child` selectors used in ` .col-set-equal()` for proper clearing would be passed on to all
 * other viewports/media queries in the layout.
 *
-* .grid-col-clear([columns per line]):
-* Use this to manually clear every nth column if columns differ in height.
-* This ensures that a grid layout can have only [columns per line] columns on one horizontal grid line.
+* .grid-col-clear(<columns per line>):
+* Use this to manually clear every nth+1 column if columns differ in height.
+* This ensures that a grid layout can have only <columns per line> columns on one horizontal grid line.
 *
 **/
 
@@ -44,11 +46,11 @@
 	// large: 4
 
 	@media @m-medium {
-		.grid-col-set-equal(6);
+		.grid-col-set-equal(@grid-max-cols/2);
 	}
 
 	@media @m-large {
-		.grid-col-set-equal(4);
+		.grid-col-set-equal(@grid-max-cols/3);
 	}
 }
 
@@ -58,18 +60,18 @@
 	// large: 6
 
 	@media @m-large {
-		.grid-col-set-equal(6);
+		.grid-col-set-equal(@grid-max-cols/2);
 	}
 }
 
 .g-layout-3 {
 	// small: 12
-	// medium: 8/4
-	// large: 8/4
+	// medium: 8 | 4
+	// large: 8 | 4
 
 	@media @m-medium-up {
-		.grid-col-set(col-1, 8);
-		.grid-col-set(col-2, 4);
+		.grid-col-set('col-1', @grid-max-cols/3*2);
+		.grid-col-set('col-2', @grid-max-cols/3);
 	}
 }
 
@@ -78,31 +80,29 @@
 	// medium: 6 offset 6
 	// large: 4 offset 8
 
-	@media @m-small {
-		.grid-col-set(col, 4, 8);
+	@media @m-medium {
+		.grid-col-set('col', @grid-max-cols/2, @grid-max-cols/2);
 	}
 
-	@media @m-medium {
-		.grid-col-set(col, 6, 6);
+	@media @m-large {
+		.grid-col-set('col', @grid-max-cols/3, @grid-max-cols/3*2);
 	}
 }
 
 .g-layout-nogrid {
-	// small: 5
-	// medium: 7
-	// large: 9
-	
-	// variable @spartan-grid-max-cols gets defined by the grid
+	// small: 5 columns
+	// medium: 7 columns
+	// large: 9 columns
 	
 	@media @m-small {
-		.grid-col-set(col, (@spartan-grid-max-cols / 5));
+		.grid-col-set('col', (@grid-max-cols / 5));
 	}
 
 	@media @m-medium {
-		.grid-col-set(col, (@spartan-grid-max-cols / 7));
+		.grid-col-set('col', (@grid-max-cols / 7));
 	}
 
 	@media @m-large {
-		.grid-col-set(col, (@spartan-grid-max-cols / 9));
+		.grid-col-set('col', (@grid-max-cols / 9));
 	}
 }

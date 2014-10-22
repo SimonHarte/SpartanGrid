@@ -1,18 +1,20 @@
+// See: https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#viewport-dependent-grids
+
 // Content oriented media queries //
 @reading-length: 40em;
 
 // breakpoints
-@m-small-max: @reading-length;
-@m-medium-min: (@reading-length + .01);
-@m-medium-max: (@reading-length*2);
-@m-large-min: (@reading-length*2 + .01);
+@m-small-max:   @reading-length;
+@m-medium-min:  (@reading-length + .01);
+@m-medium-max:  (@reading-length*2);
+@m-large-min:   (@reading-length*2 + .01);
 
 // queries
-@m-small: ~"(max-width: @{m-small-max})";
-@m-medium: ~"(min-width: @{m-medium-min}) and (max-width: @{m-medium-max})";
-@m-medium-up: ~"(min-width: @{m-medium-min})";
+@m-small:       ~"(max-width: @{m-small-max})";
+@m-medium:      ~"(min-width: @{m-medium-min}) and (max-width: @{m-medium-max})";
+@m-medium-up:   ~"(min-width: @{m-medium-min})";
 @m-medium-down: ~"(max-width: @{m-medium-max})";
-@m-large: ~"(min-width: @{m-large-min})";
+@m-large:       ~"(min-width: @{m-large-min})";
 
 .grid-core();
 
