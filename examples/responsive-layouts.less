@@ -16,6 +16,18 @@
 @m-medium-down: ~"(max-width: @{m-medium-max})";
 @m-large: ~"(min-width: @{m-large-min})";
 
+// base grid without gutter and classes
+@grid-width:    940px;
+@grid-type:     'fluid';
+@grid-gutter:   20px;
+@grid-gtype:    'fixed';
+@grid-gcount:   12;
+
+@grid-config: @grid-width, @grid-type, @grid-gutter, @grid-gtype, @grid-gcount;
+
+.grid-core();
+.grid-unlock(@grid-config);
+
 /**
 * You can use the following mixins to easily set up responsive layouts.
 * For grid layouts with non-equal span sizes use incrementing col-[integer] classes and apply sizes to each of these classes:
