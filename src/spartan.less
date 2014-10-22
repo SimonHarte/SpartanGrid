@@ -321,8 +321,7 @@ Spartan grid version 3.4.0: https://github.com/SimonHarte/SpartanGrid
 		margin-left: round(-@row-gutter, @precision);
 	}
 	
-	// base row and gutter styles must be set anew
-	.@{spartan-namespace}row {
+	&.@{spartan-namespace}row {
 		.spartan-gutter(-1) !important;
 	}
 
