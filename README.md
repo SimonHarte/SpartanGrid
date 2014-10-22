@@ -56,7 +56,7 @@ Spartan arose from a project where we had the need for a fluid responsive grid s
 
 ### Have a Project at the Ready?
 
-- Integrate [`lib/spartan.less`](https://github.com/SimonHarte/SpartanGrid/blob/master/lib/spartan.less) in your project
+- Integrate [`src/spartan.less`](https://github.com/SimonHarte/SpartanGrid/blob/master/src/spartan.less) in your project
 - Use the [API mixin(s)](#grid-setup) to set up your grid
 
 > Spartan will not generate any CSS until you use the setup API.
@@ -65,46 +65,26 @@ Spartan arose from a project where we had the need for a fluid responsive grid s
 
 - Download Spartan
 - Adjust `grid-setup.less`
-- Execute: `lessc compile.less grid.css`
+- Execute: `sh scripts/compile.sh`
 
 ## Grid Structure
 
-Here's a short example of how a Spartan grid looks like with a responsive layout implementation:
+Here's a short example of Spartans base structure in a 12-column grid:
 
 **HTML**
 
 ```html
-<div class="g-row g-layout-1">
-	<div class="g-col"></div>
-	<div class="g-col"></div>
-	<div class="g-col"></div>
-	<div class="g-col"></div>
+<div class="g-row">
+	<div class="g-col g-span-3"></div>
+	<div class="g-col g-span-3"></div>
+	<div class="g-col g-span-3"></div>
+	<div class="g-col g-span-3"></div>
 </div>
 ```
 
-**LessCSS**
-
-```less
-.g-layout-1 {
-	// maximum columns: 12
-	// omit small media definition as it uses full width anyway
-	
-	// 2 columns in medium screen
-	@media (min-width: 40.01em) and (max-width: 65em) {
-		.grid-col-set-equal(6);
-	}
-	// 3 columns in large screen
-	@media (min-width: 65.01em) {
-		.grid-col-set-equal(4);
-	}
-}
-```
-
-> Watch out not to use overlapping media queries!
-
 Spartan uses a negative left margin on `.g-row` and left padding (gutter) on `.g-col`s for having a consistent structure and reduced output css.
 
-Check out [examples](https://github.com/SimonHarte/SpartanGrid/blob/master/examples/responsive-layouts.less) for more responsive layouts.
+Check out [responsive approaches](https://github.com/SimonHarte/SpartanGrid/blob/develop/Documentation.md#responsive-approaches) with Spartan.
 
 ## Basic Usage
 
@@ -175,7 +155,7 @@ the generated classes you can also use similar named mixins to apply the grid in
 ```
 
 #### `grid-span`
-Override the width of a column (default is full-width), equivalent to `.g-span-<columns>`. This mixin allows you to pass
+Override the width of a column (default is full-width), equivalent to `.g-span-{columns}`. This mixin allows you to pass
 in floating point numbers, which enables you to define literally **any** width using the mixin.
 
 ```less

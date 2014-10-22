@@ -6,8 +6,8 @@
 	- [Viewport Dependent Grids](#viewport-dependent-grids)
 	- [Custom Classes](#custom-classes)
 - [Responsive Approaches](#responsive-approaches)
-	- [The "Spartan Way"](#the-spartan-way-layouts)
-	- [The "Twitter Bootstrap Way"](#the-twitter-bootstrap-way-building-bricks)
+	- [The "Spartan Way"](#the-spartan-way)
+	- [The "Twitter Bootstrap Way"](#the-twitter-bootstrap-way)
 
 ## Basic Usage
 
@@ -44,68 +44,7 @@ configuration within the current scope.
 
 Generate only gutter styles. Especially useful if you have grid setups which only differ in the gutter, so you don't have to generate gutter styles anew.
 
-*Example old*:
-
-```less
-.grid-core();
-
-// grid configurations have different gutters only
-@grid-config-1: 940px, 'fluid', 20px, 'fixed', 12;
-@grid-config-2: 940px, 'fluid', 15px, 'fluid', 12;
-
-// unlock and use spartan in one scope (layout)
-.some-scope {
-	// every unlock generated gutter styles
-	.grid-unlock(@grid-config-1);
-	
-	// etc...
-}
-
-// unlock differing config in another scope
-.alternate-scope {
-	// every unlock generated gutter styles
-	.grid-unlock(@grid-config-2);
-	
-	// etc...
-}
-
-// unlock first config again in a new scope
-.last-scope {
-	// every unlock generated gutter styles
-	.grid-unlock(@grid-config-1);
-	
-	// etc...
-}
-```
-
-*Example NEW*:
-
-```less
-.grid-core();
-
-// same grid configs as above
-// generate gutter styles once for different scopes
-
-.some-scope {
-	.grid-unlock(@grid-config-1);
-	.grid-gutter();
-}
-
-.alternate-scope {
-	.grid-unlock(@grid-config-2);
-	.grid-gutter();
-}
-
-.last-scope {
-	// get gutter styles from one scope
-	&:extend(.some-scope all);
-	
-	// unlock does not generate gutters again
-	.grid-unlock(@grid-config-1);
-	
-	// etc...
-}
-```
+Checkout the [differing gutter setup](https://github.com/SimonHarte/SpartanGrid/tree/master/examples/differing-gutters.less) example.
 
 #### `.grid-generate([prefix])`
 
@@ -126,19 +65,19 @@ different viewports like so:
 
 @media (max-width: 40em) {
 	// grid setup for small screen
-	.grid-unlock(@config: 'fluid', 940px, 5px, 'fixed', 12;);
+	.grid-unlock(@config: 940px, 'fluid', 5px, 'fixed', 12;);
 	.grid-gutter();
 	.grid-generate();
 }
 @media (min-width: 40.01em) and (max-width: 65em) {
 	// grid setup for medium screen
-	.grid-unlock(@config: 'fluid', 940px, 15px, 'fixed', 12;);
+	.grid-unlock(@config: 940px, 'fluid', 15px, 'fixed', 12;);
 	.grid-gutter();
 	.grid-generate();
 }
 @media (min-width: 65.01em) {
 	// grid setup for large screen
-	.grid-unlock(@config: 'fluid', 940px, 30px, 'fluid', 12;);
+	.grid-unlock(@config: 940px, 'fluid', 30px, 'fluid', 12;);
 	.grid-gutter();
 	.grid-generate();
 }
@@ -189,9 +128,9 @@ See it as an addition to the namespace which counts for all generated classes wh
 Lets assume the following setup:
 
 ```less
-.grid-core(grid);
+.grid-core('grid');
 .grid-unlock(@grid-config);
-.grid-generate(test);
+.grid-generate('test');
 ```
 
 This will generate the base classes as mentioned in the [namespace section](#namespace):
@@ -237,7 +176,7 @@ and can be omitted if not used.
 
 | Param | Type | Value | Comment |
 |-------|:-----|:------|:--------|
-| `col-name`    | string | | quoted or unquoted, example: `col-1` |
+| `col-name`    | string | | quoted or unquoted, example: `'col-1'` |
 | `columns`     | number | only positive | |
 | `offset`      | number | positive or negative | optional, uses `.grid-offset()` to apply indents |
 | `reorder`     | number | positive or negative | optional, uses `.grid-reorder()` to reposition a column |
@@ -248,8 +187,8 @@ This mixin is used to define different columns inside a layout, so if one column
 ```less
 .g-layout-2 {
 	// max columns: 12
-	.grid-col-set(col-1, 8);
-	.grid-col-set(col-2, 4);
+	.grid-col-set('col-1', 8);
+	.grid-col-set('col-2', 4);
 }
 ```
 
@@ -270,15 +209,37 @@ Example with reordered columns:
 	.grid-row-reorder();
 	
 	// switch positions of columns
-	.grid-col-set(col-1, 6, 0, 6);
-	.grid-col-set(col-2, 6, 0, -6);
+	.grid-col-set('col-1', 6, 0, 6);
+	.grid-col-set('col-2', 6, 0, -6);
 }
 ```
 
 #### `grid-col-set-equal`
 
-Generate a `.g-col` selector as direct child of `.g-row` with the given width and also properly clear columns every 
+Generate a direct child selector `.g-col` with the given width and also properly clear columns every 
 nth child element using the `.grid-col-clear()` mixin.
+
+Example LessCSS:
+
+```less
+@grid-columns: 12;
+
+.g-layout-1 {
+	.grid-col-set-equal(@grid-columns/4);
+}
+```
+
+Example output CSS:
+
+```css
+.g-layout-1 > .g-col {
+	width: 25%;
+}
+	
+.g-layout-1 > .g-col:nth-child(4n+1) {
+	clear: left;
+}
+```
 
 #### `grid-col-clear`
 
@@ -297,11 +258,11 @@ line, clear the 4th, the 7th, the 10th etc.
 
 	@media (min-width: 40.01em) and (max-width: 65em) {
 		// 2 columns in medium screen
-		.grid-col-set-equal(6);
+		.grid-col-set-equal(6); // 12 / 2 = 6
 	}
 	@media (min-width: 65.01em) {
 		// 3 columns in large screen
-		.grid-col-set-equal(4);
+		.grid-col-set-equal(4); // 12 / 3 = 4
 	}
 }
 ```
@@ -324,16 +285,16 @@ Simply make use of the optional parameter to [`.grid-generate()`](#custom-classe
 .grid-unlock(@grid-config);
 
 // generate mobile first, small screen classes
-.grid-generate(sm);
+.grid-generate('sm');
 
 // generate medium screen classes
 @media (min-width: 40.01em) and (max-width: 65em) {
-	.grid-generate(md);
+	.grid-generate('md');
 }
 
 // generate large screen classes
 @media (min-width: 65.01em) {
-	.grid-generate(lg);
+	.grid-generate('lg');
 }
 ```
 
