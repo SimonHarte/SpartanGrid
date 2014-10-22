@@ -1,0 +1,36 @@
+.grid-core();
+
+@grid-config-1: 940px, 'fluid', 20px, 'fluid', 12;
+@grid-config-2: 940px, 'fluid', 40px, 'fluid', 12;
+
+.g-gutter-single {
+	.grid-unlock(@grid-config-1);
+	// generate only gutter styles
+	.grid-gutter();
+}
+
+.g-gutter-double {
+	.grid-unlock(@grid-config-2);
+	// generate only gutter styles
+	.grid-gutter();
+}
+
+.g-layout-1 {
+	// use preset gutter
+	&:extend(.g-gutter-single all);
+	
+	// unlock a config again (only needed to get grid mixins in this scope)
+	.grid-unlock(@grid-config-1);
+	// and generate selectors
+	.grid-col-set-equal(4);
+}
+
+.g-layout-2 {
+	// use preset gutter
+	&:extend(.g-gutter-double all);
+	
+	// unlock a config again (only needed to get grid mixins in this scope)
+	.grid-unlock(@grid-config-2);
+	// and generate selectors
+	.grid-col-set-equal(3);
+}

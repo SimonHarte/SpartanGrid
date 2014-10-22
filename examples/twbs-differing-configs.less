@@ -1,0 +1,42 @@
+// See: https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#the-twitter-bootstrap-way
+
+// Content oriented media queries //
+@reading-length: 40em;
+
+// breakpoints
+@m-small-max:   @reading-length;
+@m-medium-min:  (@reading-length + .01);
+@m-medium-max:  (@reading-length*2);
+@m-large-min:   (@reading-length*2 + .01);
+
+// queries
+@m-small:       ~"(max-width: @{m-small-max})";
+@m-medium:      ~"(min-width: @{m-medium-min}) and (max-width: @{m-medium-max})";
+@m-medium-up:   ~"(min-width: @{m-medium-min})";
+@m-medium-down: ~"(max-width: @{m-medium-max})";
+@m-large:       ~"(min-width: @{m-large-min})";
+
+// set up twitter bootstrap like grid classes for every viewport with differing configurations
+@grid-config-s: 940px, 'fluid', 10px, 'fixed', 12;
+@grid-config-m: 940px, 'fluid', 20px, 'fixed', 12;
+@grid-config-l: 940px, 'fluid', 40px, 'fixed', 12;
+
+.grid-core();
+
+@media @m-small {
+	.grid-unlock(@config: @grid-config-s);
+	.grid-gutter();
+	.grid-generate('sm');
+}
+
+@media @m-medium {
+	.grid-unlock(@config: @grid-config-m);
+	.grid-gutter();
+	.grid-generate('md');
+}
+
+@media @m-large {
+	.grid-unlock(@config: @grid-config-l);
+	.grid-gutter();
+	.grid-generate('lg');
+}
