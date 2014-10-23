@@ -5,6 +5,7 @@
 	- [Grid Setup API](#grid-setup-api)
 	- [Viewport Dependent Grids](#viewport-dependent-grids)
 	- [Custom Classes](#custom-classes)
+- [Semantic Grid](#semantic-grid)
 - [Responsive Approaches](#responsive-approaches)
 	- [The "Spartan Way"](#the-spartan-way)
 	- [The "Twitter Bootstrap Way"](#the-twitter-bootstrap-way)
@@ -27,8 +28,7 @@ This will generate the core selectors and styles needed for any grid setup, e.g.
 
 #### `.grid-unlock(<config>)`
 
-Pass in your grid configuration like with `.grid-bundle()`. This will unlock all the grid mixins using your 
-configuration within the current scope.
+Pass in your grid configuration like with `.grid-bundle()`. This will unlock all the grid mixins using your configuration within the current scope (or globally).
 
 ```less
 #my-scope {
@@ -40,21 +40,54 @@ configuration within the current scope.
 }
 ```
 
-#### `.grid-gutter()`
+#### `.grid-gutters([relation|gutter], [gutter])`
 
-Generate only gutter styles. Especially useful if you have grid setups which only differ in the gutter, so you don't have to generate gutter styles anew.
+Generate only gutter styles. Especially useful if you have grid setups which only differ in the gutter, so you don't have to generate all classes anew.
 
 Checkout the [differing gutter setup](https://github.com/SimonHarte/SpartanGrid/tree/master/examples/differing-gutters.less) example.
 
-#### `.grid-generate([prefix])`
+You can call `.grid-gutters()` without parameters, in that case it simply relies on your unlocked grid configuration,
+or you call it with either a fix value which will be taken as is or provide a relation to which a percentage value will be calculated.
+
+**Rely on Config**
+```
+.grid-gutters();
+```
+
+**Fixed values**
+
+```less
+.grid-gutters(20px);
+
+.grid-gutters(1.5em);
+
+.grid-gutters(3%);
+```
+
+**Relational percentage value**
+
+```
+.grid-gutters(940px, 20px);
+
+.grid-gutters(940px, 1.5em); // em are simply multiplied with 16 for calculation
+```
+
+#### `.grid-generate([prefix], [@columns])`
 
 This mixin will generate all configuration sensitive classes like `.g-span-{xx}`, `.g-offset-{xx}` etc. in the current scope.
 
 > [Read about prefixing](#additional-prefix)
 
-### Viewport Dependent Grids
+If you pass an optional column amount, it will use this value for generation while relying on your unlocked config.
+So if you know you'll never use classes for more than half the grid width you can reduce output css by only generating those classes:
 
-You can call `.grid-unlock()` and `.grid-generate()` **inside media queries** to generate different grid setups for 
+```
+.grid-generate(@columns: 6);
+```
+
+### Viewport Dependent Configurations
+
+You can call `.grid-unlock()`, `.grid-gutters()` and `.grid-generate()` **inside media queries** to generate different grid setups for 
 different viewports like so:
 
 ```less
@@ -66,19 +99,19 @@ different viewports like so:
 @media (max-width: 40em) {
 	// grid setup for small screen
 	.grid-unlock(@config: 940px, 'fluid', 5px, 'fixed', 12;);
-	.grid-gutter();
+	.grid-gutters();
 	.grid-generate();
 }
 @media (min-width: 40.01em) and (max-width: 65em) {
 	// grid setup for medium screen
 	.grid-unlock(@config: 940px, 'fluid', 15px, 'fixed', 12;);
-	.grid-gutter();
+	.grid-gutters();
 	.grid-generate();
 }
 @media (min-width: 65.01em) {
 	// grid setup for large screen
 	.grid-unlock(@config: 940px, 'fluid', 30px, 'fluid', 12;);
-	.grid-gutter();
+	.grid-gutters();
 	.grid-generate();
 }
 ```
@@ -108,7 +141,7 @@ You can always use `.grid-unlock()` in any separated media query to unlock grid 
 
 `.grid-bundle()` (as well as `.grid-core()`) takes one optional parameter `namespace`, with which you can customize the generated classes.
 
- This namespace is per default set to `g`, but you can simply just change it, so if you set `namespace` to for example 
+ This namespace is per default set to `g`, but you can simply just change it, so if you set `[namespace]` to for example 
  `grid` the generated classes will look like this:
 
 ```less
@@ -150,6 +183,59 @@ But the other classes will look like this:
 
 > Check out the ["Twitter Bootstrap"](#the-twitter-bootstrap-way) responsive approach too see how this can be of use.
 
+## Semantic Grid
+
+Spartan comes with two mixins for applying grid styles to any selector:
+
+- `.grid-row([gutter])`
+- `.grid-col([gutter])`
+
+As you could imagine `.grid-row()` applies all row styles to your selector and `.grid-col()` does so for column styles.
+You can optionally overwrite the gutter from your previously unlocked settings.
+
+```less
+.product-list {
+	.grid-row();
+	
+	.product-item {
+		.grid-col();
+		.grid-span(4);
+	}
+}
+```
+
+You can use this with responsive layouts as well, the only requirement is to eliminate the general [grid namespace](#namespace).
+
+```less
+.grid-core(''); // remove grid namespace so we later can define column classes freely
+.grid-unlock(940px, 'fluid', 20px, 'fixed', 12);
+
+.product-list {
+	.grid-row();
+	
+	.product {
+		.grid-col();
+	}
+	
+	// use layout helpers to generate a semantic responsive layout
+	
+	@media @small {
+		// two columns per line
+		.grid-col-set('product', 6);
+	}
+	
+	@media @medium {
+		// three columns per line
+		.grid-col-set('product', 4);
+	}
+	
+	@media @large {
+		// four columns per line
+		.grid-col-set('product', 3);
+	}
+}
+```
+
 ## Responsive Approaches
 
 ### The "Spartan Way"
@@ -176,10 +262,10 @@ and can be omitted if not used.
 
 | Param | Type | Value | Comment |
 |-------|:-----|:------|:--------|
-| `col-name`    | string | | quoted or unquoted, example: `'col-1'` |
-| `columns`     | number | only positive | |
-| `offset`      | number | positive or negative | optional, uses `.grid-offset()` to apply indents |
-| `reorder`     | number | positive or negative | optional, uses `.grid-reorder()` to reposition a column |
+| `<col-name>`    | string | | quotes optional, example: `col-1` |
+| `<columns>`     | number | only positive | |
+| `[offset]`      | number | positive or negative | optional, uses `.grid-offset()` to apply indents |
+| `[reorder]`     | number | positive or negative | optional, uses `.grid-reorder()` to reposition a column |
 
 This mixin is used to define different columns inside a layout, so if one column takes 2/3 of the grid and the other 
 1/3 you'd use the mixin twice like this:
