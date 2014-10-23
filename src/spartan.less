@@ -1,5 +1,5 @@
 /*
-Spartan grid version 3.5.0: https://github.com/SimonHarte/SpartanGrid
+Spartan grid version 4.0.0: https://github.com/SimonHarte/SpartanGrid
 */
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -8,92 +8,47 @@ Spartan grid version 3.5.0: https://github.com/SimonHarte/SpartanGrid
 // Note: We use !important statements for grid layout critical styles.
 //       Like this you can define for example margin and padding shorthands without affecting the grid.
 
-.spartan-grid(@fixed-width, @grid-type, @fixed-gutter, @gutter-type, @max-cols, @precision) {
+.spartan-grid(@grid-type, @fixed-width, @gutter-with, @max-cols) {
 	// multiple mixins switch according to passed types
-	// mixin for standard fluid grid with fluid gutter
-	.spartan-create('fluid', 'fluid', @fixed-width, @fixed-gutter, @cols) {
+	
+	// mixin for fluid grid
+	.spartan-create(fluid, @fixed-width, @gutter-with, @cols) {
 		// implement grid mixins with type dependent variables
 		.spartan-grid-mixins(
-			percentage(@fixed-gutter / @fixed-width), // row gutter
-			percentage(@fixed-gutter / (@fixed-width + @fixed-gutter)), // column gutter
 			(100% / @cols) // single column width
 		);
 	}
 
-	// mixin for fluid grid and fixed gutter
-	.spartan-create('fluid', 'fixed', @fixed-width, @fixed-gutter, @cols) {
+	// mixin for fixed grid
+	.spartan-create(fixed, @fixed-width, @gutter-with, @cols) {
 		// implement grid mixins with type dependent variables
 		.spartan-grid-mixins(
-			@fixed-gutter, // row gutter
-			@fixed-gutter, // column gutter
-			(100% / @cols) // single column width
-		);
-	}
-
-	// only one mixin for fixed grid needed because we cannot make fluid gutters in static grid
-	.spartan-create('fixed', @gutter-type, @fixed-width, @fixed-gutter, @cols) {
-		// implement grid mixins with type dependent variables
-		.spartan-grid-mixins(
-			@fixed-gutter, // row gutter
-			@fixed-gutter, // column gutter
-			((@fixed-width + @fixed-gutter) / @cols) // single column width
+			((@fixed-width + @gutter-with) / @cols) // single column width
 		);
 	}
 
 	// call switch mixin to calculate variables depending on grid configuration
-	.spartan-create(@grid-type, @gutter-type, @fixed-width, @fixed-gutter, @max-cols);
+	.spartan-create(~'@{grid-type}', @fixed-width, @gutter-with, @max-cols);
 
 	// unlock grid mixins with modified variables
-	.spartan-grid-mixins(@row-gutter, @col-gutter, @one-col) {
+	.spartan-grid-mixins(@one-col) {
 		.spartan-span-width(@num) {
-			width: ceil((@one-col * @num) * pow(10, @precision)) / pow(10, @precision);
+			width: ceil((@one-col * @num) * pow(10, @spartan-grid-precision)) / pow(10, @spartan-grid-precision);
 		}
 
 		// indent grid columns either way with these mixins
 		.spartan-indent(@num: 0) {
-			margin-left: round((@one-col * @num), @precision);
+			margin-left: round((@one-col * @num), @spartan-grid-precision);
 		}
 
 		// visually manipulate grid column order with these mixins
 		.spartan-push(@num) {
-			left: round((@one-col * @num), @precision);
+			left: round((@one-col * @num), @spartan-grid-precision);
 		}
 
 		.spartan-pull(@num) {
-			right: round((@one-col * @num), @precision);
+			right: round((@one-col * @num), @spartan-grid-precision);
 		}
-	}
-
-	// less loop to generate grid classes
-	.spartan-loop (@index, @class: item, @mixin: '') when (@index > 0) {
-		// create the actual css selector
-		.@{class}-@{index} {
-			.spartan-apply(@mixin, @index);
-		}
-
-		// next iteration
-		.spartan-loop(@index - 1, @class, @mixin);
-	}
-
-	// GRID CLASS GENERATOR
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// mixins to call inside less loop
-	// use standardized global mixins - because we have them...
-
-	.spartan-apply('grid-span', @index) {
-		.grid-span(@index);
-	}
-
-	.spartan-apply('grid-offset', @index) {
-		.grid-offset(@index);
-	}
-
-	.spartan-apply('grid-push', @index) {
-		.grid-push(@index);
-	}
-
-	.spartan-apply('grid-pull', @index) {
-		.grid-pull(@index);
 	}
 }
 
@@ -209,9 +164,6 @@ Spartan grid version 3.5.0: https://github.com/SimonHarte/SpartanGrid
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// GRID CREATION API
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // CORE STYLES
 
 .grid-core(@ns: g) {
@@ -313,9 +265,10 @@ Spartan grid version 3.5.0: https://github.com/SimonHarte/SpartanGrid
 	}
 }
 
-.grid-row() {
+.grid-row(@gutter: @spartan-grid-gutter) {
 	.spartan-base-style('both');
 	.spartan-base-style('row');
+	.spartan-row-gutter(@gutter);
 }
 
 .grid-row-reorder() {
@@ -324,79 +277,80 @@ Spartan grid version 3.5.0: https://github.com/SimonHarte/SpartanGrid
 	}
 }
 
-.grid-col() {
+.grid-col(@gutter: @spartan-grid-gutter) {
 	.spartan-base-style('both');
 	.spartan-base-style('col');
+	.spartan-col-gutter(@gutter);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // GRID GUTTER
 
-.spartan-gutter-styles(@row-gutter, @col-gutter, @precision) {
-	// used only on .g-col for uniquely applied gutter
-	.spartan-gutter(@num: 0) when (@num >= 0) {
-		padding-left: ceil(@col-gutter * pow(10, @precision)) / pow(10, @precision);
-	}
+.spartan-row-gutter(@gutter) {
+	margin-left: round(-@gutter, @spartan-grid-precision);
+}
 
-	// used only on .g-row for proper negative indents
-	.spartan-gutter(@num: 0) when (@num < 0) {
-		margin-left: round(-@row-gutter, @precision);
-	}
-	
+// assuming px, em
+.spartan-col-gutter(@gutter) when (default()) {
+	padding-left: ceil(@gutter * pow(10, @spartan-grid-precision)) / pow(10, @spartan-grid-precision);
+}
+
+// assuming %
+.spartan-col-gutter(@gutter, true) when (ispercentage(@gutter)) {
+	// column gutter has to be slightly smaller with percentage value because container is bigger
+	padding-left: ceil(percentage(@gutter / (100% + @gutter)) * pow(10, @spartan-grid-precision)) / pow(10, @spartan-grid-precision);
+}
+
+.spartan-gutter-styles(@row-gutter, @col-gutter) {
 	&.@{spartan-namespace}row {
-		.spartan-gutter(-1) !important;
+		.spartan-row-gutter(@row-gutter);
 	}
 
 	.@{spartan-namespace}col {
-		// one gutter indent for each column
-		.spartan-gutter(1) !important;
+		.spartan-col-gutter(@col-gutter);
 	}
 }
 
 // passing no argument
-.grid-gutter() when (default()) {
-	.grid-gutter(@spartan-grid-fixed-width, @spartan-grid-fixed-gutter);
+.grid-gutters() when (default()) {
+	.grid-gutters(@spartan-grid-fixed-width, @spartan-grid-gutter);
 }
-.grid-gutter() when (@spartan-grid-gutter-type = 'fixed') {
-	.grid-gutter(@spartan-grid-fixed-gutter);
+.grid-gutters() when (@spartan-grid-type = 'fixed'), (@spartan-grid-gutter-type = 'fixed') {
+	.grid-gutters(@spartan-grid-gutter);
 }
 
 // passing one argument
-.grid-gutter(@gutter-width) when (default()) {
+.grid-gutters(@gutter-width) when (default()) {
 	.spartan-gutter-styles(
 		@gutter-width, // row gutter
-		@gutter-width, // column gutter
-		@spartan-grid-precision
+		@gutter-width // column gutter
 	);
 }
-.grid-gutter(@gutter-width) when (ispercentage(@gutter-width)) {
+.grid-gutters(@gutter-width) when (ispercentage(@gutter-width)) {
 	.spartan-gutter-styles(
 		@gutter-width, // row gutter
-		percentage(@gutter-width / (100% + @gutter-width)), // column gutter
-		@spartan-grid-precision
+		percentage(@gutter-width / (100% + @gutter-width)) // column gutter
 	);
 }
 
 // passing two arguments
-.grid-gutter(@grid-width, @gutter-width) when (default()) {
-	.grid-gutter(@grid-width, unit(@gutter-width, px));
+.grid-gutters(@grid-width, @gutter-width) when (default()) {
+	.grid-gutters(@grid-width, unit(@gutter-width, px));
 }
-.grid-gutter(@grid-width, @gutter-width) when (ispixel(@gutter-width)) {
+.grid-gutters(@grid-width, @gutter-width) when (ispixel(@gutter-width)) {
 	.spartan-gutter-styles(
 		percentage(@gutter-width / @grid-width), // row gutter
-		percentage(@gutter-width / (@grid-width + @gutter-width)), // column gutter
-		@spartan-grid-precision
+		percentage(@gutter-width / (@grid-width + @gutter-width)) // column gutter
 	);
 }
-.grid-gutter(@grid-width, @gutter-width) when (isem(@gutter-width)) {
+.grid-gutters(@grid-width, @gutter-width) when (isem(@gutter-width)) {
 	.spartan-gutter-styles(
 		percentage((@gutter-width*16) / @grid-width), // row gutter
-		percentage((@gutter-width*16) / (@grid-width + (@gutter-width*16))), // column gutter
-		@spartan-grid-precision
+		percentage((@gutter-width*16) / (@grid-width + (@gutter-width*16))) // column gutter
 	);
 }
-.grid-gutter(@grid-width, @gutter-width) when (ispercentage(@gutter-width)) {
-	.grid-gutter(@gutter-width);
+.grid-gutters(@grid-width, @gutter-width) when (ispercentage(@gutter-width)) {
+	.grid-gutters(@gutter-width);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -404,26 +358,26 @@ Spartan grid version 3.5.0: https://github.com/SimonHarte/SpartanGrid
 
 .grid-unlock(@config...) {
 	@spartan-grid-fixed-width: extract(@config, 1);
-	@spartan-grid-fixed-gutter: extract(@config, 3);
+	@spartan-grid-gutter: extract(@config, 3);
 	@spartan-grid-max-cols: extract(@config, 5);
 	@spartan-grid-type: extract(@config, 2);
 	@spartan-grid-gutter-type: extract(@config, 4);
 
 	// set up grid styles depending on an included config
 	.spartan-grid(
-		@spartan-grid-fixed-width,
 		@spartan-grid-type,
-		@spartan-grid-fixed-gutter,
-		@spartan-grid-gutter-type,
-		@spartan-grid-max-cols,
-		@spartan-grid-precision
+		@spartan-grid-fixed-width,
+		@spartan-grid-gutter,
+		@spartan-grid-max-cols
 	);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // GENERATE BASE CLASSES
 
-.grid-generate(@prefix: '') {
+.grid-generate(@prefix: '', @columns: @spartan-grid-max-cols) {
+	@spartan-grid-max-cols: @columns;
+	
 	.set-prefix(@prefix) when not (@prefix = '') {
 		@spartan-prefix: ~'@{prefix}-';
 	}
@@ -432,6 +386,36 @@ Spartan grid version 3.5.0: https://github.com/SimonHarte/SpartanGrid
 	}
 
 	.set-prefix(@prefix);
+
+	// less loop to generate grid classes
+	.spartan-loop (@index, @class: item, @mixin: '') when (@index > 0) {
+		// create the actual css selector
+		.@{class}-@{index} {
+			.spartan-apply(@mixin, @index);
+		}
+
+		// next iteration
+		.spartan-loop(@index - 1, @class, @mixin);
+	}
+
+	// mixins to call inside less loop
+	// use standardized global mixins - because we have them...
+
+	.spartan-apply('grid-span', @index) {
+		.grid-span(@index);
+	}
+
+	.spartan-apply('grid-offset', @index) {
+		.grid-offset(@index);
+	}
+
+	.spartan-apply('grid-push', @index) {
+		.grid-push(@index);
+	}
+
+	.spartan-apply('grid-pull', @index) {
+		.grid-pull(@index);
+	}
 	
 	// generate grid classes
 	// Parameters:
@@ -446,10 +430,10 @@ Spartan grid version 3.5.0: https://github.com/SimonHarte/SpartanGrid
 	
 	@spartan-selector: ~'@{spartan-namespace}@{spartan-prefix}';
 	
-	.spartan-loop(@spartan-grid-max-cols - 1, ~'@{spartan-selector}span', 'grid-span');
-	.spartan-loop(@spartan-grid-max-cols - 1, ~'@{spartan-selector}offset', 'grid-offset');
-	.spartan-loop(@spartan-grid-max-cols - 1, ~'@{spartan-selector}push', 'grid-push');
-	.spartan-loop(@spartan-grid-max-cols - 1, ~'@{spartan-selector}pull', 'grid-pull');
+	.spartan-loop(@columns, ~'@{spartan-selector}span', 'grid-span');
+	.spartan-loop(@columns, ~'@{spartan-selector}offset', 'grid-offset');
+	.spartan-loop(@columns, ~'@{spartan-selector}push', 'grid-push');
+	.spartan-loop(@columns, ~'@{spartan-selector}pull', 'grid-pull');
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -458,6 +442,6 @@ Spartan grid version 3.5.0: https://github.com/SimonHarte/SpartanGrid
 .grid-bundle(@ns: g, @config...) {
 	.grid-core(@ns);
 	.grid-unlock(@config);
-	.grid-gutter();
+	.grid-gutters();
 	.grid-generate();
 }
