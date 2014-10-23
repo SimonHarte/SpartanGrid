@@ -369,6 +369,7 @@ Simply make use of the optional parameter to [`.grid-generate()`](#custom-classe
 
 .grid-core(); // base classes, no change in namespace
 .grid-unlock(@grid-config);
+.grid-gutters(); // define gutter once
 
 // generate mobile first, small screen classes
 .grid-generate('sm');
