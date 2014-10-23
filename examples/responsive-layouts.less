@@ -1,7 +1,5 @@
 // Content oriented media queries //
-@reading-length: 40em;
-
-@grid-max-cols: 12;
+@reading-length: 35em;
 
 // breakpoints
 @m-small-max: @reading-length;
@@ -61,11 +59,11 @@
 	// large: 4
 
 	@media @m-medium {
-		.grid-col-set-equal(@grid-max-cols/2);
+		.grid-col-set-equal(@grid-gcount/2);
 	}
 
 	@media @m-large {
-		.grid-col-set-equal(@grid-max-cols/3);
+		.grid-col-set-equal(@grid-gcount/3);
 	}
 }
 
@@ -75,7 +73,7 @@
 	// large: 6
 
 	@media @m-large {
-		.grid-col-set-equal(@grid-max-cols/2);
+		.grid-col-set-equal(@grid-gcount/2);
 	}
 }
 
@@ -85,8 +83,8 @@
 	// large: 8 | 4
 
 	@media @m-medium-up {
-		.grid-col-set('col-1', @grid-max-cols/3*2);
-		.grid-col-set('col-2', @grid-max-cols/3);
+		.grid-col-set('col-1', @grid-gcount/3*2);
+		.grid-col-set('col-2', @grid-gcount/3);
 	}
 }
 
@@ -96,11 +94,11 @@
 	// large: 4 offset 8
 
 	@media @m-medium {
-		.grid-col-set('col', @grid-max-cols/2, @grid-max-cols/2);
+		.grid-col-set('col', @grid-gcount/2, @grid-gcount/2);
 	}
 
 	@media @m-large {
-		.grid-col-set('col', @grid-max-cols/3, @grid-max-cols/3*2);
+		.grid-col-set('col', @grid-gcount/3, @grid-gcount/3*2);
 	}
 }
 
@@ -110,14 +108,14 @@
 	// large: 9 columns
 	
 	@media @m-small {
-		.grid-col-set('col', (@grid-max-cols / 5));
+		.grid-col-set('col', (@grid-gcount / 5));
 	}
 
 	@media @m-medium {
-		.grid-col-set('col', (@grid-max-cols / 7));
+		.grid-col-set('col', (@grid-gcount / 7));
 	}
 
 	@media @m-large {
-		.grid-col-set('col', (@grid-max-cols / 9));
+		.grid-col-set('col', (@grid-gcount / 9));
 	}
 }
