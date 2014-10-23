@@ -284,6 +284,25 @@ Spartan grid version 4.0.0: https://github.com/SimonHarte/SpartanGrid
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// UNLOCK GRID CONFIGURATION
+
+.grid-unlock(@config...) {
+	@spartan-grid-fixed-width: extract(@config, 1);
+	@spartan-grid-gutter: extract(@config, 3);
+	@spartan-grid-max-cols: extract(@config, 5);
+	@spartan-grid-type: extract(@config, 2);
+	@spartan-grid-gutter-type: extract(@config, 4);
+
+	// set up grid styles depending on an included config
+	.spartan-grid(
+		@spartan-grid-type,
+		@spartan-grid-fixed-width,
+		@spartan-grid-gutter,
+		@spartan-grid-max-cols
+	);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // GRID GUTTER
 
 .spartan-row-gutter(@gutter) {
@@ -351,25 +370,6 @@ Spartan grid version 4.0.0: https://github.com/SimonHarte/SpartanGrid
 }
 .grid-gutters(@grid-width, @gutter-width) when (ispercentage(@gutter-width)) {
 	.grid-gutters(@gutter-width);
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// UNLOCK GRID CONFIGURATION
-
-.grid-unlock(@config...) {
-	@spartan-grid-fixed-width: extract(@config, 1);
-	@spartan-grid-gutter: extract(@config, 3);
-	@spartan-grid-max-cols: extract(@config, 5);
-	@spartan-grid-type: extract(@config, 2);
-	@spartan-grid-gutter-type: extract(@config, 4);
-
-	// set up grid styles depending on an included config
-	.spartan-grid(
-		@spartan-grid-type,
-		@spartan-grid-fixed-width,
-		@spartan-grid-gutter,
-		@spartan-grid-max-cols
-	);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
