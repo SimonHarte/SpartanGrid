@@ -1,5 +1,15 @@
 # Changelog
 
+## 4.0.0
+
+- new mixins for semantic grid implemenation
+- gutter styles now separated from `.grid-unlock()` for maximum flexibility
+- gutters can be any unit (px, %, em/rem)
+- more intuitive grid config order
+- maximised precision of calculated values
+- `.grid-generate()` takes a new optional parameter to adjust the amount of classes
+- less cluttering of global space with lib internally used variables
+
 ## 3.3.1
 
 - added bower installation
