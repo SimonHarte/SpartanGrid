@@ -278,16 +278,14 @@ Spartan grid version 3.4.0: https://github.com/SimonHarte/SpartanGrid
 			position: relative;
 		}
 	}
-
-	// base grid layout styles, valid for every grid setup
-	.@{spartan-namespace}row,
-	.@{spartan-namespace}col {
+	
+	.spartan-base-style('both') {
 		display: block;
 		margin-right: 0 !important;
 		padding-right: 0 !important;
 	}
-
-	.@{spartan-namespace}row {
+	
+	.spartan-base-style('row') {
 		.grid-cf();
 		padding-left: 0 !important;
 
@@ -296,8 +294,8 @@ Spartan grid version 3.4.0: https://github.com/SimonHarte/SpartanGrid
 			.grid-row-reorder();
 		}
 	}
-
-	.@{spartan-namespace}col {
+	
+	.spartan-base-style('col') {
 		// make sure we have the correct box sizing for fixed gutter grid
 		.grid-box-sizing();
 		float: left;
@@ -305,6 +303,30 @@ Spartan grid version 3.4.0: https://github.com/SimonHarte/SpartanGrid
 		// columns should per default span the whole width if none is set
 		width: 100%;
 	}
+	
+	// base grid layout styles, valid for every grid setup
+	.@{spartan-namespace}row,
+	.@{spartan-namespace}col {
+		.spartan-base-style('both');
+	}
+
+	.@{spartan-namespace}row {
+		.spartan-base-style('row');
+	}
+
+	.@{spartan-namespace}col {
+		.spartan-base-style('col');
+	}
+}
+
+.grid-row() {
+	.spartan-base-style('both');
+	.spartan-base-style('row');
+}
+
+.grid-col() {
+	.spartan-base-style('both');
+	.spartan-base-style('col');
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
