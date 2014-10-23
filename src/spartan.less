@@ -1,5 +1,5 @@
 /*
-Spartan grid version 3.4.0: https://github.com/SimonHarte/SpartanGrid
+Spartan grid version 3.5.0: https://github.com/SimonHarte/SpartanGrid
 */
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -254,7 +254,7 @@ Spartan grid version 3.4.0: https://github.com/SimonHarte/SpartanGrid
 	.set-namespace(@ns);
 	
 	// prefixed clearfix mixin from h5bp for grid only
-	.grid-cf() {
+	.spartan-cf() {
 		&:before,
 		&:after {
 			content: " ";
@@ -267,16 +267,10 @@ Spartan grid version 3.4.0: https://github.com/SimonHarte/SpartanGrid
 	}
 
 	// prefixed twitter bootstrap box sizing mixin
-	.grid-box-sizing(@boxmodel: border-box) {
+	.spartan-box-sizing(@boxmodel: border-box) {
 		-webkit-box-sizing: @boxmodel;
 		-moz-box-sizing: @boxmodel;
 		box-sizing: @boxmodel;
-	}
-
-	.grid-row-reorder() {
-		> .@{spartan-namespace}col {
-			position: relative;
-		}
 	}
 	
 	.spartan-base-style('both') {
@@ -286,7 +280,7 @@ Spartan grid version 3.4.0: https://github.com/SimonHarte/SpartanGrid
 	}
 	
 	.spartan-base-style('row') {
-		.grid-cf();
+		.spartan-cf();
 		padding-left: 0 !important;
 
 		// used to .push and .pull columns
@@ -297,7 +291,7 @@ Spartan grid version 3.4.0: https://github.com/SimonHarte/SpartanGrid
 	
 	.spartan-base-style('col') {
 		// make sure we have the correct box sizing for fixed gutter grid
-		.grid-box-sizing();
+		.spartan-box-sizing();
 		float: left;
 		margin-left: 0 !important;
 		// columns should per default span the whole width if none is set
@@ -322,6 +316,12 @@ Spartan grid version 3.4.0: https://github.com/SimonHarte/SpartanGrid
 .grid-row() {
 	.spartan-base-style('both');
 	.spartan-base-style('row');
+}
+
+.grid-row-reorder() {
+	> .@{spartan-namespace}col {
+		position: relative;
+	}
 }
 
 .grid-col() {
