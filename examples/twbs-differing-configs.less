@@ -17,26 +17,26 @@
 @m-large:       ~"(min-width: @{m-large-min})";
 
 // set up twitter bootstrap like grid classes for every viewport with differing configurations
-@grid-config-s: 940px, 'fluid', 10px, 'fixed', 12;
-@grid-config-m: 940px, 'fluid', 20px, 'fixed', 12;
-@grid-config-l: 940px, 'fluid', 40px, 'fixed', 12;
+@grid-config-s: 720px, 'fluid', 10px, 'fixed', 12;
+@grid-config-m: 940px, 'fluid', 20px, 'fluid', 12;
+@grid-config-l: 1280px, 'fluid', 40px, 'fluid', 12;
 
 .grid-core();
 
 @media @m-small {
 	.grid-unlock(@config: @grid-config-s);
-	.grid-gutter();
+	.grid-gutters();
 	.grid-generate('sm');
 }
 
 @media @m-medium {
 	.grid-unlock(@config: @grid-config-m);
-	.grid-gutter();
+	.grid-gutters();
 	.grid-generate('md');
 }
 
 @media @m-large {
 	.grid-unlock(@config: @grid-config-l);
-	.grid-gutter();
+	.grid-gutters();
 	.grid-generate('lg');
 }
