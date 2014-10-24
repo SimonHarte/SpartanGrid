@@ -262,16 +262,9 @@ Spartan grid version 4.0.0: https://github.com/SimonHarte/SpartanGrid
 		width: 100%;
 	}
 }
-// don't generate any css but just unlock core variables and mixins
-.grid-core(@ns: g, @generate: true) when (@generate = false) {
-	.spartan-core(@ns);
-}
 
-// also generate core selectors
-.grid-core(@ns: g, @generate: true) when (default()) {
-	.spartan-core(@ns);
-	
-	// base grid layout styles, valid for every grid setup
+// base grid layout styles, valid for every grid setup
+.spartan-core-selectors() {
 	.@{spartan-namespace}row,
 	.@{spartan-namespace}col {
 		.spartan-base-style('both');
@@ -289,6 +282,26 @@ Spartan grid version 4.0.0: https://github.com/SimonHarte/SpartanGrid
 	.@{spartan-namespace}col {
 		.spartan-base-style('col');
 	}
+}
+
+// don't generate any css but just unlock core variables and mixins
+.grid-core(@ns: g, @generate: true) when (@generate = false) {
+	.spartan-core(@ns);
+}
+
+.grid-core(@ns: g, @generat: true) when (@ns = false) {
+	.spartan-core('g');
+}
+
+.grid-core(@ns: g, @generate: true) when (@ns = true) {
+	.spartan-core('g');
+	.spartan-core-selectors();
+}
+
+// also generate core selectors
+.grid-core(@ns: g, @generate: true) when (default()) {
+	.spartan-core(@ns);
+	.spartan-core-selectors();
 }
 
 // all necessary row styles with gutter
