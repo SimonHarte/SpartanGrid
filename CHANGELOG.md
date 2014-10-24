@@ -7,6 +7,7 @@
 - gutters can be any unit (px, %, em/rem)
 - more intuitive grid config order
 - maximised precision of calculated values
+- `.grid-core()` takes a new optional parameter to omit generation of core css
 - `.grid-generate()` takes a new optional parameter to adjust the amount of classes
 - less cluttering of global space with lib internally used variables
 
