@@ -182,7 +182,8 @@ Spartan grid version 4.0.0: https://github.com/SimonHarte/SpartanGrid
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // CORE STYLES
 
-.grid-core(@ns: g) {
+// core variables and mixins
+.spartan-core(@ns) {
 	// Float precision used for rounding is the most important variable because we get different behaviours over browsers
 	// and certain grid container widths. Note that rounding issues only exist for width and padding style properties.
 	// 
@@ -209,9 +210,8 @@ Spartan grid version 4.0.0: https://github.com/SimonHarte/SpartanGrid
 	// Recommendation:
 	// Using a float precision of 5 together with ceil() seems to be the smallest possible,
 	// most accurate amount for a future-proof grid system.
-	
 	@spartan-grid-precision: 5;
-	
+
 	.set-namespace(@ns) when not (@ns = '') {
 		@spartan-namespace: ~'@{ns}-';
 	}
@@ -261,6 +261,15 @@ Spartan grid version 4.0.0: https://github.com/SimonHarte/SpartanGrid
 		// columns should per default span the whole width if none is set
 		width: 100%;
 	}
+}
+// don't generate any css but just unlock core variables and mixins
+.grid-core(@ns: g, @generate: true) when (@generate = false) {
+	.spartan-core(@ns);
+}
+
+// also generate core selectors
+.grid-core(@ns: g, @generate: true) when (default()) {
+	.spartan-core(@ns);
 	
 	// base grid layout styles, valid for every grid setup
 	.@{spartan-namespace}row,
