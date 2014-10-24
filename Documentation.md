@@ -20,11 +20,18 @@ All about basic usage of Spartan is documented in the [project readme](https://g
 
 You would normally just use `.grid-bundle()` to set up a grid, but you can also use the following mixins to generate even more flexible grids in [LessCSS scopes](http://lesscss.org/features/#features-overview-feature-scope), see [Viewport Dependent Grids](#viewport-dependent-grids) and [Custom Classes](#custom-classes) for use cases.
 
-#### `.grid-core([namespace])`
+#### `.grid-core([namespace], [@generate])`
 
-This will generate the core selectors and styles needed for any grid setup, e.g. clearing on the row, float of columns etc. No matter how much you customize your grid, this mixin has to be called only once in your project.
+This will define the core variables and mixins and generate selectors and styles needed for any grid setup, e.g. clearing on the row, float of columns etc. Generally has to be called only once for any grid setup.
 
 > [Read about namespacing](#namespace)
+
+If you use the grid only with semantic selectors you can optionally omit generation of core selectors like `.g-row` etc.
+
+```less
+// unlock core variables and mixins without generating css
+.grid-core(@generate: false);
+```
 
 #### `.grid-unlock(<config>)`
 
@@ -139,10 +146,11 @@ You can always use `.grid-unlock()` in any separated media query to unlock grid 
 
 #### Namespace
 
-`.grid-bundle()` (as well as `.grid-core()`) takes one optional parameter `namespace`, with which you can customize the generated classes.
+`.grid-bundle()` (as well as `.grid-core()`) takes an optional parameter `namespace`, with which you can customize the generated classes.
 
- This namespace is per default set to `g`, but you can simply just change it, so if you set `[namespace]` to for example 
- `grid` the generated classes will look like this:
+ This namespace is per default set to `g`, but you can freely customize it.
+ 
+ Example with `.grid-bundle('grid')`:
 
 ```less
 .grid-row
@@ -207,7 +215,7 @@ You can optionally overwrite the gutter from your previously unlocked settings.
 You can use this with responsive layouts as well, the only requirement is to eliminate the general [grid namespace](#namespace).
 
 ```less
-.grid-core(''); // remove grid namespace so we later can define column classes freely
+.grid-core('', false); // remove grid namespace so we later can define column classes freely and don't generate core css
 .grid-unlock(940px, 'fluid', 20px, 'fixed', 12);
 
 .product-list {

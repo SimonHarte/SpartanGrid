@@ -14,7 +14,8 @@
 @m-medium-down: ~"(max-width: @{m-medium-max})";
 @m-large: ~"(min-width: @{m-large-min})";
 
-.grid-core(''); // remove grid namespace so we later can define column classes freely
+// remove grid namespace so we later can define column classes freely and don't generate unnecessary core css
+.grid-core('', false);
 .grid-unlock(940px, 'fluid', 20px, 'fixed', 12);
 // no grid-gutter or grid-generate needed
 
