@@ -111,7 +111,9 @@ Spartan grid version 4.0.0: https://github.com/SimonHarte/SpartanGrid
 
 // clear every new grid line, see issue in "before" state here: http://stackoverflow.com/questions/3628311/css-floating-divs-with-different-height-are-aligned-with-space-between-them
 .grid-col-clear(@columns) when (@columns >= 0) {
-	> .@{spartan-namespace}col:nth-child(@{columns}n+1) {
+	@column-integer: floor(@columns);
+	
+	> .@{spartan-namespace}col:nth-child(@{column-integer}n+1) {
 		clear: left;
 	}
 }

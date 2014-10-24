@@ -332,6 +332,8 @@ Example output CSS:
 Clear the float every nth+1 child (every new line) so columns align properly if they differ in height. So if you have 3 columns per 
 line, clear the 4th, the 7th, the 10th etc.
 
+> Floating point numbers will always be rounded down to the next integer
+
 ### Responsive Layout Example
 
 > **Note**: With a mobile first approach you either have to declare a media query or omit the definition because of possible interfering pseudo selectors (:nth-child).
