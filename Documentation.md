@@ -26,7 +26,19 @@ This will define the core variables and mixins and generate selectors and styles
 
 > [Read about namespacing](#namespace)
 
-If you use the grid only with semantic selectors you can optionally omit generation of core selectors like `.g-row` etc.
+**Unlocks**
+
+- `@spartan-namespace`
+- `.grid-row()`
+- `.grid-col()`
+
+**Generates**
+
+- `.g-row`
+- `.g-col`
+
+
+If you use the grid only with [semantic selectors](#semantic-grid) you can optionally omit generation of core selectors.
 
 ```less
 // unlock core variables and mixins without generating css
@@ -47,9 +59,42 @@ Pass in your grid configuration like with `.grid-bundle()`. This will unlock all
 }
 ```
 
+**Unlocks**
+
+- `@spartan-grid-fixed-width`
+- `@spartan-grid-gutter`
+- `@spartan-grid-max-cols`
+- `@spartan-grid-type`
+- `@spartan-grid-gutter-type`
+
+
+- `.grid-span()`
+- `.grid-offset()`
+- `.grid-push()`
+- `.grid-pull()`
+- `.grid-reorder()`
+
+
+- `.grid-col-set()`
+- `.grid-col-set-equal()`
+- `.grid-col-clear()`
+
+**Generates**
+
+Nothing
+
 #### `.grid-gutters([relation|gutter], [gutter])`
 
 Generate only gutter styles. Especially useful if you have grid setups which only differ in the gutter, so you don't have to generate all classes anew.
+
+**Unlocks**
+
+Nothing
+
+**Generates**
+
+- `.g-row`
+- `.g-col`
 
 Checkout the [differing gutter setup](https://github.com/SimonHarte/SpartanGrid/tree/master/examples/differing-gutters.less) example.
 
@@ -84,6 +129,17 @@ or you call it with either a fix value which will be taken as is or provide a re
 This mixin will generate all configuration sensitive classes like `.g-span-{xx}`, `.g-offset-{xx}` etc. in the current scope.
 
 > [Read about prefixing](#additional-prefix)
+
+**Unlocks**
+
+- `@spartan-prefix`
+
+**Generates**
+
+- `.g-span`
+- `.g-offset`
+- `.g-push`
+- `.g-pull`
 
 If you pass an optional column amount, it will use this value for generation while relying on your unlocked config.
 So if you know you'll never use classes for more than half the grid width you can reduce output css by only generating those classes:

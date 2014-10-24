@@ -426,7 +426,6 @@ Spartan grid version 4.0.0: https://github.com/SimonHarte/SpartanGrid
 // GENERATE BASE CLASSES
 
 .grid-generate(@prefix: '', @columns: @spartan-grid-max-cols) {
-	@spartan-grid-max-cols: @columns;
 	
 	.set-prefix(@prefix) when not (@prefix = '') {
 		@spartan-prefix: ~'@{prefix}-';
