@@ -378,23 +378,23 @@ Spartan grid version 4.0.0: https://github.com/SimonHarte/SpartanGrid
 // global mixins
 
 // passing no argument
-.grid-gutters() when (default()) {
+.grid-gutter() when (default()) {
 	// assume fluid grid
-	.grid-gutters(@spartan-grid-fixed-width, @spartan-grid-gutter);
+	.grid-gutter(@spartan-grid-fixed-width, @spartan-grid-gutter);
 }
-.grid-gutters() when (@spartan-grid-type = 'fixed'), (@spartan-grid-gutter-type = 'fixed') {
+.grid-gutter() when (@spartan-grid-type = 'fixed'), (@spartan-grid-gutter-type = 'fixed') {
 	// use original value
-	.grid-gutters(@spartan-grid-gutter);
+	.grid-gutter(@spartan-grid-gutter);
 }
 
 // passing one argument
-.grid-gutters(@gutter-width) when (default()) {
+.grid-gutter(@gutter-width) when (default()) {
 	.spartan-gutter-styles(
 		@gutter-width, // row gutter
 		@gutter-width // column gutter
 	);
 }
-.grid-gutters(@gutter-width) when (ispercentage(@gutter-width)) {
+.grid-gutter(@gutter-width) when (ispercentage(@gutter-width)) {
 	// when gutter is passed as percentage we have to set a slightly smaller gutter for columns
 	// because the row container gets larger through negative gutter indent
 	.spartan-gutter-styles(
@@ -404,24 +404,24 @@ Spartan grid version 4.0.0: https://github.com/SimonHarte/SpartanGrid
 }
 
 // passing two arguments
-.grid-gutters(@grid-width, @gutter-width) when (default()) {
+.grid-gutter(@grid-width, @gutter-width) when (default()) {
 	// if any other than tested units is passed, use the value as pixel
-	.grid-gutters(@grid-width, unit(@gutter-width, px));
+	.grid-gutter(@grid-width, unit(@gutter-width, px));
 }
-.grid-gutters(@grid-width, @gutter-width) when (ispixel(@gutter-width)) {
+.grid-gutter(@grid-width, @gutter-width) when (ispixel(@gutter-width)) {
 	.spartan-gutter-styles(
 		percentage(@gutter-width / @grid-width), // row gutter
 		percentage(@gutter-width / (@grid-width + @gutter-width)) // column gutter
 	);
 }
-.grid-gutters(@grid-width, @gutter-width) when (isem(@gutter-width)) {
+.grid-gutter(@grid-width, @gutter-width) when (isem(@gutter-width)) {
 	.spartan-gutter-styles(
 		percentage((@gutter-width*16) / @grid-width), // row gutter
 		percentage((@gutter-width*16) / (@grid-width + (@gutter-width*16))) // column gutter
 	);
 }
-.grid-gutters(@grid-width, @gutter-width) when (ispercentage(@gutter-width)) {
-	.grid-gutters(@gutter-width);
+.grid-gutter(@grid-width, @gutter-width) when (ispercentage(@gutter-width)) {
+	.grid-gutter(@gutter-width);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -494,6 +494,6 @@ Spartan grid version 4.0.0: https://github.com/SimonHarte/SpartanGrid
 .grid-bundle(@ns: g, @config...) {
 	.grid-core(@ns);
 	.grid-unlock(@config);
-	.grid-gutters();
+	.grid-gutter();
 	.grid-generate();
 }

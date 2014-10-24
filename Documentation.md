@@ -83,7 +83,7 @@ Pass in your grid configuration like with `.grid-bundle()`. This will unlock all
 
 Nothing
 
-#### `.grid-gutters([relation|gutter], [gutter])`
+#### `.grid-gutter([relation|gutter], [gutter])`
 
 Generate only gutter styles. Especially useful if you have grid setups which only differ in the gutter, so you don't have to generate all classes anew.
 
@@ -98,30 +98,30 @@ Nothing
 
 Checkout the [differing gutter setup](https://github.com/SimonHarte/SpartanGrid/tree/master/examples/differing-gutters.less) example.
 
-You can call `.grid-gutters()` without parameters, in that case it simply relies on your unlocked grid configuration,
+You can call `.grid-gutter()` without parameters, in that case it simply relies on your unlocked grid configuration,
 or you call it with either a fix value which will be taken as is or provide a relation to which a percentage value will be calculated.
 
 **Rely on Config**
 ```
-.grid-gutters();
+.grid-gutter();
 ```
 
 **Fixed values**
 
 ```less
-.grid-gutters(20px);
+.grid-gutter(20px);
 
-.grid-gutters(1.5em);
+.grid-gutter(1.5em);
 
-.grid-gutters(3%);
+.grid-gutter(3%);
 ```
 
 **Relational percentage value**
 
 ```
-.grid-gutters(940px, 20px);
+.grid-gutter(940px, 20px);
 
-.grid-gutters(940px, 1.5em); // em are simply multiplied with 16 for calculation
+.grid-gutter(940px, 1.5em); // em are simply multiplied with 16 for calculation
 ```
 
 #### `.grid-generate([prefix], [@columns])`
@@ -150,7 +150,7 @@ So if you know you'll never use classes for more than half the grid width you ca
 
 ### Viewport Dependent Configurations
 
-You can call `.grid-unlock()`, `.grid-gutters()` and `.grid-generate()` **inside media queries** to generate different grid setups for 
+You can call `.grid-unlock()`, `.grid-gutter()` and `.grid-generate()` **inside media queries** to generate different grid setups for 
 different viewports like so:
 
 ```less
@@ -162,19 +162,19 @@ different viewports like so:
 @media (max-width: 40em) {
 	// grid setup for small screen
 	.grid-unlock(@config: 940px, 'fluid', 5px, 'fixed', 12;);
-	.grid-gutters();
+	.grid-gutter();
 	.grid-generate();
 }
 @media (min-width: 40.01em) and (max-width: 65em) {
 	// grid setup for medium screen
 	.grid-unlock(@config: 940px, 'fluid', 15px, 'fixed', 12;);
-	.grid-gutters();
+	.grid-gutter();
 	.grid-generate();
 }
 @media (min-width: 65.01em) {
 	// grid setup for large screen
 	.grid-unlock(@config: 940px, 'fluid', 30px, 'fluid', 12;);
-	.grid-gutters();
+	.grid-gutter();
 	.grid-generate();
 }
 ```
@@ -435,7 +435,7 @@ Simply make use of the optional parameter to [`.grid-generate()`](#custom-classe
 
 .grid-core(); // base classes, no change in namespace
 .grid-unlock(@grid-config);
-.grid-gutters(); // define gutter once
+.grid-gutter(); // define gutter once
 
 // generate mobile first, small screen classes
 .grid-generate('sm');
