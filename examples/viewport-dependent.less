@@ -1,44 +1,49 @@
+// See: https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#viewport-dependent-grids
+
 // Content oriented media queries //
-@reading-length: 40em;
+@reading-length: 35em;
 
 // breakpoints
-@m-small-max: @reading-length;
-@m-medium-min: (@reading-length + .01);
-@m-medium-max: (@reading-length*2);
-@m-large-min: (@reading-length*2 + .01);
+@m-small-max:   @reading-length;
+@m-medium-min:  (@reading-length + .01);
+@m-medium-max:  (@reading-length*2);
+@m-large-min:   (@reading-length*2 + .01);
 
 // queries
-@m-small: ~"(max-width: @{m-small-max})";
-@m-medium: ~"(min-width: @{m-medium-min}) and (max-width: @{m-medium-max})";
-@m-medium-up: ~"(min-width: @{m-medium-min})";
+@m-small:       ~"(max-width: @{m-small-max})";
+@m-medium:      ~"(min-width: @{m-medium-min}) and (max-width: @{m-medium-max})";
+@m-medium-up:   ~"(min-width: @{m-medium-min})";
 @m-medium-down: ~"(max-width: @{m-medium-max})";
-@m-large: ~"(min-width: @{m-large-min})";
+@m-large:       ~"(min-width: @{m-large-min})";
 
 .grid-core();
 
-@grid-config-s: 'fluid', 720px, 5px, 'fixed', 12;
-@grid-config-m: 'fluid', 940px, 15px, 'fluid', 12;
-@grid-config-l: 'fluid', 1040px, 20px, 'fixed', 12;
+@grid-config-s: 720px, 'fluid', 5px, 'fixed', 12;
+@grid-config-m: 940px, 'fluid', 15px, 'fluid', 12;
+@grid-config-l: 1040px, 'fluid', 20px, 'fixed', 12;
 
 @media @m-small {
 	.grid-unlock(@grid-config-s);
+	.grid-gutter();
 	.grid-generate();
 }
 
 @media @m-medium {
 	.grid-unlock(@grid-config-m);
+	.grid-gutter();
 	.grid-generate();
 }
 
 @media @m-large {
 	.grid-unlock(@grid-config-l);
+	.grid-gutter();
 	.grid-generate();
 }
 
-// separated media query has to unlock config again
+// separated media query has to unlock config again to use mixins
 @media @m-medium {
 	.grid-unlock(@grid-config-m);
-	// no generate needed here
+	// no gutters or generate needed here
 	
 	.my-col {
 		.grid-span(4.5);

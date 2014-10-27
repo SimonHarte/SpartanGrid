@@ -1,0 +1,24 @@
+/* GRID-UNLOCK TESTS */
+#unlock-1 {
+	/* unlock 720px, 'fixed', 20px, 'fixed', 12 */
+	.grid-core(@generate: false);
+	.grid-unlock(720px, 'fixed', 20px, 'fixed', 12);
+	.grid-gutter();
+	
+	.test-1 {
+		/* .grid-span(6) */
+		.grid-span(6);
+	}
+}
+
+#unlock-2 {
+	/* unlock 940px, 'fluid', 80px, 'fixed', 12 */
+	.grid-core(@generate: false);
+	.grid-unlock(940px, 'fluid', 80px, 'fixed', 12);
+	.grid-gutter();
+	
+	.test-1 {
+		/* .grid-span(6) */
+		.grid-span(6);
+	}
+}

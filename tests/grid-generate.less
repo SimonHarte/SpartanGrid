@@ -1,0 +1,44 @@
+/*
+GRID-GENERATE TESTS
+unlock 940px, 'fluid', 20px, 'fluid', 12 for all generate tests
+*/
+
+#generate-1 {
+	.grid-core(@generate: false);
+	.grid-unlock(940px, 'fluid', 20px, 'fluid', 12);
+	
+	/* without params */
+	.grid-generate();
+}
+
+#generate-2 {
+	.grid-core(@generate: false);
+	.grid-unlock(940px, 'fluid', 20px, 'fluid', 12);
+	
+	/* empty string */
+	.grid-generate('');
+}
+
+#generate-3 {
+	.grid-core(@generate: false);
+	.grid-unlock(940px, 'fluid', 20px, 'fluid', 12);
+	
+	/* unquoted string */
+	.grid-generate(unquoted);
+}
+
+#generate-4 {
+	.grid-core(@generate: false);
+	.grid-unlock(940px, 'fluid', 20px, 'fluid', 12);
+	
+	/* quoted string */
+	.grid-generate('quoted');
+}
+
+#generate-5 {
+	.grid-core(@generate: false);
+	.grid-unlock(940px, 'fluid', 20px, 'fluid', 12);
+	
+	/* restrict amount */
+	.grid-generate(@columns: 6);
+}

@@ -1,8 +1,8 @@
 # Spartan
 
-A highly customizable, standalone LessCSS grid system. Try the [dynamic online demo](http://spartan-grid.herokuapp.com/).
+A highly customizable yet tiny, standalone LessCSS grid system. Try the [dynamic online demo](http://spartan-grid.herokuapp.com/).
 
-> Requires [LessCSS](https://github.com/less/less.js) version 1.4.0 or above. Does **not** work with v1.7.0 
+> Requires [LessCSS](https://github.com/less/less.js) version 1.6.0 or above. Does **not** work with v1.7.0 
 because of [this bug](https://github.com/less/less.js/pull/1929#issuecomment-45307325) (fixed in v1.7.1).
 
 > [Tested with Less.php](http://lessphp.gpeasy.com/Demo) version 1.6.3
@@ -16,7 +16,7 @@ Spartan arose from a project where we had the need for a fluid responsive grid s
 - [Basic Usage](#basic-usage)
 	- [Grid Setup](#grid-setup)
 	- [Grid Classes and Mixins](#grid-classes-and-mixins)
-- [Responsiveness and Customization](#responsiveness-and-customization)
+- [Advanced Usage](#advanced-usage)
 - [Browser Support](#browser-support)
 	- [The Safari Problem](#the-safari-problem)
 
@@ -30,7 +30,7 @@ Spartan arose from a project where we had the need for a fluid responsive grid s
 	- column offsets
 - grid creation API for maximum flexibility
 - customizable css classes
-- tiny: **~11KB** of LessCSS which generates less than **2KB** of base css (minified)
+- tiny: **1.8KB** of minified base css
 
 ## Comparison
 
@@ -56,7 +56,7 @@ Spartan arose from a project where we had the need for a fluid responsive grid s
 
 ### Have a Project at the Ready?
 
-- Integrate [`lib/spartan.less`](https://github.com/SimonHarte/SpartanGrid/blob/master/lib/spartan.less) in your project
+- Integrate [`src/spartan.less`](https://github.com/SimonHarte/SpartanGrid/blob/master/src/spartan.less) in your project
 - Use the [API mixin(s)](#grid-setup) to set up your grid
 
 > Spartan will not generate any CSS until you use the setup API.
@@ -65,46 +65,29 @@ Spartan arose from a project where we had the need for a fluid responsive grid s
 
 - Download Spartan
 - Adjust `grid-setup.less`
-- Execute: `lessc compile.less grid.css`
+- Execute: `sh scripts/compile.sh`
 
 ## Grid Structure
 
-Here's a short example of how a Spartan grid looks like with a responsive layout implementation:
+Here's a short example of Spartans base structure in a 12-column grid:
 
 **HTML**
 
 ```html
-<div class="g-row g-layout-1">
-	<div class="g-col"></div>
-	<div class="g-col"></div>
-	<div class="g-col"></div>
-	<div class="g-col"></div>
+<div class="g-row">
+	<div class="g-col g-span-3"></div>
+	<div class="g-col g-span-3"></div>
+	<div class="g-col g-span-3"></div>
+	<div class="g-col g-span-3"></div>
 </div>
 ```
 
-**LessCSS**
+- `.g-row` initializes a grid row with negative left margin (gutter) and uses [H5BP clearfix](https://github
+.com/h5bp/html5-boilerplate/blob/master/css/main.css#L161) to contain the floating `.g-col`s.
+- `.g-col` applies default column styles like float and padding (gutter).
+- `.g-span-<columns>` applies a column based width according ot the set maximum amount of columns.
 
-```less
-.g-layout-1 {
-	// maximum columns: 12
-	// omit small media definition as it uses full width anyway
-	
-	// 2 columns in medium screen
-	@media (min-width: 40.01em) and (max-width: 65em) {
-		.grid-col-set-equal(6);
-	}
-	// 3 columns in large screen
-	@media (min-width: 65.01em) {
-		.grid-col-set-equal(4);
-	}
-}
-```
-
-> Watch out not to use overlapping media queries!
-
-Spartan uses a negative left margin on `.g-row` and left padding (gutter) on `.g-col`s for having a consistent structure and reduced output css.
-
-Check out [examples](https://github.com/SimonHarte/SpartanGrid/blob/master/examples/responsive-layouts.less) for more responsive layouts.
+Check out [responsive approaches](https://github.com/SimonHarte/SpartanGrid/blob/develop/Documentation.md#responsive-approaches) with Spartan.
 
 ## Basic Usage
 
@@ -115,7 +98,7 @@ There are two ways to set up a grid with Spartan, within the basic usage we only
 The basic grid setup requires you to call just one mixin, pass in a configuration and an optional prefix (read more about custom classes in the [documentation](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#custom-classes)).
 
 ```less
-@grid-config: [grid-type], [grid-width], [gutter-width], [gutter-type], [grid-columns];
+@grid-config: <grid-width>, <grid-type>, <gutter-width>, <gutter-type>, <grid-columns>;
 
 .grid-bundle([prefix], @grid-config);
 ```
@@ -130,37 +113,22 @@ If you are not using a grid prefix, you have to name the config param, so `.grid
 
 | Param | Type | Value | Comment |
 |-------|:-----|:------|:--------|
-| `prefix`       | expression | `~''` or custom | Example: `grid-` (without single quotes) |
-| `grid-type`    | string  | `'fluid'` or `'fixed'` | Single quotes mandatory |
-| `grid-width`   | pixel   | | |
-| `gutter-width` | pixel   | | |
-| `gutter-type`  | string  | `'fluid'` or `'fixed'` | Forced to `'fixed'` if `grid-type` is `'fixed'` |
-| `grid-columns` | integer | | | |
+| `[prefix]`       | string | | quotes optional |
+| `<grid-width>`   | pixel   | | |
+| `<grid-type>`    | string  | `fluid` or `fixed` | quotes optional |
+| `<gutter-width>` | number | | `px`, `%` or `em/rem`, only reacts to `<gutter-type>` with `px` |
+| `<gutter-type>`  | string  | `fluid` or `fixed` | forced to `fixed` if `<grid-type>` is `fixed` |
+| `<grid-columns>` | integer | | | |
 
-#### Example Setup and Markup
+#### Example Setup
 
 **LessCSS**
 
 ```less
-@grid-config: 'fluid', 940px, 20px, 'fixed', 12;
+@grid-config: 940px, 'fluid', 20px, 'fixed', 12;
 
 .grid-bundle(@config: @grid-config);
 ```
-
-**HTML**
-
-```html
-<!-- defining two columns in the current grid (max columns: 12) -->
-<div class="g-row">
-	<div class="g-col g-span-6"></div>
-	<div class="g-col g-span-6"></div>
-</div>
-```
-
-- `.g-row` initializes a grid row and uses [H5BP clearfix](https://github
-.com/h5bp/html5-boilerplate/blob/master/css/main.css#L161) to contain the floating `.g-col`s.
-- `.g-col` applies default column styles like float and padding (gutter).
-- `.g-span-[columns]` applies a column based width according ot the set maximum amount of columns.
 
 ### Grid Classes and Mixins
 
@@ -168,14 +136,14 @@ Spartan comes with an integrated LessCSS loop to generate grid classes according
 the generated classes you can also use similar named mixins to apply the grid in a less style sheet.
 
 ```less
-.grid-span([columns]), .g-span-[columns]
-.grid-offset([columns]), .g-offset-[columns]
-.grid-push([columns]), .g-push-[columns]
-.grid-pull([columns]), .g-pull-[columns]
+.grid-span(<columns>), .g-span-{columns}
+.grid-offset(<columns>), .g-offset-{columns}
+.grid-push(<columns>), .g-push-{columns}
+.grid-pull(<columns>), .g-pull-{columns}
 ```
 
 #### `grid-span`
-Override the width of a column (default is full-width), equivalent to `.g-span-[columns]`. This mixin allows you to pass
+Override the width of a column (default is full-width), equivalent to `.g-span-{columns}`. This mixin allows you to pass
 in floating point numbers, which enables you to define literally **any** width using the mixin.
 
 ```less
@@ -184,14 +152,14 @@ in floating point numbers, which enables you to define literally **any** width u
 ```
 
 #### `grid-offset`
-Indent a column by the defined amount of grid columns, equivalent to `.g-offset-[columns]`.
+Indent a column by the defined amount of grid columns, equivalent to `.g-offset-{columns}`.
 While there are just positive indents in generated classes, you could also call this mixin with negative values.
 
 > **Note:** Using negative indents generally only works in static width grids.
 
 #### `grid-push` and `grid-pull`
 Together with the additional class `.g-reorder` on `.g-row` you can reorder columns visually without changing the 
-order in HTML. Equivalent to `.g-push-[columns]` and `.g-pull-[columns]`, similar behavior as `.grid-offset()`.
+order in HTML. Equivalent to `.g-push-{columns}` and `.g-pull-{columns}`, similar behavior as `.grid-offset()`.
 
 > Note that you may run into problems if these are used within certain responsive layouts as they use relative positioning.
 
@@ -200,9 +168,17 @@ order in HTML. Equivalent to `.g-push-[columns]` and `.g-pull-[columns]`, simila
 You can alternatively use `.grid-reorder()` and pass in any number. If the passed number is positive or zero, it will
 simply call `.grid-push()` and if the number is negative `.grid-pull()` instead.
 
-## Responsiveness and Customization
+## Advanced Usage
 
 There's a detailed [documentation](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md) about every aspect of Spartan with different approaches to setting up your most flexible grid.
+
+Overview:
+
+- [Grid Setup API](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#grid-setup-api)
+- [Viewport Dependent Configs](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#viewport-dependent-configurations)
+- [Custom Classes](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#custom-classes)
+- [Semantic Grid](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#semantic-grid)
+- [Responsive Approaches](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#responsive-approaches)
 
 ## Browser Support
 
@@ -226,7 +202,5 @@ values down to the next integer when calculating rendered pixels. So a width dec
 
 There's an [article from John Resig](http://ejohn.org/blog/sub-pixel-problems-in-css/) about this subject.
 
-Note that all grid systems suffer from this issue and merely provide workarounds in some cases. Spartan does not try to do that
-~~but instead there is an alternate grid style pattern with [Spartan 2](https://github.com/SimonHarte/Spartan2) which
-uses the same techniques as Profound to position each grid column independently with margins because they are not
-affected by this subpixel rendering issue.~~ (not maintained since v3.0.0)
+Note that all grid systems suffer from this issue and merely provide workarounds in some cases,
+Spartan does not try to do that but optimises its precision to avoid bad pixel rendering as much as possible.

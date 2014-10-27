@@ -1,0 +1,54 @@
+/* SEMANTIC HELPERS TESTS */
+#semantic {
+	/* unlock 940px, 'fluid', 20px, 'fluid', 12 */
+	.grid-core(@generate: false);
+	.grid-unlock(940px, 'fluid', 20px, 'fluid', 12);
+
+	.test-1 {
+		/* without params */
+		.grid-row();
+
+		.column {
+			.grid-col();
+		}
+	}
+	
+	.test-2 {
+		/* @gutter: 15px */
+		@gutter: 15px;
+		
+		& {
+			.grid-row(@gutter);
+		}
+
+		.column {
+			.grid-col(@gutter);
+		}
+	}
+	
+	.test-3 {
+		/* @gutter: 2em */
+		@gutter: 2em;
+		
+		& {
+			.grid-row(@gutter);
+		}
+
+		.column {
+			.grid-col(@gutter);
+		}
+	}
+	
+	.test-4 {
+		/* @gutter: 3% */
+		@gutter: 3%;
+		
+		& {
+			.grid-row(@gutter);
+		}
+
+		.column {
+			.grid-col(@gutter);
+		}
+	}
+}

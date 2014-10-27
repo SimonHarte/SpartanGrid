@@ -1,9 +1,3 @@
-@grid-config: 'fluid', 940px, 20px, 'fluid', 12;
-@mq-desktop: ~'(min-width: 1040px)';
-
-.grid-core();
-.grid-unlock(@grid-config);
-
-@media @mq-desktop {
-	.grid-generate();
-}
+@import "src/spartan";
+// integrate base setup per default, remove this and use the grid API to adjust outcome
+@import "examples/base-setup";

@@ -1,0 +1,52 @@
+/*
+GRID-GUTTER TESTS
+unlock 940px, 'fluid', 20px, 'fixed', 12 for all gutter tests
+*/
+
+#gutters-1 {
+	.grid-core(@generate: false);
+	.grid-unlock(940px, 'fluid', 20px, 'fixed', 12);
+	
+	/* without params */
+	.grid-gutter();
+}
+
+#gutters-2 {
+	.grid-core(@generate: false);
+	.grid-unlock(940px, 'fluid', 20px, 'fixed', 12);
+	
+	/* one param, 15px */
+	.grid-gutter(15px);
+}
+
+#gutters-3 {
+	.grid-core(@generate: false);
+	.grid-unlock(940px, 'fluid', 20px, 'fixed', 12);
+	
+	/* one param, 2em */
+	.grid-gutter(2em);
+}
+
+#gutters-4 {
+	.grid-core(@generate: false);
+	.grid-unlock(940px, 'fluid', 20px, 'fixed', 12);
+	
+	/* one param, 3% */
+	.grid-gutter(3%);
+}
+
+#gutters-5 {
+	.grid-core(@generate: false);
+	.grid-unlock(940px, 'fluid', 20px, 'fixed', 12);
+	
+	/* two params, 720px, 20px */
+	.grid-gutter(720px, 20px);
+}
+
+#gutters-6 {
+	.grid-core(@generate: false);
+	.grid-unlock(940px, 'fluid', 20px, 'fixed', 12);
+	
+	/* two params, 720px, 1em */
+	.grid-gutter(720px, 1em);
+}

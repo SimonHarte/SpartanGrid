@@ -1,15 +1,12 @@
-/*
-Example how to "switch" column amount if you cannot achieve a layout with the current amount of columns
-Alternative to just divide the column amount defined in config through the amount of columns you want
-*/
+// Example how to "switch" column amount if you cannot achieve a layout with the current amount of columns.
 
-@grid-type: 'fluid';
-@grid-width: 940px;
-@grid-gutter: 20px;
-@grid-gtype: 'fixed';
-@grid-gcount: 12;
+@grid-width:    940px;
+@grid-type:     'fluid';
+@grid-gutter:   20px;
+@grid-gtype:    'fixed';
+@grid-gcount:   12;
 
-@grid-config: @grid-type, @grid-width, @grid-gutter, @grid-gtype, @grid-gcount;
+@grid-config: @grid-width, @grid-type, @grid-gutter, @grid-gtype, @grid-gcount;
 
 .grid-bundle(@config: @grid-config);
 
@@ -21,6 +18,6 @@ Alternative to just divide the column amount defined in config through the amoun
 // for some reason we now want columns to behave like in a 16 column grid
 .g-layout-16col {
 	// 1st col = 10, 2nd col = 6
-	.grid-col-set(col-1, @grid-gcount/16*10);
-	.grid-col-set(col-2, @grid-gcount/16*6);
+	.grid-col-set('col-1', @grid-gcount/16*10);
+	.grid-col-set('col-2', @grid-gcount/16*6);
 }
