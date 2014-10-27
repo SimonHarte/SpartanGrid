@@ -66,15 +66,11 @@ Pass in your grid configuration like with `.grid-bundle()`. This will unlock all
 - `@spartan-grid-max-cols`
 - `@spartan-grid-type`
 - `@spartan-grid-gutter-type`
-
-
 - `.grid-span()`
 - `.grid-offset()`
 - `.grid-push()`
 - `.grid-pull()`
 - `.grid-reorder()`
-
-
 - `.grid-col-set()`
 - `.grid-col-set-equal()`
 - `.grid-col-clear()`
@@ -261,7 +257,7 @@ You can optionally overwrite the gutter from your previously unlocked settings.
 .product-list {
 	.grid-row();
 	
-	.product-item {
+	.product {
 		.grid-col();
 		.grid-span(4);
 	}
