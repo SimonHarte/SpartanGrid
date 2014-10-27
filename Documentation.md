@@ -271,7 +271,7 @@ You can optionally overwrite the gutter from your previously unlocked settings.
 You can use this with responsive layouts as well, the only requirement is to eliminate the general [grid namespace](#namespace).
 
 ```less
-.grid-core('', false); // remove grid namespace so we later can define column classes freely and don't generate core css
+.grid-core('', false); // remove grid namespace so we later can define column classes freely and do not generate core css
 .grid-unlock(940px, 'fluid', 20px, 'fixed', 12);
 
 .product-list {
