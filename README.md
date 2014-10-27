@@ -174,7 +174,7 @@ There's a detailed [documentation](https://github.com/SimonHarte/SpartanGrid/blo
 
 Overview:
 
-- [Grid Setup API](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#grid-setup-api)
+- [Grid Creation API](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#grid-creation-api)
 - [Viewport Dependent Configs](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#viewport-dependent-configurations)
 - [Custom Classes](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#custom-classes)
 - [Semantic Grid](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#semantic-grid)
