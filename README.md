@@ -7,7 +7,12 @@ because of [this bug](https://github.com/less/less.js/pull/1929#issuecomment-453
 
 > [Tested with Less.php](http://lessphp.gpeasy.com/Demo) version 1.6.3
 
-Spartan arose from a project where we had the need for a fluid responsive grid system with both html and less integration possibilities. As we couldn't find anything covering the requirements at that time we simply developed something on our own. Over time the initial idea developed into this vastly enhanced less grid system.
+## What sets Spartan apart?
+
+Spartan can mainly shine through its very unique [**grid creation API**](#grid-setup).
+While you define some variables in other grid systems which will then be used to create a predefined grid structure, 
+Spartan provides you with a sensible set of less mixins to freely customize your setup and get the most out of our grid system:
+**you define** how you want to use **your grid**!
 
 - [Features](#features)
 - [Comparison with other Grids](#comparison)
@@ -26,8 +31,8 @@ Spartan arose from a project where we had the need for a fluid responsive grid s
 	- fluid or static grid
 	- fully responsive
 	- block gutter (fixed gutter in a fluid grid)
-	- column reordering through css
 	- column offsets
+	- column reordering
 - grid creation API for maximum flexibility
 - customizable css classes
 - tiny: **1.8KB** of minified base css
@@ -174,7 +179,7 @@ There's a detailed [documentation](https://github.com/SimonHarte/SpartanGrid/blo
 
 Overview:
 
-- [Grid Setup API](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#grid-setup-api)
+- [Grid Creation API](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#grid-creation-api)
 - [Viewport Dependent Configs](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#viewport-dependent-configurations)
 - [Custom Classes](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#custom-classes)
 - [Semantic Grid](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#semantic-grid)

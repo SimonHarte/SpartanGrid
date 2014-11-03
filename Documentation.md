@@ -2,7 +2,7 @@
 
 - [Basic Usage](#basic-usage)
 - [Advanced Usage](#advanced-usage)
-	- [Grid Setup API](#grid-setup-api)
+	- [Grid Creation API](#grid-creation-api)
 	- [Viewport Dependent Grids](#viewport-dependent-grids)
 	- [Custom Classes](#custom-classes)
 - [Semantic Grid](#semantic-grid)
@@ -16,7 +16,7 @@ All about basic usage of Spartan is documented in the [project readme](https://g
 
 ## Advanced Usage
 
-### Grid Setup API
+### Grid Creation API
 
 You would normally just use `.grid-bundle()` to set up a grid, but you can also use the following mixins to generate even more flexible grids in [LessCSS scopes](http://lesscss.org/features/#features-overview-feature-scope), see [Viewport Dependent Grids](#viewport-dependent-grids) and [Custom Classes](#custom-classes) for use cases.
 
