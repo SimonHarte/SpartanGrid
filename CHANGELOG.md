@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.0.1
+
+- fix grid gutter mixin with important statement
+
 ## 4.0.0
 
 - new mixins for semantic grid implemenation
