@@ -260,8 +260,6 @@ Spartan grid version 4.0.0: https://github.com/SimonHarte/SpartanGrid
 		margin-left: 0 !important;
 		// columns should per default span the whole width if none is set
 		width: 100%;
-		// let empty columns not collapse
-		min-height: 1px;
 	}
 }
 
@@ -310,7 +308,7 @@ Spartan grid version 4.0.0: https://github.com/SimonHarte/SpartanGrid
 .grid-row(@gutter: @spartan-grid-gutter) {
 	.spartan-base-style('both');
 	.spartan-base-style('row');
-	.spartan-row-gutter(@gutter);
+	.spartan-row-gutter(@gutter) !important;
 }
 
 .grid-row-reorder() {
@@ -323,7 +321,7 @@ Spartan grid version 4.0.0: https://github.com/SimonHarte/SpartanGrid
 .grid-col(@gutter: @spartan-grid-gutter) {
 	.spartan-base-style('both');
 	.spartan-base-style('col');
-	.spartan-col-gutter(@gutter);
+	.spartan-col-gutter(@gutter) !important;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -367,11 +365,11 @@ Spartan grid version 4.0.0: https://github.com/SimonHarte/SpartanGrid
 
 .spartan-gutter-styles(@row-gutter, @col-gutter) {
 	&.@{spartan-namespace}row {
-		.spartan-row-gutter(@row-gutter);
+		.spartan-row-gutter(@row-gutter) !important;
 	}
 
 	.@{spartan-namespace}col {
-		.spartan-col-gutter(@col-gutter);
+		.spartan-col-gutter(@col-gutter) !important;
 	}
 }
 
