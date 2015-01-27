@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.0.2
+
+- use :nth-of-type instead of :nth-child selector so we skip possible non-grid elements
+
 ## 4.0.1
 
 - fix grid gutter mixin with important statement

@@ -1,2 +1,2 @@
 #!/bin/sh
-lessc grid-setup.less grid
+lessc grid-setup.less grid.css
