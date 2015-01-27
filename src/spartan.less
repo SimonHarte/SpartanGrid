@@ -1,6 +1,10 @@
-/*
-Spartan grid version 4.0.0: https://github.com/SimonHarte/SpartanGrid
-*/
+/**
+ * "Spartan" LessCSS Grid System
+ * version: 4.0.0
+ * https://github.com/SimonHarte/SpartanGrid/blob/develop/spartan.less
+ * License: MIT
+ * Copyright 2014 Simon Harte
+ */
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // GRID CALCULATIONS
@@ -102,18 +106,19 @@ Spartan grid version 4.0.0: https://github.com/SimonHarte/SpartanGrid
 // Extended mixin to set up equal width columns and properly clear them at the same time
 //
 // Note: Every use of .col-set-equal() must be wrapped in a media query (even for smallest "mobile first" viewport).
-//       Because else the `nth-child` selectors used in ` .col-set-equal()` for proper clearing would be passed on to all
+//       Because else the `nth-of-type` selectors used in ` .col-set-equal()` for proper clearing would be passed on to all
 //       other viewports/media queries in the layout.
 //
 // .col-clear([colums per line]):
 // Use this to manually clear every nth column if columns differ in height.
 // This ensures that a grid layout can have only [colums per line] columns on one horizontal grid line.
+// We use :nth-of-type instead of :nth-child because of an iPhone5 bug: http://stackoverflow.com/questions/26032513/ios8-safari-after-a-pushstate-the-nth-child-selectors-not-works
 
 // clear every new grid line, see issue in "before" state here: http://stackoverflow.com/questions/3628311/css-floating-divs-with-different-height-are-aligned-with-space-between-them
 .grid-col-clear(@columns) when (@columns >= 0) {
 	@column-integer: floor(@columns);
 	
-	> .@{spartan-namespace}col:nth-child(@{column-integer}n+1) {
+	> .@{spartan-namespace}col:nth-of-type(@{column-integer}n+1) {
 		clear: left;
 	}
 }
