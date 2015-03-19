@@ -1,9 +1,9 @@
 /**
  * "Spartan" LessCSS Grid System
- * version: 4.0.0
- * https://github.com/SimonHarte/SpartanGrid/blob/develop/spartan.less
+ * version: 4.0.2
+ * https://github.com/SimonHarte/SpartanGrid
  * License: MIT
- * Copyright 2014 Simon Harte
+ * Copyright 2014 Simon Harte <s.harte@gmx.ch>
  */
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -294,18 +294,20 @@
 	.spartan-core(@ns);
 }
 
-.grid-core(@ns: g, @generat: true) when (@ns = false) {
+// assuming first param is generation flag
+.grid-core(@ns: g, @generate: true) when (@ns = false) {
 	.spartan-core('g');
-}
-
-.grid-core(@ns: g, @generate: true) when (@ns = true) {
-	.spartan-core('g');
-	.spartan-core-selectors();
 }
 
 // also generate core selectors
 .grid-core(@ns: g, @generate: true) when (default()) {
 	.spartan-core(@ns);
+	.spartan-core-selectors();
+}
+
+// assuming first param is generation flag
+.grid-core(@ns: g, @generate: true) when (@ns = true) {
+	.spartan-core('g');
 	.spartan-core-selectors();
 }
 
@@ -378,7 +380,8 @@
 	}
 }
 
-// global mixins
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// GRID GUTTER MIXIN
 
 // passing no argument
 .grid-gutter() when (default()) {
@@ -454,8 +457,8 @@
 	}
 
 	// mixins to call inside less loop
-	// use standardized global mixins for correct !important statements where needed
-
+	// use global mixins for correct !important statements where needed
+	// first param must not have single quotes since mixin calls get standardized
 	.spartan-apply(grid-span, @index) {
 		.grid-span(@index);
 	}
@@ -480,8 +483,6 @@
 	//
 	// Example:
 	// .grid > .loop(12, class-prefix, 'mixin');
-	//
-	// NOTE: you can not use the generated classes themselves as mixins!
 	
 	@spartan-selector: ~'@{spartan-namespace}@{spartan-prefix}';
 	
