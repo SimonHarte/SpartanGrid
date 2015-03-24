@@ -1,0 +1,33 @@
+{
+  "name": "spartan-grid",
+  "version": "4.0.2",
+  "description": "This is madness...",
+  "main": "src/spartan.less",
+  "directories": {
+    "example": "examples",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SimonHarte/SpartanGrid.git"
+  },
+  "keywords": [
+    "spartan",
+    "grid",
+    "responsive",
+    "LessCSS",
+    "less",
+    "tiny",
+    "flexible",
+    "standalone"
+  ],
+  "author": "Simon Harte <s.harte@gmx.ch>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SimonHarte/SpartanGrid/issues"
+  },
+  "homepage": "https://github.com/SimonHarte/SpartanGrid"
+}
