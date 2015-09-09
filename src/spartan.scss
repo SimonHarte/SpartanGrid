@@ -10,9 +10,7 @@
 // GRID VARIABLE INIT
 
 $spartan-namespace: null !default;
-$spartan-type: null !default;
 $spartan-width: null !default;
-$spartan-gtype: null !default;
 $spartan-gutter: null !default;
 $spartan-cols: null !default;
 $spartan-one-col: null !default;
@@ -251,22 +249,8 @@ $spartan-one-col: null !default;
 			}
 		}
 	} @else {
-		@if $spartan-gtype == 'fluid' {
-			@if unit($_gutter) == '%' {
-				// gutter type is fluid and gutter value is percentage
-				@include _spartan-gutter-styles($_gutter, $_gutter);
-			} @else {
-				// grid width and gutter are the same unit
-				@if comparable($spartan-width, $_gutter) {
-					@include _spartan-gutter-styles(percentage(_strip-unit($_gutter) / _strip-unit($spartan-width)), percentage(_strip-unit($_gutter) / _strip-unit($spartan-width + $_gutter)));
-				} @else {
-					@error 'width and gutter units must be the same to calculate percentage';
-				}
-			}
-		} @else {
-			// take gutter as is
-			@include _spartan-gutter-styles($_gutter, $_gutter);
-		}
+		// take gutter as is
+		@include _spartan-gutter-styles($_gutter, $_gutter);
 	}
 }
 
@@ -404,15 +388,9 @@ $spartan-one-col: null !default;
 
 @mixin grid-unlock($config) {
 	$spartan-width: nth($config, 1) !global;
-	$spartan-type: nth($config, 2) !global;
-	$spartan-gutter: nth($config, 3) !global;
-	$spartan-gtype: nth($config, 4) !global;
-	$spartan-cols: nth($config, 5) !global;
+	$spartan-gutter: nth($config, 2) !global;
+	$spartan-cols: nth($config, 3) !global;
 	$spartan-one-col: $spartan-width / $spartan-cols !global;
-
-	@if $spartan-type == 'fluid' {
-		$spartan-one-col: percentage((_strip-unit($spartan-width) / $spartan-cols) / _strip-unit($spartan-width)) !global;
-	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

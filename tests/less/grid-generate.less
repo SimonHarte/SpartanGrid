@@ -5,7 +5,7 @@ unlock 940px, 'fluid', 20px, 'fluid', 12 for all generate tests
 
 #generate {
 	.grid-core(@generate: false);
-	.grid-unlock(940px, 'fluid', 20px, 'fluid', 12);
+	.grid-unlock(100%, percentage(20px / 940px), 12);
 	
 	.generate-1 {
 		/* without params */

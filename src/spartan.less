@@ -12,27 +12,27 @@
 // Note: We use !important statements for grid layout critical styles.
 //       Like this you can define for example margin and padding shorthands without affecting the grid.
 
-.spartan-grid(@grid-type, @fixed-width, @gutter-with, @cols) {
+.spartan-grid(@width, @gutter-with, @cols) {
 	// multiple mixins switch according to passed types
 
 	// mixin for fluid grid
-	.spartan-create(fluid, @fixed-width, @gutter-with, @cols) {
+	.spartan-create(@width, @gutter-with, @cols) when (ispercentage(@width)) {
 		// implement grid mixins with type dependent variable
 		.spartan-mixins(
-			(100% / @cols) // single column width
+			(@width / @cols) // single column width
 		);
 	}
 
 	// mixin for fixed grid
-	.spartan-create(fixed, @fixed-width, @gutter-with, @cols) {
+	.spartan-create(@width, @gutter-with, @cols) when (ispixel(@width)), (isem(@width)) {
 		// implement grid mixins with type dependent variable
 		.spartan-mixins(
-			((@fixed-width + @gutter-with) / @cols) // single column width
+			((@width + @gutter-with) / @cols) // single column width
 		);
 	}
 
 	// call switch mixin to calculate variables depending on grid configuration
-	.spartan-create(~'@{grid-type}', @fixed-width, @gutter-with, @cols);
+	.spartan-create(@width, @gutter-with, @cols);
 
 	// unlock grid mixins with modified variable
 	.spartan-mixins(@one-col) {
@@ -265,6 +265,7 @@
 		margin-left: 0 !important;
 		// columns should per default span the whole width if none is set
 		width: 100%;
+		min-height: 1px;
 	}
 }
 
@@ -336,16 +337,13 @@
 
 .grid-unlock(@config...) {
 	// make variables accessible for different tests
-	@spartan-fixed-width: extract(@config, 1);
-	@spartan-gutter: extract(@config, 3);
-	@spartan-cols: extract(@config, 5);
-	@spartan-type: extract(@config, 2);
-	@spartan-gtype: extract(@config, 4);
+	@spartan-width: extract(@config, 1);
+	@spartan-gutter: extract(@config, 2);
+	@spartan-cols: extract(@config, 3);
 
 	// set up grid mixins depending on an included config
 	.spartan-grid(
-	@spartan-type,
-	@spartan-fixed-width,
+	@spartan-width,
 	@spartan-gutter,
 	@spartan-cols
 	);
@@ -386,10 +384,10 @@
 // passing no argument
 .grid-gutter() when (default()) {
 	// assume fluid grid
-	.grid-gutter(@spartan-fixed-width, @spartan-gutter);
+	.grid-gutter(@spartan-width, @spartan-gutter);
 }
 
-.grid-gutter() when (@spartan-type = 'fixed'), (@spartan-gtype = 'fixed') {
+.grid-gutter() when (ispixel(@spartan-gutter)), (isem(@spartan-gutter)) {
 	// use original value
 	.grid-gutter(@spartan-gutter);
 }

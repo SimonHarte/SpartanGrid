@@ -3,7 +3,7 @@
 #layout-mixins {
 	/* unlock 940px, 'fluid', 20px, 'fluid', 12 */
 	@include grid-core($generate: false);
-	@include grid-unlock((940px, 'fluid', 20px, 'fluid', 12));
+	@include grid-unlock((100%, percentage(20px / 940px), 12));
 
 	.set-equal-1 {
 		/* @include grid-col-set-equal(4) */

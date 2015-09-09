@@ -5,9 +5,9 @@
 // core styles are only needed once
 .grid-core();
 
-@grid-config-s: 720px, 'fluid', 5px, 'fixed', 12;
-@grid-config-m: 940px, 'fluid', 15px, 'fluid', 12;
-@grid-config-l: 1040px, 'fluid', 20px, 'fixed', 12;
+@grid-config-s: 100%, 5px, 12;
+@grid-config-m: 100%, percentage(15px / 940px), 12;
+@grid-config-l: 100%, 20px, 12;
 
 // unlock different configs and generate configuration sensitive styles
 @media @m-small {
