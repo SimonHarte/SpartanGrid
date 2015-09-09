@@ -1,27 +1,15 @@
 // See: https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#viewport-dependent-grids
 
-// Content oriented media queries //
-@reading-length: 35em;
+@import "viewports";
 
-// breakpoints
-@m-small-max:   @reading-length;
-@m-medium-min:  (@reading-length + .01);
-@m-medium-max:  (@reading-length*2);
-@m-large-min:   (@reading-length*2 + .01);
-
-// queries
-@m-small:       ~"(max-width: @{m-small-max})";
-@m-medium:      ~"(min-width: @{m-medium-min}) and (max-width: @{m-medium-max})";
-@m-medium-up:   ~"(min-width: @{m-medium-min})";
-@m-medium-down: ~"(max-width: @{m-medium-max})";
-@m-large:       ~"(min-width: @{m-large-min})";
-
+// core styles are only needed once
 .grid-core();
 
 @grid-config-s: 720px, 'fluid', 5px, 'fixed', 12;
 @grid-config-m: 940px, 'fluid', 15px, 'fluid', 12;
 @grid-config-l: 1040px, 'fluid', 20px, 'fixed', 12;
 
+// unlock different configs and generate configuration sensitive styles
 @media @m-small {
 	.grid-unlock(@grid-config-s);
 	.grid-gutter();

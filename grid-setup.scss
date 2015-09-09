@@ -1,7 +1,3 @@
 @import "src/spartan";
-
-@include grid-bundle(940px, 'fluid', 20px, 'fixed', 12, 'grid');
-
-.test {
-	@include grid-gutter(3%);
-}
+// integrate base setup per default, remove this and use the grid API to adjust outcome
+@import "examples/scss/base-setup";

@@ -1,0 +1,34 @@
+/*
+GRID-GENERATE TESTS
+unlock 940px, 'fluid', 20px, 'fluid', 12 for all generate tests
+*/
+
+#generate {
+	.grid-core(@generate: false);
+	.grid-unlock(940px, 'fluid', 20px, 'fluid', 12);
+	
+	.generate-1 {
+		/* without params */
+		.grid-generate();
+	}
+	
+	.generate-2 {
+		/* empty string */
+		.grid-generate('');
+	}
+	
+	.generate-3 {
+		/* unquoted string */
+		.grid-generate(unquoted);
+	}
+	
+	.generate-4 {
+		/* quoted string */
+		.grid-generate('quoted');
+	}
+	
+	.generate-5 {
+		/* restrict amount */
+		.grid-generate(@columns: 6);
+	}
+}

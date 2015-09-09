@@ -1,18 +1,4 @@
-// Content oriented media queries //
-@reading-length: 35em;
-
-// breakpoints
-@m-small-max: @reading-length;
-@m-medium-min: (@reading-length + .01);
-@m-medium-max: (@reading-length*2);
-@m-large-min: (@reading-length*2 + .01);
-
-// queries
-@m-small: ~"(max-width: @{m-small-max})";
-@m-medium: ~"(min-width: @{m-medium-min}) and (max-width: @{m-medium-max})";
-@m-medium-up: ~"(min-width: @{m-medium-min})";
-@m-medium-down: ~"(max-width: @{m-medium-max})";
-@m-large: ~"(min-width: @{m-large-min})";
+@import "viewports";
 
 // grid
 @grid-width:    940px;
@@ -85,6 +71,23 @@
 
 	@media @m-large {
 		.grid-col-set('col', @grid-gcount/3, @grid-gcount/3*2);
+	}
+}
+
+.g-layout-5 {
+	.grid-row-reorder;
+	
+	// small: 12
+	// medium: 12
+	// large: 6 / +6 | 6 / -6
+
+	// no need to generate for small screen since full-width
+	
+	// no need to generate for medium screen since full-width
+
+	@media @m-large {
+		.grid-col-set('col-1', @grid-gcount/2, @reorder: @grid-gcount/2);
+		.grid-col-set('col-2', @grid-gcount/2, @reorder: -@grid-gcount/2);
 	}
 }
 
