@@ -35,7 +35,7 @@ e.g. clearing on the row, float of columns etc. Generally has to be called only 
 
 #### `grid-unlock(<$config>)`
 
-Pass in your grid configuration as a list object like with `grid-bundle()`. This will unlock all the grid mixins using your configuration
+Pass in your grid configuration as a list object like with [`grid-bundle()`]((https://github.com/SimonHarte/SpartanGrid/blob/master/README.md#grid-setup)). This will unlock all the grid mixins using your configuration
 within the current scope (or globally).
 
 ```scss
@@ -120,19 +120,19 @@ different viewports like so:
 
 @media (max-width: 40em) {
 	// grid setup for small screen
-	@include grid-unlock((940px, 'fluid', 5px, 'fixed', 12));
+	@include grid-unlock((100%, 5px, 12));
 	@include grid-gutter();
 	@include grid-generate();
 }
 @media (min-width: 40.01em) and (max-width: 65em) {
 	// grid setup for medium screen
-	@include grid-unlock((940px, 'fluid', 15px, 'fixed', 12));
+	@include grid-unlock((100%, 15px, 12));
 	@include grid-gutter();
 	@include grid-generate();
 }
 @media (min-width: 65.01em) {
 	// grid setup for large screen
-	@include grid-unlock((940px, 'fluid', 30px, 'fluid', 12));
+	@include grid-unlock((100%, percentage(30px / 940px), 12));
 	@include grid-gutter();
 	@include grid-generate();
 }
@@ -335,7 +335,7 @@ Simply make use of the optional parameter to [`grid-generate()`](#custom-classes
 
 ```scss
 // grid configuration
-$grid-config: 940px, 'fluid', 20px, 'fixed', 12;
+$grid-config: 100%, 20px, 12;
 
 @include grid-core(); // base classes, no change in namespace
 @include grid-unlock($grid-config);

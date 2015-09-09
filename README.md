@@ -106,17 +106,17 @@ The basic grid setup requires you to call just one mixin, pass in a configuratio
 **LessCSS**
 
 ```less
-@grid-config: <grid-width>, <grid-type>, <gutter-width>, <gutter-type>, <grid-columns>;
+@grid-config: <grid-width>, <gutter-width>, <grid-columns>;
 
-.grid-bundle(@grid-config, [prefix]);
+.grid-bundle(@grid-config, [@prefix: 'g']);
 ```
 
 **SCSS**
 
 ```scss
-$grid-config: <grid-width>, <grid-type>, <gutter-width>, <gutter-type>, <grid-columns>;
+$grid-config: <grid-width>, <gutter-width>, <grid-columns>;
 
-@include grid-bundle($grid-config, [prefix]);
+@include grid-bundle($grid-config, [@prefix: 'g']);
 ```
 
 #### Setup Params
@@ -135,7 +135,7 @@ $grid-config: <grid-width>, <grid-type>, <gutter-width>, <gutter-type>, <grid-co
 **LessCSS**
 
 ```less
-@grid-config: 940px, 'fluid', 20px, 'fixed', 12;
+@grid-config: 100%, 20px, 12;
 
 .grid-bundle(@grid-config);
 ```
@@ -143,7 +143,7 @@ $grid-config: <grid-width>, <grid-type>, <gutter-width>, <gutter-type>, <grid-co
 **SCSS**
 
 ```less
-$grid-config: 940px, 'fluid', 20px, 'fixed', 12;
+$grid-config: 100%, 20px, 12;
 
 @include grid-bundle($grid-config);
 ```

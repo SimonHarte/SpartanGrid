@@ -46,7 +46,7 @@ If you use the grid only with [semantic selectors](#semantic-grid) you can optio
 
 #### `grid-unlock(<@config>)`
 
-Pass in your grid configuration like with `.grid-bundle()`. This will unlock all the grid mixins using your configuration within the current scope (or globally).
+Pass in your grid configuration as a list object like with [`.grid-bundle()`](https://github.com/SimonHarte/SpartanGrid/blob/master/README.md#grid-setup). This will unlock all the grid mixins using your configuration within the current scope (or globally).
 
 ```less
 #my-scope {
@@ -147,19 +147,19 @@ different viewports like so:
 
 @media (max-width: 40em) {
 	// grid setup for small screen
-	.grid-unlock(940px, 'fluid', 5px, 'fixed', 12;);
+	.grid-unlock(100%, 5px, 12;);
 	.grid-gutter();
 	.grid-generate();
 }
 @media (min-width: 40.01em) and (max-width: 65em) {
 	// grid setup for medium screen
-	.grid-unlock(940px, 'fluid', 15px, 'fixed', 12;);
+	.grid-unlock(100%, 15px, 12;);
 	.grid-gutter();
 	.grid-generate();
 }
 @media (min-width: 65.01em) {
 	// grid setup for large screen
-	.grid-unlock(940px, 'fluid', 30px, 'fluid', 12;);
+	.grid-unlock(100%, percentage(30px / 940px), 12;);
 	.grid-gutter();
 	.grid-generate();
 }
@@ -362,7 +362,7 @@ Simply make use of the optional parameter to [`.grid-generate()`](#custom-classe
 
 ```less
 // grid configuration
-@grid-config: 940px, 'fluid', 20px, 'fixed', 12;
+@grid-config: 100%, 20px, 12;
 
 .grid-core(); // base classes, no change in namespace
 .grid-unlock(@grid-config);
