@@ -252,9 +252,7 @@ There's a detailed documentation about every aspect of Spartan with different ap
 
 **Partially** supported:
 
-- **IE8**: basic grid working properly, no media query support and `:nth-child` clearing, 
-**Note:** fully supported with [respond.js](https://github.com/scottjehl/Respond) and [selectivizr.js]
-(http://selectivizr.com/) polyfills
+- **IE8**: basic grid working properly, no `:nth-of-type` clearing
 - **Safari**: as explained [below](#the-safari-problem)
 
 ### The Safari Problem

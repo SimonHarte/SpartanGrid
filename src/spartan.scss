@@ -156,7 +156,7 @@ $spartan-one-col: null !default;
 // Extended mixin to set up equal width columns and properly clear them at the same time
 //
 // Note: Every use of .col-set-equal() must be wrapped in a media query (even for smallest "mobile first" viewport).
-//       Because else the `nth-child` selectors used in ` .col-set-equal()` for proper clearing would be passed on to all
+//       Because else the `nth-of-type` selectors used in ` .col-set-equal()` for proper clearing would be passed on to all
 //       other viewports/media queries in the layout.
 //
 // .col-clear([colums per line]):
@@ -167,7 +167,7 @@ $spartan-one-col: null !default;
 @mixin grid-col-clear($columns) {
 	$col-integer: floor($columns);
 
-	& > .#{$spartan-namespace}col:nth-child(#{$col-integer}n+1) {
+	& > .#{$spartan-namespace}col:nth-of-type(#{$col-integer}n+1) {
 		clear: left;
 	}
 }

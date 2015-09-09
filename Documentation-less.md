@@ -320,7 +320,7 @@ Example output CSS:
 	width: 25%;
 }
 
-.g-layout-1 > .g-col:nth-child(4n+1) {
+.g-layout-1 > .g-col:nth-of-type(4n+1) {
 	clear: left;
 }
 ```
@@ -334,7 +334,7 @@ line, clear the 4th, the 7th, the 10th etc.
 
 ### Responsive Layout Example
 
-> **Note**: With a mobile first approach you either have to declare a media query or omit the definition because of possible interfering pseudo selectors (:nth-child).
+> **Note**: With a mobile first approach you either have to declare a media query or omit the definition because of possible interfering pseudo selectors (:nth-of-type).
 
 ```less
 .g-layout-1 {
