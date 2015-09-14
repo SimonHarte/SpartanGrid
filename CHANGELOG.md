@@ -1,5 +1,12 @@
 # Changelog
 
+## 5.0.0
+
+- added SCSS support!
+- simplified and standardised API for LessCSS and SCSS
+- `grid-unlock()` only needs 3 instead of 5 configuration parameters now: grid width, gutter width and columns
+- grid and gutter type depend on passed types
+
 ## 4.0.2
 
 - use :nth-of-type instead of :nth-child selector so we skip possible non-grid elements
