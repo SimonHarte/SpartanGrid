@@ -50,13 +50,15 @@ Spartan provides you with a sensible set of mixins to freely customize your setu
 | offsets                   | ✅ | ✅ | ✅ | ✅ |
 | multiple grids            | ✅ | ❌ | ❌ | ✅ |
 | custom classes            | ✅ | ❌ | ❌ | ✅ |
-| output css (min)          | **1.8-5KB** | **8.3KB** | **18.5KB** | **~10KB** |
+| output css (min)          | **1.8-5.4KB** * | **8.3KB** | **18.5KB** | **~10KB** |
+
+> * 1.8KB with the basic grid, 5.4KB with responsiveness for 3 viewports.
 
 ## Getting Started
 
 - Install [Node](http://nodejs.org/) and a preprocessor:
-	- LessCSS: `npm install less -g`
-	- Nodescss: `npm install node-sass -g`
+	- Less: `npm install less -g`
+	- SCSS: `npm install node-sass -g`
 
 ### Have a Project at the Ready?
 
@@ -142,7 +144,7 @@ $grid-config: <grid-width>, <gutter-width>, <grid-columns>;
 
 **SCSS**
 
-```less
+```scss
 $grid-config: 100%, 20px, 12;
 
 @include grid-bundle($grid-config);
