@@ -121,17 +121,6 @@ $grid-config: <grid-width>, <gutter-width>, <grid-columns>;
 @include grid-bundle($grid-config, [@prefix: 'g']);
 ```
 
-#### Setup Params
-
-| Param | Type | Value | Comment |
-|-------|:-----|:------|:--------|
-| `<grid-width>`   | number | in `px` | Is used to calculate relative gutter in a fluid grid |
-| `<grid-type>`    | string | `fluid` or `fixed` | quotes optional |
-| `<gutter-width>` | number | in `px`, `%` or `em/rem` | only reacts to `<gutter-type>` with `px`|
-| `<gutter-type>`  | string | `fluid` or `fixed` | forced to `fixed` if `<grid-type>` is `fixed` |
-| `<grid-columns>` | number | | | |
-| `[prefix]`       | string | | quotes optional |
-
 #### Example Setup
 
 **LessCSS**
