@@ -123,6 +123,8 @@ $grid-config: <grid-width>, <gutter-width>, <grid-columns>;
 
 #### Example Setup
 
+The following will implement a fluid grid with a fixed gutter of 20 pixel and 12 columns:
+
 **LessCSS**
 
 ```less
@@ -138,6 +140,16 @@ $grid-config: 100%, 20px, 12;
 
 @include grid-bundle($grid-config);
 ```
+
+#### Grid and Gutter Types
+
+The grid and gutter type depend solely on the unit of the value you have given.
+If you define your grid width as `100%` the grid will naturally use fluid percentage values, while it will
+use fixed pixel values if you define it for example as `940px`.
+This counts for the gutter as well since grid and gutter types can be defined completely independently.
+
+> You can easily calculate a relative percentage gutter from other values with a built-in function that is present in both preprocessors,
+ example: `percentage(20px / 940px)`
 
 ### Grid Classes and Mixins
 
