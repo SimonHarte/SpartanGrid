@@ -139,6 +139,16 @@ $grid-config: 100%, 20px, 12;
 @include grid-bundle($grid-config);
 ```
 
+#### Grid and Gutter Types
+
+The grid and gutter type depend solely on the unit of the value you have given.
+If you define your grid width as `100%` the grid will naturally use fluid percentage values, while it will
+use fixed pixel values if you define it for example as `940px`.
+This counts for the gutter as well since grid and gutter types can be defined completely independently.
+
+> You can easily calculate a relative percentage gutter from pixel values with a built-in function that is present in both preprocessors,
+ example: `percentage(20px / 940px)`
+
 ### Grid Classes and Mixins
 
 Spartan generates grid classes according to your configuration per default. Instead of using
