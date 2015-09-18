@@ -380,7 +380,7 @@ $spartan-one-col: null !default;
 	$classes: span offset push pull;
 
 	@each $class in $classes {
-		@for $i from 1 to $columns {
+		@for $i from 1 through $columns {
 			.#{$selector}#{$class}-#{$i} {
 				@include _spartan-apply($class, $i);
 			}
