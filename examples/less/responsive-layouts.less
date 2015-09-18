@@ -1,6 +1,7 @@
 @import "viewports";
 
-@grid-config: 100%, 20px, 12;
+@grid-columns: 12;
+@grid-config: 100%, 20px, @grid-columns;
 
 .grid-core();
 .grid-unlock(@grid-config);
@@ -18,11 +19,11 @@
 	// no need to generate for small screen since full-width
 	
 	@media @m-medium {
-		.grid-col-set-equal(@grid-gcount/2);
+		.grid-col-set-equal(@grid-columns/2);
 	}
 
 	@media @m-large {
-		.grid-col-set-equal(@grid-gcount/3);
+		.grid-col-set-equal(@grid-columns/3);
 	}
 }
 
@@ -34,7 +35,7 @@
 	// no need to generate for small screen since full-width
 	
 	@media @m-large {
-		.grid-col-set-equal(@grid-gcount/2);
+		.grid-col-set-equal(@grid-columns/2);
 	}
 }
 
@@ -46,8 +47,8 @@
 	// no need to generate for small screen since full-width
 	
 	@media @m-medium-up {
-		.grid-col-set('col-1', @grid-gcount/3*2);
-		.grid-col-set('col-2', @grid-gcount/3);
+		.grid-col-set('col-1', @grid-columns/3*2);
+		.grid-col-set('col-2', @grid-columns/3);
 	}
 }
 
@@ -59,11 +60,11 @@
 	// no need to generate for small screen since full-width
 	
 	@media @m-medium {
-		.grid-col-set('col', @grid-gcount/2, @grid-gcount/2);
+		.grid-col-set('col', @grid-columns/2, @grid-columns/2);
 	}
 
 	@media @m-large {
-		.grid-col-set('col', @grid-gcount/3, @grid-gcount/3*2);
+		.grid-col-set('col', @grid-columns/3, @grid-columns/3*2);
 	}
 }
 
@@ -79,8 +80,8 @@
 	// no need to generate for medium screen since full-width
 
 	@media @m-large {
-		.grid-col-set('col-1', @grid-gcount/2, @reorder: @grid-gcount/2);
-		.grid-col-set('col-2', @grid-gcount/2, @reorder: -@grid-gcount/2);
+		.grid-col-set('col-1', @grid-columns/2, @reorder: @grid-columns/2);
+		.grid-col-set('col-2', @grid-columns/2, @reorder: -@grid-columns/2);
 	}
 }
 
@@ -90,14 +91,14 @@
 	// large: 9 columns
 	
 	@media @m-small {
-		.grid-col-set('col', (@grid-gcount / 5));
+		.grid-col-set('col', (@grid-columns / 5));
 	}
 
 	@media @m-medium {
-		.grid-col-set('col', (@grid-gcount / 7));
+		.grid-col-set('col', (@grid-columns / 7));
 	}
 
 	@media @m-large {
-		.grid-col-set('col', (@grid-gcount / 9));
+		.grid-col-set('col', (@grid-columns / 9));
 	}
 }
