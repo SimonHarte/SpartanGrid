@@ -351,6 +351,10 @@ $spartan-one-col: null !default;
 	@include _spartan-col-gutter($gutter);
 }
 
+@mixin grid-row-reorder() {
+	@include _spartan-row-reorder;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // GENERATE BASE CLASSES
 
