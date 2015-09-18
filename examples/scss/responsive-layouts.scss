@@ -18,7 +18,7 @@ $grid-config: 100%, 20px, $grid-columns;
 
 	// no need to generate for small screen since full-width
 	
-	$media $m-medium {
+	@media #{$m-medium} {
 		@include grid-col-set-equal($grid-columns/2);
 	}
 
