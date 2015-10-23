@@ -1,0 +1,77 @@
+/* LAYOUT MIXINS TESTS */
+
+#layout-mixins {
+	/* unlock 940px, 'fluid', 20px, 'fluid', 12 */
+	@include grid-core($generate: false);
+	@include grid-unlock((100%, percentage(20px / 940px), 12));
+
+	.set-equal-1 {
+		/* @include grid-col-set-equal(4) */
+		@include grid-col-set-equal(4);
+	}
+
+	.set-equal-2 {
+		/* @include grid-col-set-equal(-4) */
+		@include grid-col-set-equal(-4);
+	}
+
+	.set-1 {
+		/* @include grid-col-set('col', 4) */
+		@include grid-col-set('col', 4);
+	}
+
+	.set-2 {
+		/* @include grid-col-set('col', 4, 6) */
+		@include grid-col-set('col', 4, 6);
+	}
+
+	.set-3 {
+		/* @include grid-col-set('col', -4) */
+		@include grid-col-set('col', -4);
+	}
+
+	.set-4 {
+		/* @include grid-col-set('col', -4, -6) */
+		@include grid-col-set('col', -4, -6);
+	}
+
+	.set-5 {
+		/* @include grid-col-set('col', 4, 0, 4) */
+		@include grid-col-set('col', 4, 0, 4);
+	}
+
+	.set-6 {
+		/* @include grid-col-set('col', 4, 0, -4) */
+		@include grid-col-set('col', 4, 0, -4);
+	}
+
+	.set-7 {
+		/* @include grid-col-set('col', 4, 2, 4) */
+		@include grid-col-set('col', 4, 2, 4);
+	}
+
+	.set-8 {
+		/* @include grid-col-set('col', -4, 2, 4) */
+		@include grid-col-set('col', -4, 2, 4);
+	}
+
+	.set-9 {
+		/* @include grid-col-set('col', -4, 2, 4) */
+		@include grid-col-set('col', -4, 2, 4);
+	}
+
+	.set-10 {
+		/* @include grid-col-set('col', 4, -2, 4) */
+		@include grid-col-set('col', 4, -2, 4);
+	}
+
+	.clear-1 {
+		/* @include grid-col-clear(4) */
+		@include grid-col-clear(4);
+	}
+
+	.clear-2 {
+		/* @include grid-col-clear(3.5) */
+		@include grid-col-clear(3.5);
+	}
+}

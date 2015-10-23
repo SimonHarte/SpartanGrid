@@ -1,0 +1,33 @@
+/*
+GRID-CORE TESTS
+*/
+
+#core-1 {
+	/* without params */
+	@include grid-core();
+}
+
+#core-2 {
+	/* empty string */
+	@include grid-core('');
+}
+
+#core-3 {
+	/* unquoted string */
+	@include grid-core(unquoted);
+}
+
+#core-3 {
+	/* quoted string */
+	@include grid-core('quoted');
+}
+
+#core-4 {
+	/* don't generate css */
+	@include grid-core($generate: false);
+}
+
+#core-5 {
+	/* explicitly generate css */
+	@include grid-core($generate: true);
+}

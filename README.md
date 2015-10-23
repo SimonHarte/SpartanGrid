@@ -1,17 +1,14 @@
 # Spartan
 
-A highly customizable yet tiny, standalone LessCSS grid system. Try the [dynamic online demo](http://spartan-grid.herokuapp.com/).
+A highly customizable yet tiny, standalone grid system. Try the [dynamic online demo](http://spartan-grid.herokuapp.com/).
 
-> Requires [LessCSS](https://github.com/less/less.js) version 1.6.0 or above. Does **not** work with v1.7.0 
-because of [this bug](https://github.com/less/less.js/pull/1929#issuecomment-45307325) (fixed in v1.7.1).
-
-> [Tested with Less.php](http://lessphp.gpeasy.com/Demo) version 1.6.3
+`bower install spartan-grid`
 
 ## What sets Spartan apart?
 
-Spartan can mainly shine through its very unique [**grid creation API**](#grid-setup).
+Spartan will definitely convince you with its very unique [**grid creation API**](#grid-setup).
 While you define some variables in other grid systems which will then be used to create a predefined grid structure, 
-Spartan provides you with a sensible set of less mixins to freely customize your setup and get the most out of our grid system:
+Spartan provides you with a sensible set of mixins to freely customize your setup and get the most out of our grid system:
 **you define** how you want to use **your grid**!
 
 - [Features](#features)
@@ -44,7 +41,7 @@ Spartan provides you with a sensible set of less mixins to freely customize your
 |                           | [Spartan](http://spartan-grid.herokuapp.com) | [Bootstrap](http://getbootstrap.com/css/#grid) | [Foundation](http://foundation.zurb.com/) | [Profound](http://www.profoundgrid.com/) |
 |---------------------------|:-------:|:-----------------:|:----------:|:-------:|
 | less                      | ✅ | ✅ | ❌ | ❌ |
-| sass                      | ❌ | ✅ | ✅ | ✅ |
+| scss                      | ✅ | ✅ | ✅ | ✅ |
 | fluid                     | ✅ | ✅ | ✅ | ✅ |
 | static                    | ✅ | ✅ | ✅ | ✅ |
 | responsive                | ✅ | ✅ | ✅ | ✅ |
@@ -53,15 +50,19 @@ Spartan provides you with a sensible set of less mixins to freely customize your
 | offsets                   | ✅ | ✅ | ✅ | ✅ |
 | multiple grids            | ✅ | ❌ | ❌ | ✅ |
 | custom classes            | ✅ | ❌ | ❌ | ✅ |
-| output css (min)          | **1.8-5KB** | **8.3KB** | **15.1KB** | **~10KB** |
+| output css (min)          | **1.8-5.4KB** * | **8.3KB** | **18.5KB** | **~10KB** |
+
+> * 1.8KB with the basic grid, 5.4KB with responsiveness for 3 viewports.
 
 ## Getting Started
 
-- Install [Node](http://nodejs.org/) and then LessCSS: `npm install -g less`
+- Install [Node](http://nodejs.org/) and a preprocessor:
+	- Less: `npm install less -g`
+	- SCSS: `npm install node-sass -g`
 
 ### Have a Project at the Ready?
 
-- Integrate [`src/spartan.less`](https://github.com/SimonHarte/SpartanGrid/blob/master/src/spartan.less) in your project
+- Integrate the [source file](https://github.com/SimonHarte/SpartanGrid/blob/master/src) in your project
 - Use the [API mixin(s)](#grid-setup) to set up your grid
 
 > Spartan will not generate any CSS until you use the setup API.
@@ -69,8 +70,10 @@ Spartan provides you with a sensible set of less mixins to freely customize your
 ### Just want to fiddle around?
 
 - Download Spartan
-- Adjust `grid-setup.less`
-- Execute: `sh scripts/compile.sh`
+- Adjust the grid setup
+- Execute:
+	- `lessc grid-setup.less grid.css` or
+	- `node-sass grid-setup.scss grid.css`
 
 ## Grid Structure
 
@@ -100,67 +103,111 @@ Check out [responsive approaches](https://github.com/SimonHarte/SpartanGrid/blob
 
 There are two ways to set up a grid with Spartan, within the basic usage we only explain the simpler one. If you need more flexibility, to set up viewport dependent grids etc. go to the [advanced usage](#responsiveness-and-customization) section.
 
-The basic grid setup requires you to call just one mixin, pass in a configuration and an optional prefix (read more about custom classes in the [documentation](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#custom-classes)).
-
-```less
-@grid-config: <grid-width>, <grid-type>, <gutter-width>, <gutter-type>, <grid-columns>;
-
-.grid-bundle([prefix], @grid-config);
-```
-
-If you are not using a grid prefix, you have to name the config param, so `.grid-bundle()` correctly receives the configuration and doesn't think it's the prefix.
-
-```less
-.grid-bundle(@config: @grid-config);
-```
-
-#### Setup Params
-
-| Param | Type | Value | Comment |
-|-------|:-----|:------|:--------|
-| `[prefix]`       | string | | quotes optional |
-| `<grid-width>`   | pixel   | | |
-| `<grid-type>`    | string  | `fluid` or `fixed` | quotes optional |
-| `<gutter-width>` | number | | `px`, `%` or `em/rem`, only reacts to `<gutter-type>` with `px` |
-| `<gutter-type>`  | string  | `fluid` or `fixed` | forced to `fixed` if `<grid-type>` is `fixed` |
-| `<grid-columns>` | integer | | | |
-
-#### Example Setup
+The basic grid setup requires you to call just one mixin, pass in a configuration and an optional prefix; read more about custom classes in the [documentation](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#custom-classes).
 
 **LessCSS**
 
 ```less
-@grid-config: 940px, 'fluid', 20px, 'fixed', 12;
+@grid-config: <grid-width>, <gutter-width>, <grid-columns>;
 
-.grid-bundle(@config: @grid-config);
+.grid-bundle(@grid-config, [@prefix: 'g']);
 ```
+
+**SCSS**
+
+```scss
+$grid-config: <grid-width>, <gutter-width>, <grid-columns>;
+
+@include grid-bundle($grid-config, [@prefix: 'g']);
+```
+
+#### Example Setup
+
+The following will implement a fluid grid with a fixed gutter of 20 pixel and 12 columns:
+
+**LessCSS**
+
+```less
+@grid-config: 100%, 20px, 12;
+
+.grid-bundle(@grid-config);
+```
+
+**SCSS**
+
+```scss
+$grid-config: 100%, 20px, 12;
+
+@include grid-bundle($grid-config);
+```
+
+#### Grid and Gutter Types
+
+The grid and gutter type depend solely on the unit of the value you have given.
+If you define your grid width as `100%` the grid will naturally use fluid percentage values, while it will
+use fixed pixel values if you define it for example as `940px`.
+This counts for the gutter as well since grid and gutter types can be defined completely independently.
+
+> You can easily calculate a relative percentage gutter from other values with a built-in function that is present in both preprocessors,
+ example: `percentage(20px / 940px)`
 
 ### Grid Classes and Mixins
 
-Spartan comes with an integrated LessCSS loop to generate grid classes according to your configuration. Instead of using
-the generated classes you can also use similar named mixins to apply the grid in a less style sheet.
+Spartan generates grid classes according to your configuration per default. Instead of using
+the generated classes you can also use similar named mixins to apply the grid with a precompiler.
+
+**CSS**
+
+```css
+.g-span-{columns}
+.g-offset-{columns}
+.g-push-{columns}
+.g-pull-{columns}
+```
+
+**LessCSS**
 
 ```less
-.grid-span(<columns>), .g-span-{columns}
-.grid-offset(<columns>), .g-offset-{columns}
-.grid-push(<columns>), .g-push-{columns}
-.grid-pull(<columns>), .g-pull-{columns}
+.grid-span(<columns>)
+.grid-offset(<columns>)
+.grid-push(<columns>)
+.grid-pull(<columns>)
+```
+
+**SCSS**
+
+```scss
+@include grid-span(<columns>)
+@include grid-offset(<columns>)
+@include grid-push(<columns>)
+@include grid-pull(<columns>)
 ```
 
 #### `grid-span`
-Override the width of a column (default is full-width), equivalent to `.g-span-{columns}`. This mixin allows you to pass
-in floating point numbers, which enables you to define literally **any** width using the mixin.
+Override the width of a column (default is full-width), equivalent to `.g-span-{columns}`. The mixin allows you to pass
+in floating point numbers, which enables you to define literally **any** width.
+
+Following an example of a 5 column layout in a 12 column grid:
+
+**LessCSS**
 
 ```less
-// 5 columns per line in a 12 column grid
-.grid-span(12/5);
+.g-col-fifth {
+	.grid-span(12/5);
+}
+```
+
+**SCSS**
+
+```scss
+.g-col-fifth {
+	@include grid-span(12/5);
+}
 ```
 
 #### `grid-offset`
 Indent a column by the defined amount of grid columns, equivalent to `.g-offset-{columns}`.
 While there are just positive indents in generated classes, you could also call this mixin with negative values.
-
-> **Note:** Using negative indents generally only works in static width grids.
 
 #### `grid-push` and `grid-pull`
 Together with the additional class `.g-reorder` on `.g-row` you can reorder columns visually without changing the 
@@ -170,20 +217,35 @@ order in HTML. Equivalent to `.g-push-{columns}` and `.g-pull-{columns}`, simila
 
 ##### `grid-reorder`
 
-You can alternatively use `.grid-reorder()` and pass in any number. If the passed number is positive or zero, it will
-simply call `.grid-push()` and if the number is negative `.grid-pull()` instead.
+You can alternatively use the mixin `grid-row-reorder()` together with `grid-reorder()` and pass in any number.
+If the passed number is positive or zero, it will simply call `grid-push()` and if the number is negative `grid-pull()` instead.
 
 ## Advanced Usage
 
-There's a detailed [documentation](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md) about every aspect of Spartan with different approaches to setting up your most flexible grid.
+There's a detailed documentation about every aspect of Spartan with different approaches to setting up your most flexible grid.
 
-Overview:
+- [LessCSS](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation-less.md)
+- [SCSS](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation-scss.md)
 
-- [Grid Creation API](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#grid-creation-api)
-- [Viewport Dependent Configs](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#viewport-dependent-configurations)
-- [Custom Classes](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#custom-classes)
-- [Semantic Grid](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#semantic-grid)
-- [Responsive Approaches](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#responsive-approaches)
+> You basically have the same mixins which you just need to apply with preprocessor-specific syntax
+
+**Overview**
+
+- Grid Creation API
+	- [LessCSS](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation-less.md#grid-creation-api)
+	- [SCSS](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation-scss.md#grid-creation-api)
+- Viewport Dependent Configurations
+	- [LessCSS](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation-less.md#viewport-dependent-configurations)
+	- [SCSS](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation-scss.md#viewport-dependent-configurations)
+- Custom Classes
+	- [LessCSS](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation-less.md#custom-classes)
+	- [SCSS](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation-scss.md#custom-classes)
+- Semantic Grid
+	- [LessCSS](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation-less.md#semantic-grid)
+	- [SCSS](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation-scss.md#semantic-grid)
+- Responsive Approaches
+	- [LessCSS](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation-less.md#responsive-approaches)
+	- [SCSS](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation-scss.md#responsive-approaches)
 
 ## Browser Support
 
@@ -193,19 +255,17 @@ Overview:
 
 **Partially** supported:
 
-- **IE8**: basic grid working properly, no media query support and `:nth-child` clearing, 
-**Note:** fully supported with [respond.js](https://github.com/scottjehl/Respond) and [selectivizr.js]
-(http://selectivizr.com/) polyfills
+- **IE8**: basic grid working properly, no `:nth-of-type` clearing
 - **Safari**: as explained [below](#the-safari-problem)
 
 ### The Safari Problem
 
-Unfortunately all Safari browsers up to the latest version have a bad subpixel rendering for widths and always round 
+Unfortunately all Safari browsers up to the latest version have an unfortunate subpixel rendering for widths and always round 
 values down to the next integer when calculating rendered pixels. So a width declaration of for example `88.333px` or
- even `88.666px` will always be rendered as `88px`. This of course presents an issue when your grid configuration 
+ even `88.666px` will always be rendered as `88px`. This of course causes issues when your grid configuration 
  leads to such values or in general when you use a fluid grid, because we get a small displacement of columns.
 
 There's an [article from John Resig](http://ejohn.org/blog/sub-pixel-problems-in-css/) about this subject.
 
 Note that all grid systems suffer from this issue and merely provide workarounds in some cases,
-Spartan does not try to do that but optimises its precision to avoid bad pixel rendering as much as possible.
+Spartan does not try to do that but optimises calculations for it to render as precise as possible.

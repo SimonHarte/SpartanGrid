@@ -1,9 +1,9 @@
 /**
- * "Spartan" LessCSS Grid System
- * version: 4.0.2
+ * "Spartan" Grid System
+ * version: 5.0.0
  * https://github.com/SimonHarte/SpartanGrid
  * License: MIT
- * Copyright 2014 Simon Harte <s.harte@gmx.ch>
+ * Copyright 2015 Simon Harte <s.harte@gmx.ch>
  */
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -12,46 +12,46 @@
 // Note: We use !important statements for grid layout critical styles.
 //       Like this you can define for example margin and padding shorthands without affecting the grid.
 
-.spartan-grid(@grid-type, @fixed-width, @gutter-with, @max-cols) {
+.spartan-grid(@width, @gutter-with, @cols) {
 	// multiple mixins switch according to passed types
-	
+
 	// mixin for fluid grid
-	.spartan-create(fluid, @fixed-width, @gutter-with, @cols) {
+	.spartan-create(@width, @gutter-with, @cols) when (ispercentage(@width)) {
 		// implement grid mixins with type dependent variable
-		.spartan-grid-mixins(
-			(100% / @cols) // single column width
+		.spartan-mixins(
+			(@width / @cols) // single column width
 		);
 	}
 
 	// mixin for fixed grid
-	.spartan-create(fixed, @fixed-width, @gutter-with, @cols) {
+	.spartan-create(@width, @gutter-with, @cols) when (ispixel(@width)), (isem(@width)) {
 		// implement grid mixins with type dependent variable
-		.spartan-grid-mixins(
-			((@fixed-width + @gutter-with) / @cols) // single column width
+		.spartan-mixins(
+			((@width + @gutter-with) / @cols) // single column width
 		);
 	}
 
 	// call switch mixin to calculate variables depending on grid configuration
-	.spartan-create(~'@{grid-type}', @fixed-width, @gutter-with, @max-cols);
+	.spartan-create(@width, @gutter-with, @cols);
 
 	// unlock grid mixins with modified variable
-	.spartan-grid-mixins(@one-col) {
+	.spartan-mixins(@one-col) {
 		.spartan-span-width(@num) {
-			width: ceil((@one-col * @num) * pow(10, @spartan-grid-precision)) / pow(10, @spartan-grid-precision);
+			width: ceil((@one-col * @num) * pow(10, @spartan-precision)) / pow(10, @spartan-precision);
 		}
 
 		// indent grid columns either way with this mixin
 		.spartan-indent(@num: 0) {
-			margin-left: round((@one-col * @num), @spartan-grid-precision);
+			margin-left: round((@one-col * @num), @spartan-precision);
 		}
 
 		// visually manipulate grid column order with these mixins
 		.spartan-push(@num) {
-			left: round((@one-col * @num), @spartan-grid-precision);
+			left: round((@one-col * @num), @spartan-precision);
 		}
 
 		.spartan-pull(@num) {
-			right: round((@one-col * @num), @spartan-grid-precision);
+			right: round((@one-col * @num), @spartan-precision);
 		}
 	}
 }
@@ -112,12 +112,12 @@
 // .col-clear([colums per line]):
 // Use this to manually clear every nth column if columns differ in height.
 // This ensures that a grid layout can have only [colums per line] columns on one horizontal grid line.
-// We use :nth-of-type instead of :nth-child because of an iPhone5 bug: http://stackoverflow.com/questions/26032513/ios8-safari-after-a-pushstate-the-nth-child-selectors-not-works
+// We use :nth-of-type instead of :nth-of-type because of an iPhone5 bug: http://stackoverflow.com/questions/26032513/ios8-safari-after-a-pushstate-the-nth-of-type-selectors-not-works
 
 // clear every new grid line, see issue in "before" state here: http://stackoverflow.com/questions/3628311/css-floating-divs-with-different-height-are-aligned-with-space-between-them
 .grid-col-clear(@columns) when (@columns >= 0) {
 	@column-integer: floor(@columns);
-	
+
 	> .@{spartan-namespace}col:nth-of-type(@{column-integer}n+1) {
 		clear: left;
 	}
@@ -126,7 +126,7 @@
 // simple custom column name with width
 .grid-col-set(@col-name, @col-span) when (@col-span >= 0) {
 	@column-fullname: ~'.@{spartan-namespace}@{col-name}';
-	
+
 	> @{column-fullname} {
 		.grid-span(@col-span);
 	}
@@ -135,7 +135,7 @@
 // custom column with width and offset
 .grid-col-set(@col-name, @col-span, @offset) when (@col-span >= 0) {
 	@column-fullname: ~'.@{spartan-namespace}@{col-name}';
-	
+
 	> @{column-fullname} {
 		.grid-span(@col-span);
 		.grid-offset(@offset);
@@ -145,7 +145,7 @@
 // custom column with width and reordering, apply only reorder if offset is 0
 .grid-col-set(@col-name, @col-span, @offset, @reorder) when (@col-span >= 0) and (@offset = 0) {
 	@column-fullname: ~'.@{spartan-namespace}@{col-name}';
-	
+
 	> @{column-fullname} {
 		.grid-span(@col-span);
 		.grid-reorder(@reorder);
@@ -155,7 +155,7 @@
 // custom column with width and offset, apply only offset if reorder is 0
 .grid-col-set(@col-name, @col-span, @offset, @reorder) when (@col-span >= 0) and (abs(@reorder) = 0) {
 	@column-fullname: ~'.@{spartan-namespace}@{col-name}';
-	
+
 	> @{column-fullname} {
 		.grid-span(@col-span);
 		.grid-offset(@offset);
@@ -165,7 +165,7 @@
 // custom column with width, offset and reordering, apply both if offset is not 0
 .grid-col-set(@col-name, @col-span, @offset, @reorder) when (@col-span >= 0) and (abs(@offset) > 0) {
 	@column-fullname: ~'.@{spartan-namespace}@{col-name}';
-	
+
 	> @{column-fullname} {
 		.grid-span(@col-span);
 		.grid-offset(@offset);
@@ -175,7 +175,7 @@
 
 // predefined col class with width and proper clearing
 .grid-col-set-equal(@col-span) when (@col-span >= 0) {
-	@spartan-clear: @spartan-grid-max-cols / @col-span;
+	@spartan-clear: @spartan-cols / @col-span;
 
 	// use default col-set mixin to generate selector
 	.grid-col-set(col, @col-span);
@@ -215,7 +215,7 @@
 	// Recommendation:
 	// Using a float precision of 5 together with ceil() seems to be the smallest possible,
 	// most accurate amount for a future-proof grid system.
-	@spartan-grid-precision: 5;
+	@spartan-precision: 5;
 
 	.set-namespace(@ns) when not (@ns = '') {
 		@spartan-namespace: ~'@{ns}-';
@@ -225,7 +225,7 @@
 	}
 
 	.set-namespace(@ns);
-	
+
 	// prefixed clearfix mixin from h5bp for grid only
 	.spartan-cf() {
 		&:before,
@@ -241,23 +241,21 @@
 
 	// prefixed box sizing mixin
 	.spartan-box-sizing(@boxmodel: border-box) {
-		-webkit-box-sizing: @boxmodel;
-		-moz-box-sizing: @boxmodel;
 		box-sizing: @boxmodel;
 	}
-	
+
 	.spartan-base-style('both') {
 		display: block;
 		// make sure no shorthand properties interfere with grid styles
 		margin-right: 0 !important;
 		padding-right: 0 !important;
 	}
-	
+
 	.spartan-base-style('row') {
 		.spartan-cf();
 		padding-left: 0 !important;
 	}
-	
+
 	.spartan-base-style('col') {
 		// make sure we have the correct box sizing for gutter padding
 		.spartan-box-sizing();
@@ -265,6 +263,7 @@
 		margin-left: 0 !important;
 		// columns should per default span the whole width if none is set
 		width: 100%;
+		min-height: 1px;
 	}
 }
 
@@ -312,7 +311,7 @@
 }
 
 // all necessary row styles with gutter
-.grid-row(@gutter: @spartan-grid-gutter) {
+.grid-row(@gutter: @spartan-gutter) {
 	.spartan-base-style('both');
 	.spartan-base-style('row');
 	.spartan-row-gutter(@gutter) !important;
@@ -325,7 +324,7 @@
 }
 
 // all necessary column styles with gutter
-.grid-col(@gutter: @spartan-grid-gutter) {
+.grid-col(@gutter: @spartan-gutter) {
 	.spartan-base-style('both');
 	.spartan-base-style('col');
 	.spartan-col-gutter(@gutter) !important;
@@ -336,18 +335,15 @@
 
 .grid-unlock(@config...) {
 	// make variables accessible for different tests
-	@spartan-grid-fixed-width: extract(@config, 1);
-	@spartan-grid-gutter: extract(@config, 3);
-	@spartan-grid-max-cols: extract(@config, 5);
-	@spartan-grid-type: extract(@config, 2);
-	@spartan-grid-gutter-type: extract(@config, 4);
+	@spartan-width: extract(@config, 1);
+	@spartan-gutter: extract(@config, 2);
+	@spartan-cols: extract(@config, 3);
 
 	// set up grid mixins depending on an included config
 	.spartan-grid(
-		@spartan-grid-type,
-		@spartan-grid-fixed-width,
-		@spartan-grid-gutter,
-		@spartan-grid-max-cols
+	@spartan-width,
+	@spartan-gutter,
+	@spartan-cols
 	);
 }
 
@@ -356,18 +352,18 @@
 
 // lib mixins
 .spartan-row-gutter(@gutter) {
-	margin-left: round(-@gutter, @spartan-grid-precision);
+	margin-left: round(-@gutter, @spartan-precision);
 }
 
 // assuming px, em
 .spartan-col-gutter(@gutter) when (default()) {
-	padding-left: ceil(@gutter * pow(10, @spartan-grid-precision)) / pow(10, @spartan-grid-precision);
+	padding-left: ceil(@gutter * pow(10, @spartan-precision)) / pow(10, @spartan-precision);
 }
 
 // assuming %
 .spartan-col-gutter(@gutter, true) when (ispercentage(@gutter)) {
 	// column gutter has to be slightly smaller with percentage value because container is bigger
-	padding-left: ceil(percentage(@gutter / (100% + @gutter)) * pow(10, @spartan-grid-precision)) / pow(10, @spartan-grid-precision);
+	padding-left: ceil(percentage(@gutter / (100% + @gutter)) * pow(10, @spartan-precision)) / pow(10, @spartan-precision);
 }
 
 .spartan-gutter-styles(@row-gutter, @col-gutter) {
@@ -386,55 +382,49 @@
 // passing no argument
 .grid-gutter() when (default()) {
 	// assume fluid grid
-	.grid-gutter(@spartan-grid-fixed-width, @spartan-grid-gutter);
+	.grid-gutter(@spartan-width, @spartan-gutter);
 }
-.grid-gutter() when (@spartan-grid-type = 'fixed'), (@spartan-grid-gutter-type = 'fixed') {
+
+.grid-gutter() when (ispixel(@spartan-gutter)), (isem(@spartan-gutter)) {
 	// use original value
-	.grid-gutter(@spartan-grid-gutter);
+	.grid-gutter(@spartan-gutter);
 }
 
 // passing one argument
-.grid-gutter(@gutter-width) when (default()) {
+.grid-gutter(@arg1) when (default()) {
 	.spartan-gutter-styles(
-		@gutter-width, // row gutter
-		@gutter-width // column gutter
+	@arg1, // row gutter
+	@arg1 // column gutter
 	);
 }
-.grid-gutter(@gutter-width) when (ispercentage(@gutter-width)) {
+
+.grid-gutter(@arg1) when (ispercentage(@arg1)) {
 	// when gutter is passed as percentage we have to set a slightly smaller gutter for columns
 	// because the row container gets larger through negative gutter indent
 	.spartan-gutter-styles(
-		@gutter-width, // row gutter
-		percentage(@gutter-width / (100% + @gutter-width)) // column gutter
+	@arg1, // row gutter
+	percentage(@arg1 / (100% + @arg1)) // column gutter
 	);
 }
 
 // passing two arguments
-.grid-gutter(@grid-width, @gutter-width) when (default()) {
-	// if any other than tested units is passed, use the value as pixel
-	.grid-gutter(@grid-width, unit(@gutter-width, px));
-}
-.grid-gutter(@grid-width, @gutter-width) when (ispixel(@gutter-width)) {
-	.spartan-gutter-styles(
-		percentage(@gutter-width / @grid-width), // row gutter
-		percentage(@gutter-width / (@grid-width + @gutter-width)) // column gutter
+.grid-gutter(@arg1, @arg2) when (default()) {
+	// if any other than tested units is passed
+	.grid-gutter(
+	percentage(@arg2 / @arg1), // row gutter
+	percentage(@arg2 / (@arg1 + @arg2)) // column gutter
 	);
 }
-.grid-gutter(@grid-width, @gutter-width) when (isem(@gutter-width)) {
-	.spartan-gutter-styles(
-		percentage((@gutter-width*16) / @grid-width), // row gutter
-		percentage((@gutter-width*16) / (@grid-width + (@gutter-width*16))) // column gutter
-	);
-}
-.grid-gutter(@grid-width, @gutter-width) when (ispercentage(@gutter-width)) {
-	.grid-gutter(@gutter-width);
+
+.grid-gutter(@arg1, @arg2) when (ispercentage(@arg2)) {
+	.grid-gutter(@arg2);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // GENERATE BASE CLASSES
 
-.grid-generate(@prefix: '', @columns: @spartan-grid-max-cols) {
-	
+.grid-generate(@prefix: '', @columns: @spartan-cols) {
+
 	.set-prefix(@prefix) when not (@prefix = '') {
 		@spartan-prefix: ~'@{prefix}-';
 	}
@@ -474,7 +464,7 @@
 	.spartan-apply(grid-pull, @index) {
 		.grid-pull(@index);
 	}
-	
+
 	// generate grid classes
 	// Parameters:
 	// 1) amount of iterations
@@ -483,9 +473,9 @@
 	//
 	// Example:
 	// .grid > .loop(12, class-prefix, 'mixin');
-	
+
 	@spartan-selector: ~'@{spartan-namespace}@{spartan-prefix}';
-	
+
 	.spartan-loop(@columns, ~'@{spartan-selector}span', 'grid-span');
 	.spartan-loop(@columns, ~'@{spartan-selector}offset', 'grid-offset');
 	.spartan-loop(@columns, ~'@{spartan-selector}push', 'grid-push');
@@ -495,7 +485,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // DO EVERYTHING AT ONCE
 
-.grid-bundle(@ns: g, @config...) {
+.grid-bundle(@config, @ns: g) {
 	.grid-core(@ns);
 	.grid-unlock(@config);
 	.grid-gutter();

@@ -1,0 +1,69 @@
+/*
+BASE MIXIN TESTS
+*/
+
+#base-mixins {
+	/* unlock 940px, 'fluid', 20px, 'fluid', 12 */
+	@include grid-core($generate: false);
+	@include grid-unlock((100%, percentage(20px / 940px), 12));
+
+	.span-1 {
+		/* @include grid-span(6) */
+		@include grid-span(6);
+	}
+
+	.span-2 {
+		/* @include grid-span(-6) */
+		@include grid-span(-6);
+	}
+
+	.span-3 {
+		/* @include grid-span(6.5) */
+		@include grid-span(6.5);
+	}
+
+	.offset-1 {
+		/* @include grid-offset(6) */
+		@include grid-offset(6);
+	}
+
+	.offset-2 {
+		/* @include grid-offset(-6) */
+		@include grid-offset(-6);
+	}
+
+	.offset-3 {
+		/* @include grid-offset(6.5) */
+		@include grid-offset(6.5);
+	}
+
+	.push-1 {
+		/* @include grid-push(6) */
+		@include grid-push(6);
+	}
+
+	.push-2 {
+		/* @include grid-push(-6) */
+		@include grid-push(-6);
+	}
+
+	.push-3 {
+		/* @include grid-push(6.5) */
+		@include grid-push(6.5);
+	}
+
+	.pull-1 {
+		/* @include grid-pull(6) */
+		@include grid-pull(6);
+	}
+
+	.pull-2 {
+		/* @include grid-pull(-6) */
+		@include grid-pull(-6);
+	}
+
+	.pull-3 {
+		/* @include grid-pull(6) */
+		@include grid-pull(6.5);
+	}
+}

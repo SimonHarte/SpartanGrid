@@ -1,0 +1,39 @@
+// See: https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#viewport-dependent-grids
+
+@import "viewports";
+
+// core styles are only needed once
+@include grid-core();
+
+$grid-config-s: 100%, 5px, 12;
+$grid-config-m: 100%, percentage(15px / 940px), 12;
+$grid-config-l: 100%, 20px, 12;
+
+// unlock different configs and generate configuration sensitive styles
+@media #{$m-small} {
+	@include grid-unlock($grid-config-s);
+	@include grid-gutter();
+	@include grid-generate();
+}
+
+@media #{$m-medium} {
+	@include grid-unlock($grid-config-m);
+	@include grid-gutter();
+	@include grid-generate();
+}
+
+@media #{$m-large} {
+	@include grid-unlock($grid-config-l);
+	@include grid-gutter();
+	@include grid-generate();
+}
+
+// separated media query has to unlock config again to use mixins
+@media #{$m-medium} {
+	@include grid-unlock($grid-config-m);
+	// no gutters or generate needed here
+	
+	.my-col {
+		@include grid-span(4.5);
+	}
+}

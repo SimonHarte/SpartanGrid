@@ -1,7 +1,6 @@
 {
 	"name": "spartan-grid",
-	"description": "A standalone, highly flexible yet tiny LessCSS grid system",
-	"main": "src/spartan.less",
+	"description": "A highly customizable yet tiny, standalone grid system",
 	"license": "MIT",
 	"authors": [
 		{
@@ -16,9 +15,9 @@
 	"ignore": [
 		"examples/",
 		"tests/",
-		"scripts",
 		".gitignore",
-		"grid-setup.less"
+		"grid-setup.less",
+		"grid-setup.scss"
 	],
 	"keywords": [
 		"spartan",
@@ -26,6 +25,7 @@
 		"responsive",
 		"LessCSS",
 		"less",
+		"SCSS",
 		"tiny",
 		"flexible",
 		"standalone"

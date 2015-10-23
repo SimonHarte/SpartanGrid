@@ -20,7 +20,7 @@ All about basic usage of Spartan is documented in the [project readme](https://g
 
 You would normally just use `.grid-bundle()` to set up a grid, but you can also use the following mixins to generate even more flexible grids in [LessCSS scopes](http://lesscss.org/features/#features-overview-feature-scope), see [Viewport Dependent Grids](#viewport-dependent-grids) and [Custom Classes](#custom-classes) for use cases.
 
-#### `.grid-core([namespace], [@generate])`
+#### `grid-core([@ns: ''], [@generate: true])`
 
 This will define the core variables and mixins and generate selectors and styles needed for any grid setup, e.g. clearing on the row, float of columns etc. Generally has to be called only once for any grid setup.
 
@@ -28,7 +28,6 @@ This will define the core variables and mixins and generate selectors and styles
 
 **Unlocks**
 
-- `@spartan-namespace`
 - `.grid-row()`
 - `.grid-col()`
 
@@ -45,13 +44,13 @@ If you use the grid only with [semantic selectors](#semantic-grid) you can optio
 .grid-core(@generate: false);
 ```
 
-#### `.grid-unlock(<config>)`
+#### `grid-unlock(<@config>)`
 
-Pass in your grid configuration like with `.grid-bundle()`. This will unlock all the grid mixins using your configuration within the current scope (or globally).
+Pass in your grid configuration as a list object like with [`.grid-bundle()`](https://github.com/SimonHarte/SpartanGrid/blob/master/README.md#grid-setup). This will unlock all the grid mixins using your configuration within the current scope (or globally).
 
 ```less
 #my-scope {
-	.grid-unlock(@scope-config);
+	.grid-unlock(@config-list);
 	
 	.custom-column {
 		.grid-span(5);
@@ -61,11 +60,6 @@ Pass in your grid configuration like with `.grid-bundle()`. This will unlock all
 
 **Unlocks**
 
-- `@spartan-grid-fixed-width`
-- `@spartan-grid-gutter`
-- `@spartan-grid-max-cols`
-- `@spartan-grid-type`
-- `@spartan-grid-gutter-type`
 - `.grid-span()`
 - `.grid-offset()`
 - `.grid-push()`
@@ -79,7 +73,7 @@ Pass in your grid configuration like with `.grid-bundle()`. This will unlock all
 
 Nothing
 
-#### `.grid-gutter([relation|gutter], [gutter])`
+#### `grid-gutter([@arg1: @spartan-gutter], [@arg2])`
 
 Generate only gutter styles. Especially useful if you have grid setups which only differ in the gutter, so you don't have to generate all classes anew.
 
@@ -98,7 +92,7 @@ You can call `.grid-gutter()` without parameters, in that case it simply relies 
 or you call it with either a fix value which will be taken as is or provide a relation to which a percentage value will be calculated.
 
 **Rely on Config**
-```
+```less
 .grid-gutter();
 ```
 
@@ -114,21 +108,17 @@ or you call it with either a fix value which will be taken as is or provide a re
 
 **Relational percentage value**
 
-```
+```less
 .grid-gutter(940px, 20px);
 
 .grid-gutter(940px, 1.5em); // em are simply multiplied with 16 for calculation
 ```
 
-#### `.grid-generate([prefix], [@columns])`
+#### `grid-generate([@prefix: ''], [@columns: @spartan-cols])`
 
 This mixin will generate all configuration sensitive classes like `.g-span-{xx}`, `.g-offset-{xx}` etc. in the current scope.
 
 > [Read about prefixing](#additional-prefix)
-
-**Unlocks**
-
-- `@spartan-prefix`
 
 **Generates**
 
@@ -140,7 +130,7 @@ This mixin will generate all configuration sensitive classes like `.g-span-{xx}`
 If you pass an optional column amount, it will use this value for generation while relying on your unlocked config.
 So if you know you'll never use classes for more than half the grid width you can reduce output css by only generating those classes:
 
-```
+```less
 .grid-generate(@columns: 6);
 ```
 
@@ -157,19 +147,19 @@ different viewports like so:
 
 @media (max-width: 40em) {
 	// grid setup for small screen
-	.grid-unlock(@config: 940px, 'fluid', 5px, 'fixed', 12;);
+	.grid-unlock(100%, 5px, 12;);
 	.grid-gutter();
 	.grid-generate();
 }
 @media (min-width: 40.01em) and (max-width: 65em) {
 	// grid setup for medium screen
-	.grid-unlock(@config: 940px, 'fluid', 15px, 'fixed', 12;);
+	.grid-unlock(100%, 15px, 12;);
 	.grid-gutter();
 	.grid-generate();
 }
 @media (min-width: 65.01em) {
 	// grid setup for large screen
-	.grid-unlock(@config: 940px, 'fluid', 30px, 'fluid', 12;);
+	.grid-unlock(100%, percentage(30px / 940px), 12;);
 	.grid-gutter();
 	.grid-generate();
 }
@@ -177,22 +167,7 @@ different viewports like so:
 
 Note that you cannot make a mobile first, global configuration because unlocked mixins like `.grid-span()` can not be reassigned inside media queries and will use global values.
 
-> Of course `.grid-generate()` will generate all the grid styles in the given viewport, so with three viewports you'll have three times the normal css. That's why we invested a lot of effort into keeping the base css as tiny as possible ;).
-
-You can always use `.grid-unlock()` in any separated media query to unlock grid mixins again.
-
-```less
-// unlock mixins in another media query again
-@media (min-width: 40.01em) and (max-width: 65em) {
-	.grid-unlock('fluid', 940px, 15px, 'fixed', 12);
-	
-	.g-col {
-		.grid-span(6);
-	}
-}
-```
-
-> **Hint**: Save different grid setups in global variables to reuse anywhere.
+> Of course `.grid-generate()` will produce all the grid styles in the given viewport, so with three viewports you'll have three times the normal css. That's why we invested a lot of effort into keeping the base css as tiny as possible ;).
 
 ### Custom Classes
 
@@ -204,7 +179,7 @@ You can always use `.grid-unlock()` in any separated media query to unlock grid 
  
  Example with `.grid-bundle('grid')`:
 
-```less
+```csss
 .grid-row
 .grid-col
 .grid-span
@@ -228,14 +203,14 @@ Lets assume the following setup:
 
 This will generate the base classes as mentioned in the [namespace section](#namespace):
 
-```less
+```css
 .grid-row
 .grid-col
 ```
 
 But the other classes will look like this:
 
-```less
+```css
 .grid-test-span
 .grid-test-offset
 // etc...
@@ -247,51 +222,27 @@ But the other classes will look like this:
 
 Spartan comes with two mixins for applying grid styles to any selector:
 
-- `.grid-row([gutter])`
-- `.grid-col([gutter])`
+- `.grid-row([@gutter: @spartan-gutter])`
+- `.grid-col([@gutter: @spartan-gutter])`
 
 As you could imagine `.grid-row()` applies all row styles to your selector and `.grid-col()` does so for column styles.
 You can optionally overwrite the gutter from your previously unlocked settings.
 
 ```less
-.product-list {
+main {
 	.grid-row();
 	
-	.product {
+	article,
+	aside {
 		.grid-col();
+	}
+	
+	article {
+		.grid-span(8);
+	}
+	
+	aside {
 		.grid-span(4);
-	}
-}
-```
-
-You can use this with responsive layouts as well, the only requirement is to eliminate the general [grid namespace](#namespace).
-
-```less
-.grid-core('', false); // remove grid namespace so we later can define column classes freely and do not generate core css
-.grid-unlock(940px, 'fluid', 20px, 'fixed', 12);
-
-.product-list {
-	.grid-row();
-	
-	.product {
-		.grid-col();
-	}
-	
-	// use layout helpers to generate a semantic responsive layout
-	
-	@media @small {
-		// two columns per line
-		.grid-col-set('product', 6);
-	}
-	
-	@media @medium {
-		// three columns per line
-		.grid-col-set('product', 4);
-	}
-	
-	@media @large {
-		// four columns per line
-		.grid-col-set('product', 3);
 	}
 }
 ```
@@ -304,9 +255,9 @@ Our idea and recommended way to implement a responsive grid in your project is t
 There are three mixins which will help you create responsive layouts.
 
 ```less
-.grid-col-set(<col-name>, <columns>, [offset], [reorder]);
-.grid-col-set-equal(<columns>);
-.grid-col-clear(<column-count>);
+.grid-col-set(<@col-name>, <@col-span>, [@offset], [@reorder]);
+.grid-col-set-equal(<@col-span>);
+.grid-col-clear(<@columns>);
 ```
 
 > If your project only consists of layouts and you never use classes like `.grid-span-{xx}` you don't even have to use `.grid-generate()`.
@@ -322,10 +273,10 @@ and can be omitted if not used.
 
 | Param | Type | Value | Comment |
 |-------|:-----|:------|:--------|
-| `<col-name>`    | string | | quotes optional, example: `col-1` |
-| `<columns>`     | number | only positive | |
-| `[offset]`      | number | positive or negative | optional, uses `.grid-offset()` to apply indents |
-| `[reorder]`     | number | positive or negative | optional, uses `.grid-reorder()` to reposition a column |
+| `@col-name`    | string | | quotes optional, example: `col-1` |
+| `@columns`     | number | only positive | |
+| `@offset`      | number | positive or negative | optional, uses `.grid-offset()` to apply indents |
+| `@reorder`     | number | positive or negative | optional, uses `.grid-reorder()` to reposition a column |
 
 This mixin is used to define different columns inside a layout, so if one column takes 2/3 of the grid and the other 
 1/3 you'd use the mixin twice like this:
@@ -345,19 +296,6 @@ Which will enable you to use `.g-col-1` and `.g-col-2` as classes:
 	<div class="g-col g-col-1"></div>
 	<div class="g-col g-col-2"></div>
 </div>
-```
-
-Example with reordered columns:
-
-```less
-.g-layout-3 {
-	// apply .g-reorder styles
-	.grid-row-reorder();
-	
-	// switch positions of columns
-	.grid-col-set('col-1', 6, 0, 6);
-	.grid-col-set('col-2', 6, 0, -6);
-}
 ```
 
 #### `grid-col-set-equal`
@@ -381,8 +319,8 @@ Example output CSS:
 .g-layout-1 > .g-col {
 	width: 25%;
 }
-	
-.g-layout-1 > .g-col:nth-child(4n+1) {
+
+.g-layout-1 > .g-col:nth-of-type(4n+1) {
 	clear: left;
 }
 ```
@@ -396,7 +334,7 @@ line, clear the 4th, the 7th, the 10th etc.
 
 ### Responsive Layout Example
 
-> **Note**: With a mobile first approach you either have to declare a media query or omit the definition because of possible interfering pseudo selectors (:nth-child).
+> **Note**: With a mobile first approach you either have to declare a media query or omit the definition because of possible interfering pseudo selectors (:nth-of-type).
 
 ```less
 .g-layout-1 {
@@ -415,9 +353,6 @@ line, clear the 4th, the 7th, the 10th etc.
 }
 ```
 
-> You can optimise the output css by wrapping all your layouts with media queries once to remove duplication of media
- query definitions in the css, but this is way harder to maintain with an increasing amount of layouts.
-
 ## The "Twitter Bootstrap Way"
 
 If you prefer or have to be able to use a twitter bootstrap like system with viewport specific classes in your markup you can use this technique.
@@ -427,7 +362,7 @@ Simply make use of the optional parameter to [`.grid-generate()`](#custom-classe
 
 ```less
 // grid configuration
-@grid-config: 940px, 'fluid', 20px, 'fixed', 12;
+@grid-config: 100%, 20px, 12;
 
 .grid-core(); // base classes, no change in namespace
 .grid-unlock(@grid-config);
@@ -457,5 +392,3 @@ Now you can use these classes in your markup and the columns will change accordi
 	<div class="g-col g-sm-span-6 g-md-span-4 g-lg-span-3"></div>
 </div>
 ```
-
-You could even connect this with [viewport dependent grid setups](#viewport-dependent-grids), imagine the possiblities, that's how mighty Spartan really is!

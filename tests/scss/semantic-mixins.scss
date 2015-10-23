@@ -1,0 +1,54 @@
+/* SEMANTIC HELPERS TESTS */
+#semantic {
+	/* unlock 940px, 'fluid', 20px, 'fluid', 12 */
+	@include grid-core($generate: false);
+	@include grid-unlock((100%, percentage(20px / 940px), 12));
+
+	.test-1 {
+		/* without params */
+		@include grid-row();
+
+		.column {
+			@include grid-col();
+		}
+	}
+	
+	.test-2 {
+		/* $gutter: 15px */
+		$gutter: 15px;
+		
+		& {
+			@include grid-row($gutter);
+		}
+
+		.column {
+			@include grid-col($gutter);
+		}
+	}
+	
+	.test-3 {
+		/* $gutter: 2em */
+		$gutter: 2em;
+		
+		& {
+			@include grid-row($gutter);
+		}
+
+		.column {
+			@include grid-col($gutter);
+		}
+	}
+	
+	.test-4 {
+		/* $gutter: 3% */
+		$gutter: 3%;
+		
+		& {
+			@include grid-row($gutter);
+		}
+
+		.column {
+			@include grid-col($gutter);
+		}
+	}
+}
