@@ -1,8 +1,10 @@
 # Spartan
 
-A tiny, easy to use yet highly customizable, standalone grid system. Try the [dynamic online demo](http://spartan-grid.herokuapp.com/) (old version).
+A tiny, easy to use yet highly customizable, standalone grid system.
 
 `bower install spartan-grid`
+
+Try the [dynamic online demo](http://spartan-grid.herokuapp.com/) (old version).
 
 ## What sets Spartan apart?
 
@@ -26,7 +28,7 @@ Spartan provides you with a sensible set of mixins to freely customize your setu
 
 - supports all common grid features:
 	- fluid or static grid columns
-	- fluid or static gutter
+	- independent gutter, fluid or static
 	- fully responsive
 	- column offsets
 	- column reordering
