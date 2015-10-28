@@ -14,6 +14,7 @@ Spartan provides you with a sensible set of mixins to freely customize your setu
 **you define** how you want to use **your grid**!
 
 - [Features](#features)
+- [Websites using Spartan](#websites-using-spartan)
 - [Comparison with other Grids](#comparison)
 - [Getting Started](#getting-started)
 - [Grid Structure](#grid-structure)
@@ -35,6 +36,13 @@ Spartan provides you with a sensible set of mixins to freely customize your setu
 - grid creation API for maximum flexibility
 - customizable css classes
 - tiny: **1.8KB** of minified base css
+
+## Websites using Spartan
+
+- [http://www.victorinox.com/](http://www.victorinox.com/)
+- [http://m14.migros.ch/](http://m14.migros.ch/)
+- [https://www.schwaebisch-hall.de/](https://www.schwaebisch-hall.de/)
+- [https://www.visana.ch/](https://www.visana.ch/)
 
 ## Comparison
 
