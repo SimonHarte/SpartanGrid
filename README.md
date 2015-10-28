@@ -54,7 +54,7 @@ Spartan provides you with a sensible set of mixins to freely customize your setu
 | custom classes            | ✅ | ❌ | ❌ | ✅ |
 | output css (min)          | **1.8-5.4KB** * | **8.3KB** | **18.5KB** | **~10KB** |
 
-> * 1.8KB with the basic grid, 5.4KB with responsiveness for 3 viewports.
+> \* 1.8KB with the basic grid, 5.4KB with responsiveness for 3 viewports.
 
 ## Getting Started
 
