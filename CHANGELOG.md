@@ -1,6 +1,6 @@
 # Changelog
 
-## 5.0.0
+## 5.0.1
 
 - added SCSS support!
 - simplified and standardised API for LessCSS and SCSS

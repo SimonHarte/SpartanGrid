@@ -1,6 +1,6 @@
 # Spartan
 
-A highly customizable yet tiny, standalone grid system. Try the [dynamic online demo](http://spartan-grid.herokuapp.com/).
+A tiny, easy to use yet highly customizable, standalone grid system. Try the [dynamic online demo](http://spartan-grid.herokuapp.com/) (old version).
 
 `bower install spartan-grid`
 
@@ -24,10 +24,10 @@ Spartan provides you with a sensible set of mixins to freely customize your setu
 
 ## Features
 
-- supports all features of other common grid systems:
-	- fluid or static grid
+- supports all common grid features:
+	- fluid or static grid columns
+	- fluid or static gutter
 	- fully responsive
-	- block gutter (fixed gutter in a fluid grid)
 	- column offsets
 	- column reordering
 - grid creation API for maximum flexibility
@@ -59,6 +59,8 @@ Spartan provides you with a sensible set of mixins to freely customize your setu
 - Install [Node](http://nodejs.org/) and a preprocessor:
 	- Less: `npm install less -g`
 	- SCSS: `npm install node-sass -g`
+
+> Since Spartan has **no dependencies** at all, you can seamlessly integrated it in any frontend build process.
 
 ### Have a Project at the Ready?
 
@@ -105,9 +107,13 @@ There are two ways to set up a grid with Spartan, within the basic usage we only
 
 The basic grid setup requires you to call just one mixin, pass in a configuration and an optional prefix; read more about custom classes in the [documentation](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#custom-classes).
 
+> Spartan works exactly the same for both LessCSS and SCSS, you just need to consider language specific syntax.
+
 **LessCSS**
 
 ```less
+@import 'src/spartan';
+
 @grid-config: <grid-width>, <gutter-width>, <grid-columns>;
 
 .grid-bundle(@grid-config, [@prefix: 'g']);
@@ -116,6 +122,8 @@ The basic grid setup requires you to call just one mixin, pass in a configuratio
 **SCSS**
 
 ```scss
+@import 'src/spartan';
+
 $grid-config: <grid-width>, <gutter-width>, <grid-columns>;
 
 @include grid-bundle($grid-config, [@prefix: 'g']);
@@ -153,8 +161,8 @@ This counts for the gutter as well since grid and gutter types can be defined co
 
 ### Grid Classes and Mixins
 
-Spartan generates grid classes according to your configuration per default. Instead of using
-the generated classes you can also use similar named mixins to apply the grid with a precompiler.
+Spartan generates grid classes according to your configuration per default.
+Instead of applying these classes you can also use similar named mixins to apply the grid.
 
 **CSS**
 
@@ -184,6 +192,7 @@ the generated classes you can also use similar named mixins to apply the grid wi
 ```
 
 #### `grid-span`
+
 Override the width of a column (default is full-width), equivalent to `.g-span-{columns}`. The mixin allows you to pass
 in floating point numbers, which enables you to define literally **any** width.
 
@@ -206,10 +215,12 @@ Following an example of a 5 column layout in a 12 column grid:
 ```
 
 #### `grid-offset`
+
 Indent a column by the defined amount of grid columns, equivalent to `.g-offset-{columns}`.
 While there are just positive indents in generated classes, you could also call this mixin with negative values.
 
 #### `grid-push` and `grid-pull`
+
 Together with the additional class `.g-reorder` on `.g-row` you can reorder columns visually without changing the 
 order in HTML. Equivalent to `.g-push-{columns}` and `.g-pull-{columns}`, similar behavior as `.grid-offset()`.
 
@@ -226,8 +237,6 @@ There's a detailed documentation about every aspect of Spartan with different ap
 
 - [LessCSS](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation-less.md)
 - [SCSS](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation-scss.md)
-
-> You basically have the same mixins which you just need to apply with preprocessor-specific syntax
 
 **Overview**
 
@@ -260,12 +269,9 @@ There's a detailed documentation about every aspect of Spartan with different ap
 
 ### The Safari Problem
 
-Unfortunately all Safari browsers up to the latest version have an unfortunate subpixel rendering for widths and always round 
+Unfortunately all Safari browsers up to the latest version have a very pragmatic sub-pixel rendering for widths and always round 
 values down to the next integer when calculating rendered pixels. So a width declaration of for example `88.333px` or
  even `88.666px` will always be rendered as `88px`. This of course causes issues when your grid configuration 
  leads to such values or in general when you use a fluid grid, because we get a small displacement of columns.
 
 There's an [article from John Resig](http://ejohn.org/blog/sub-pixel-problems-in-css/) about this subject.
-
-Note that all grid systems suffer from this issue and merely provide workarounds in some cases,
-Spartan does not try to do that but optimises calculations for it to render as precise as possible.
