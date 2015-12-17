@@ -84,7 +84,7 @@ Nothing
 **Generates**
 
 - `.g-row`
-- `.g-col`
+- `.g-row > .g-col`
 
 Checkout the [differing gutter setup](https://github.com/SimonHarte/SpartanGrid/tree/master/examples/differing-gutters.less) example.
 
