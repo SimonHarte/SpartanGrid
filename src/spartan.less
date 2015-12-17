@@ -1,6 +1,6 @@
 /**
  * "Spartan" Grid System
- * version: 5.0.1
+ * version: 5.0.2
  * https://github.com/SimonHarte/SpartanGrid
  * License: MIT
  * Copyright 2015 Simon Harte <s.harte@gmx.ch>
@@ -369,10 +369,10 @@
 .spartan-gutter-styles(@row-gutter, @col-gutter) {
 	&.@{spartan-namespace}row {
 		.spartan-row-gutter(@row-gutter) !important;
-	}
 
-	.@{spartan-namespace}col {
-		.spartan-col-gutter(@col-gutter) !important;
+		> .@{spartan-namespace}col {
+			.spartan-col-gutter(@col-gutter) !important;
+		}
 	}
 }
 
