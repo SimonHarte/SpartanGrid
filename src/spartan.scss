@@ -217,10 +217,10 @@ $spartan-one-col: null !default;
 @mixin _spartan-gutter-styles($row-gutter, $col-gutter) {
 	&.#{$spartan-namespace}row {
 		@include _spartan-row-gutter($row-gutter);
-	}
 
-	.#{$spartan-namespace}col {
-		@include _spartan-col-gutter($col-gutter);
+		> .#{$spartan-namespace}col {
+			@include _spartan-col-gutter($col-gutter);
+		}
 	}
 }
 
