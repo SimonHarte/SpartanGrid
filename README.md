@@ -102,20 +102,19 @@ Here's a short example of Spartans base structure in a 12-column grid:
 </div>
 ```
 
-- `.g-row` initializes a grid row with negative left margin (gutter) and uses [H5BP clearfix](https://github
-.com/h5bp/html5-boilerplate/blob/master/css/main.css#L161) to contain the floating `.g-col`s.
+- `.g-row` initializes a grid row with negative left margin (gutter) and uses [H5BP clearfix](https://github.com/h5bp/html5-boilerplate/blob/master/css/main.css#L161) to contain the floating `.g-col`s.
 - `.g-col` applies default column styles like float and padding (gutter).
 - `.g-span-<columns>` applies a column based width according ot the set maximum amount of columns.
 
-Check out [responsive approaches](https://github.com/SimonHarte/SpartanGrid/blob/develop/Documentation.md#responsive-approaches) with Spartan.
+Check out [responsive approaches](#advanced-usage) with Spartan.
 
 ## Basic Usage
 
 ### Grid Setup
 
-There are two ways to set up a grid with Spartan, within the basic usage we only explain the simpler one. If you need more flexibility, to set up viewport dependent grids etc. go to the [advanced usage](#responsiveness-and-customization) section.
+There are two ways to set up a grid with Spartan, within the basic usage we only explain the simpler one. If you need more flexibility, to set up viewport dependent grids etc. go to the [advanced usage](#advanced-usage) section.
 
-The basic grid setup requires you to call just one mixin, pass in a configuration and an optional prefix; read more about custom classes in the [documentation](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#custom-classes).
+The basic grid setup requires you to call just one mixin, pass in a configuration and an optional prefix; read more about custom classes in the [documentation](#advanced-usage).
 
 > Spartan works exactly the same for both LessCSS and SCSS, you just need to consider language specific syntax.
 
