@@ -4,7 +4,7 @@ A tiny, easy to use yet highly customizable, standalone grid system.
 
 `bower install spartan-grid`
 
-Try the [dynamic online demo](http://spartan-grid.herokuapp.com/) (old version).
+Try the [dynamic online demo](http://spartan-grid.herokuapp.com/).
 
 ## What sets Spartan apart?
 
