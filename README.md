@@ -66,12 +66,6 @@ Spartan provides you with a sensible set of mixins to freely customize your setu
 
 ## Getting Started
 
-- Install [Node](http://nodejs.org/) and a preprocessor:
-	- Less: `npm install less -g`
-	- SCSS: `npm install node-sass -g`
-
-> Since Spartan has **no dependencies** at all, you can seamlessly integrated it in any frontend build process.
-
 ### Have a Project at the Ready?
 
 - Integrate the [source file](https://github.com/SimonHarte/SpartanGrid/blob/master/src) in your project
@@ -82,10 +76,11 @@ Spartan provides you with a sensible set of mixins to freely customize your setu
 ### Just want to fiddle around?
 
 - Download Spartan
+- Install [NodeJS](http://nodejs.org/) and run `npm install` in the project directory
 - Adjust the grid setup
 - Execute:
-	- `lessc grid-setup.less grid.css` or
-	- `node-sass grid-setup.scss grid.css`
+  - `npm run scss` or
+  - `npm run less`
 
 ## Grid Structure
 
