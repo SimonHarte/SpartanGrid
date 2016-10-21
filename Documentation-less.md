@@ -151,13 +151,13 @@ different viewports like so:
 	.grid-gutter();
 	.grid-generate();
 }
-@media (min-width: 40.01em) and (max-width: 65em) {
+@media (min-width: 40.0625em) and (max-width: 65em) {
 	// grid setup for medium screen
 	.grid-unlock(100%, 15px, 12;);
 	.grid-gutter();
 	.grid-generate();
 }
-@media (min-width: 65.01em) {
+@media (min-width: 65.0625em) {
 	// grid setup for large screen
 	.grid-unlock(100%, percentage(30px / 940px), 12;);
 	.grid-gutter();
@@ -342,11 +342,11 @@ line, clear the 4th, the 7th, the 10th etc.
 
 	// 1 column in small screen -> no declaration needed
 
-	@media (min-width: 40.01em) and (max-width: 65em) {
+	@media (min-width: 40.0625em) and (max-width: 65em) {
 		// 2 columns in medium screen
 		.grid-col-set-equal(6); // 12 / 2 = 6
 	}
-	@media (min-width: 65.01em) {
+	@media (min-width: 65.0625em) {
 		// 3 columns in large screen
 		.grid-col-set-equal(4); // 12 / 3 = 4
 	}
@@ -372,12 +372,12 @@ Simply make use of the optional parameter to [`.grid-generate()`](#custom-classe
 .grid-generate('sm');
 
 // generate medium screen classes
-@media (min-width: 40.01em) and (max-width: 65em) {
+@media (min-width: 40.0625em) and (max-width: 65em) {
 	.grid-generate('md');
 }
 
 // generate large screen classes
-@media (min-width: 65.01em) {
+@media (min-width: 65.0625em) {
 	.grid-generate('lg');
 }
 ```

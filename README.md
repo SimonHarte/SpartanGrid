@@ -66,12 +66,6 @@ Spartan provides you with a sensible set of mixins to freely customize your setu
 
 ## Getting Started
 
-- Install [Node](http://nodejs.org/) and a preprocessor:
-	- Less: `npm install less -g`
-	- SCSS: `npm install node-sass -g`
-
-> Since Spartan has **no dependencies** at all, you can seamlessly integrated it in any frontend build process.
-
 ### Have a Project at the Ready?
 
 - Integrate the [source file](https://github.com/SimonHarte/SpartanGrid/blob/master/src) in your project
@@ -82,10 +76,11 @@ Spartan provides you with a sensible set of mixins to freely customize your setu
 ### Just want to fiddle around?
 
 - Download Spartan
+- Install [NodeJS](http://nodejs.org/) and run `npm install` in the project directory
 - Adjust the grid setup
 - Execute:
-	- `lessc grid-setup.less grid.css` or
-	- `node-sass grid-setup.scss grid.css`
+  - `npm run scss` or
+  - `npm run less`
 
 ## Grid Structure
 
@@ -104,7 +99,7 @@ Here's a short example of Spartans base structure in a 12-column grid:
 
 - `.g-row` initializes a grid row with negative left margin (gutter) and uses [H5BP clearfix](https://github.com/h5bp/html5-boilerplate/blob/master/css/main.css#L161) to contain the floating `.g-col`s.
 - `.g-col` applies default column styles like float and padding (gutter).
-- `.g-span-<columns>` applies a column based width according ot the set maximum amount of columns.
+- `.g-span-<columns>` applies a column based width relative to the set maximum amount of columns.
 
 Check out [responsive approaches](#advanced-usage) with Spartan.
 
@@ -140,7 +135,7 @@ $grid-config: <grid-width>, <gutter-width>, <grid-columns>;
 
 #### Example Setup
 
-The following will implement a fluid grid with a fixed gutter of 20 pixel and 12 columns:
+The following will implement a **fluid grid** with a fixed gutter of **20 pixel** and **12 columns**:
 
 **LessCSS**
 
@@ -170,8 +165,8 @@ This counts for the gutter as well since grid and gutter types can be defined co
 
 ### Grid Classes and Mixins
 
-Spartan generates grid classes according to your configuration per default.
-Instead of applying these classes you can also use similar named mixins to apply the grid.
+Spartan generates grid classes according to your configuration,
+but instead of applying these classes you can also use similar named mixins to apply the grid.
 
 **CSS**
 
@@ -273,12 +268,11 @@ There's a detailed documentation about every aspect of Spartan with different ap
 
 **Partially** supported:
 
-- **IE8**: basic grid working properly, no `:nth-of-type` clearing
-- **Safari**: as explained [below](#the-safari-problem)
+- **Safari 7-**: as explained [below](#the-safari-problem)
 
 ### The Safari Problem
 
-Unfortunately all Safari browsers up to the latest version have a very pragmatic sub-pixel rendering for widths and always round 
+Unfortunately all Safari browsers up to version 7 have a very pragmatic sub-pixel rendering for widths and always round 
 values down to the next integer when calculating rendered pixels. So a width declaration of for example `88.333px` or
  even `88.666px` will always be rendered as `88px`. This of course causes issues when your grid configuration 
  leads to such values or in general when you use a fluid grid, because we get a small displacement of columns.

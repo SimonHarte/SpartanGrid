@@ -1,6 +1,6 @@
 {
   "name": "spartan-grid",
-  "version": "5.0.3",
+  "version": "5.0.4",
   "description": "This is madness...",
   "directories": {
     "example": "examples",
@@ -9,6 +9,10 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/SimonHarte/SpartanGrid.git"
+  },
+  "scripts": {
+    "scss": "node-sass grid-setup.scss grid.css",
+    "less": "lessc grid-setup.less grid.css"
   },
   "keywords": [
     "spartan",
@@ -26,5 +30,9 @@
   "bugs": {
     "url": "https://github.com/SimonHarte/SpartanGrid/issues"
   },
-  "homepage": "https://github.com/SimonHarte/SpartanGrid"
+  "homepage": "https://github.com/SimonHarte/SpartanGrid",
+  "devDependencies": {
+    "less": "^2.7.1",
+    "node-sass": "^3.10.1"
+  }
 }
