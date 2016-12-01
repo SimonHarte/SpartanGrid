@@ -3,7 +3,7 @@ BASE MIXIN TESTS
 */
 
 #base-mixins {
-	/* unlock 940px, 'fluid', 20px, 'fluid', 12 */
+	/* unlock [100%, percentage(20px, 940px), 12] */
 	@include grid-core($generate: false);
 	@include grid-unlock((100%, percentage(20px / 940px), 12));
 

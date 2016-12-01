@@ -26,8 +26,3 @@ GRID-CORE TESTS
 	/* don't generate css */
 	@include grid-core($generate: false);
 }
-
-#core-5 {
-	/* explicitly generate css */
-	@include grid-core($generate: true);
-}
