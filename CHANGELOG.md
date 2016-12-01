@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.1.0
+
+- simplified use of `grid-push` and `grid-pull`
+- updated tests and added npm scripts
+
 ## 5.0.4
 
 - added SCSS support!
