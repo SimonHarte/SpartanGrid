@@ -1,6 +1,6 @@
 /* GRID-UNLOCK TESTS */
 #unlock-1 {
-	/* unlock 720px, 'fixed', 20px, 'fixed', 12 */
+	/* unlock [720px, 20px, 12] */
 	@include grid-core($generate: false);
 	@include grid-unlock((720px, 20px, 12));
 	@include grid-gutter();
@@ -12,7 +12,7 @@
 }
 
 #unlock-2 {
-	/* unlock 940px, 'fluid', 80px, 'fixed', 12 */
+	/* unlock [100%, 80px, 12] */
 	@include grid-core($generate: false);
 	@include grid-unlock((100%, 80px, 12));
 	@include grid-gutter();

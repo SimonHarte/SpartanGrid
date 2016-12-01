@@ -1,10 +1,8 @@
-/**
- * "Spartan" Grid System
- * version: 5.0.4
- * https://github.com/SimonHarte/SpartanGrid
- * License: MIT
- * Copyright 2015 Simon Harte <s.harte@gmx.ch>
- */
+// "Spartan" Grid System
+// version: 5.1.0
+// https://github.com/SimonHarte/SpartanGrid
+// License: MIT
+// Copyright 2015 Simon Harte <s.harte@gmx.ch>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // GRID VARIABLE INIT
@@ -80,7 +78,7 @@ $spartan-one-col: null !default;
 }
 
 @function _get-gutter($type, $width, $gutter) {
-	@if $type == 'fluid'and unit($gutter) !='%' {
+	@if $type == 'fluid' and unit($gutter) !='%' {
 		@return percentage($gutter / $width);
 	} @else {
 		@return $gutter;
@@ -100,10 +98,12 @@ $spartan-one-col: null !default;
 }
 
 @mixin _spartan-push($num) {
+	position: relative;
 	left: _get-rounded($spartan-one-col * $num);
 }
 
 @mixin _spartan-pull($num) {
+	position: relative;
 	right: _get-rounded($spartan-one-col * $num);
 }
 
@@ -261,7 +261,7 @@ $spartan-one-col: null !default;
 @mixin _spartan-cf {
 	&:before,
 	&:after {
-		content: " ";
+		content: '';
 		display: table;
 	}
 
@@ -295,12 +295,6 @@ $spartan-one-col: null !default;
 	}
 }
 
-@mixin _spartan-row-reorder {
-	> .#{$spartan-namespace}col {
-		position: relative;
-	}
-}
-
 // base grid layout styles, valid for every grid setup
 @mixin _spartan-core-selectors {
 	.#{$spartan-namespace}row,
@@ -310,11 +304,6 @@ $spartan-one-col: null !default;
 
 	.#{$spartan-namespace}row {
 		@include _spartan-base-style('row');
-
-		// used to .push and .pull columns
-		&.#{$spartan-namespace}reorder {
-			@include _spartan-row-reorder;
-		}
 	}
 
 	.#{$spartan-namespace}col {
@@ -347,10 +336,6 @@ $spartan-one-col: null !default;
 	@include _spartan-base-style('both');
 	@include _spartan-base-style('col');
 	@include _spartan-col-gutter($gutter);
-}
-
-@mixin grid-row-reorder() {
-	@include _spartan-row-reorder;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
