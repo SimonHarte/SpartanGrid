@@ -34,13 +34,14 @@ Spartan provides you with a sensible set of mixins to freely customize your setu
 	- column offsets
 	- column reordering
 - grid creation API for maximum flexibility
-- customizable css classes
-- tiny: **1.8KB** of minified base css
+- straight forward, easy to use
+- freely customizable css classes
+- tiny: **2.2KB** of minified base css
 
 ## Websites using Spartan
 
 - [http://www.victorinox.com/](http://www.victorinox.com/)
-- [http://m14.migros.ch/](http://m14.migros.ch/)
+- [http://m15.migros.ch/](http://m15.migros.ch/)
 - [https://www.schwaebisch-hall.de/](https://www.schwaebisch-hall.de/)
 - [https://www.visana.ch/](https://www.visana.ch/)
 
@@ -60,9 +61,9 @@ Spartan provides you with a sensible set of mixins to freely customize your setu
 | offsets                   | ✅ | ✅ | ✅ | ✅ |
 | multiple grids            | ✅ | ❌ | ❌ | ✅ |
 | custom classes            | ✅ | ❌ | ❌ | ✅ |
-| output css (min)          | **1.8-5.4KB** * | **8.3KB** | **18.5KB** | **~10KB** |
+| output css (min)          | **2.2-6.0KB** * | **8.3KB** | **18.5KB** | **10KB** |
 
-> \* 1.8KB with the basic grid, 5.4KB with responsiveness for 3 viewports.
+> \* 2.2KB with the basic grid, 6.0KB with responsiveness for 3 viewports.
 
 ## Getting Started
 
@@ -225,14 +226,14 @@ While there are just positive indents in generated classes, you could also call 
 
 #### `grid-push` and `grid-pull`
 
-Together with the additional class `.g-reorder` on `.g-row` you can reorder columns visually without changing the 
-order in HTML. Equivalent to `.g-push-{columns}` and `.g-pull-{columns}`, similar behavior as `.grid-offset()`.
+You can reorder columns visually without changing the order in HTML with these mixins.
+Equivalent to `.g-push-{columns}` and `.g-pull-{columns}`, similar behavior as `.grid-offset()`.
 
-> Note that you may run into problems if these are used within certain responsive layouts as they use relative positioning.
+> Note that you may run into problems when these are used within nested grids as they use relative positioning.
 
 ##### `grid-reorder`
 
-You can alternatively use the mixin `grid-row-reorder()` together with `grid-reorder()` and pass in any number.
+You can alternatively use the mixin `grid-reorder()` and pass in any number.
 If the passed number is positive or zero, it will simply call `grid-push()` and if the number is negative `grid-pull()` instead.
 
 ## Advanced Usage
