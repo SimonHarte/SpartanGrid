@@ -12,7 +12,9 @@
   },
   "scripts": {
     "scss": "node-sass grid-setup.scss grid.css",
-    "less": "lessc grid-setup.less grid.css"
+    "less": "lessc grid-setup.less grid.css",
+    "test-scss": "node-sass tests/tests.scss tests.css",
+    "test-less": "lessc tests/tests.less tests.css"
   },
   "keywords": [
     "spartan",
