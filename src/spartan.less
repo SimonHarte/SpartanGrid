@@ -1,10 +1,8 @@
-/**
- * "Spartan" Grid System
- * version: 5.0.4
- * https://github.com/SimonHarte/SpartanGrid
- * License: MIT
- * Copyright 2015 Simon Harte <s.harte@gmx.ch>
- */
+// "Spartan" Grid System
+// version: 5.0.4 
+// https://github.com/SimonHarte/SpartanGrid
+// License: MIT
+// Copyright 2015 Simon Harte <s.harte@gmx.ch>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // GRID CALCULATIONS
@@ -47,10 +45,12 @@
 
 		// visually manipulate grid column order with these mixins
 		.spartan-push(@num) {
+			position: relative;
 			left: round((@one-col * @num), @spartan-precision);
 		}
 
 		.spartan-pull(@num) {
+			position: relative;
 			right: round((@one-col * @num), @spartan-precision);
 		}
 	}
@@ -225,46 +225,46 @@
 	}
 
 	.set-namespace(@ns);
+}
 
-	// prefixed clearfix mixin from h5bp for grid only
-	.spartan-cf() {
-		&:before,
-		&:after {
-			content: " ";
-			display: table;
-		}
-
-		&:after {
-			clear: both;
-		}
+// prefixed clearfix mixin from h5bp for grid only
+.spartan-cf() {
+	&:before,
+	&:after {
+		content: '';
+		display: table;
 	}
 
-	// prefixed box sizing mixin
-	.spartan-box-sizing(@boxmodel: border-box) {
-		box-sizing: @boxmodel;
+	&:after {
+		clear: both;
 	}
+}
 
-	.spartan-base-style('both') {
-		display: block;
-		// make sure no shorthand properties interfere with grid styles
-		margin-right: 0 !important;
-		padding-right: 0 !important;
-	}
+// prefixed box sizing mixin
+.spartan-box-sizing(@boxmodel: border-box) {
+	box-sizing: @boxmodel;
+}
 
-	.spartan-base-style('row') {
-		.spartan-cf();
-		padding-left: 0 !important;
-	}
+.spartan-base-style('both') {
+	display: block;
+	// make sure no shorthand properties interfere with grid styles
+	margin-right: 0 !important;
+	padding-right: 0 !important;
+}
 
-	.spartan-base-style('col') {
-		// make sure we have the correct box sizing for gutter padding
-		.spartan-box-sizing();
-		float: left;
-		margin-left: 0 !important;
-		// columns should per default span the whole width if none is set
-		width: 100%;
-		min-height: 1px;
-	}
+.spartan-base-style('row') {
+	.spartan-cf();
+	padding-left: 0 !important;
+}
+
+.spartan-base-style('col') {
+	// make sure we have the correct box sizing for gutter padding
+	.spartan-box-sizing();
+	float: left;
+	margin-left: 0 !important;
+	// columns should per default span the whole width if none is set
+	width: 100%;
+	min-height: 1px;
 }
 
 // base grid layout styles, valid for every grid setup
@@ -276,11 +276,6 @@
 
 	.@{spartan-namespace}row {
 		.spartan-base-style('row');
-
-		// used to .push and .pull columns
-		&.@{spartan-namespace}reorder {
-			.grid-row-reorder();
-		}
 	}
 
 	.@{spartan-namespace}col {
@@ -315,12 +310,6 @@
 	.spartan-base-style('both');
 	.spartan-base-style('row');
 	.spartan-row-gutter(@gutter) !important;
-}
-
-.grid-row-reorder() {
-	> .@{spartan-namespace}col {
-		position: relative;
-	}
 }
 
 // all necessary column styles with gutter
