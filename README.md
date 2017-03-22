@@ -21,20 +21,20 @@ Spartan provides you with a sensible set of mixins to freely customize your setu
 - [Getting Started](#getting-started)
 - [Grid Structure](#grid-structure)
 - [Basic Usage](#basic-usage)
-	- [Grid Setup](#grid-setup)
-	- [Grid Classes and Mixins](#grid-classes-and-mixins)
+  - [Grid Setup](#grid-setup)
+  - [Grid Classes and Mixins](#grid-classes-and-mixins)
 - [Advanced Usage](#advanced-usage)
 - [Browser Support](#browser-support)
-	- [The Safari Problem](#the-safari-problem)
+  - [The Safari Problem](#the-safari-problem)
 
 ## Features
 
 - supports all common grid features:
-	- fluid or static grid cells
-	- independent gutter, fluid or static
-	- fully responsive
-	- cell offsets
-	- cell reordering
+  - fluid or static grid cells
+  - independent gutter, fluid or static
+  - fully responsive
+  - cell offsets
+  - cell reordering
 - grid creation API for maximum flexibility
 - straight forward, easy to use
 - freely customizable css classes
@@ -44,7 +44,7 @@ Spartan provides you with a sensible set of mixins to freely customize your setu
 
 Note that from version 6.0.0 on we will drop LessCSS support because of lacking demand and simpler maintenance.
 
-> For LessCSS Support you can use Spartan v5.2.0
+> For LessCSS Support you can use Spartan v5.1.0
 
 ## Websites using Spartan
 
@@ -60,7 +60,7 @@ Note that from version 6.0.0 on we will drop LessCSS support because of lacking 
 ### Have a Project at the Ready?
 
 - Integrate the [source file](https://github.com/SimonHarte/SpartanGrid/blob/master/src) in your project
-- Use the [API mixin(s)](#grid-setup) to set up your grid
+- Use [API mixin(s)](#grid-setup) to set up your grid
 
 > Spartan will not generate any CSS until you use the setup API.
 
@@ -181,8 +181,6 @@ While there are just positive indents in generated classes, you could also call 
 
 You can reorder cells visually without changing the order in HTML with these mixins.
 Equivalent to `.g-push-{cells}` and `.g-pull-{cells}`, similar behavior as `.grid-offset()`.
-
-> Note that you may run into problems when these are used within nested grids as they use relative positioning.
 
 ##### `grid-reorder`
 

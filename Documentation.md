@@ -277,6 +277,14 @@ Which will enable you to use `.g-cell-1` and `.g-cell-2` as classes:
 Generate a direct child selector `.g-cell` with the given width and, vertically align items to each other
 and add an optional vertical spacing.
 
+**Params**
+
+| Param | Type | Value | Comment |
+|-------|:-----|:------|:--------|
+| `$cells`     | number | only positive | |
+| `$spacing`   | any valid `margin-top` or `margin-bottom` setting | | optional, add a vertical spacing on rows of cells |
+| `$direction` | string | defaults to `'between'`| optional, the spacing direction (`'between'`, `'before'`, `'after'`) |
+
 **Basic**
 
 ```scss
