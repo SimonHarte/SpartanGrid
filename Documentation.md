@@ -24,14 +24,14 @@ to generate even more flexible grids, see [Viewport Dependent Configurations](#v
 #### `grid-core([$ns: 'g'], [$generate: true])`
 
 This will define the core variables and mixins and generate selectors and styles needed for any grid setup,
-e.g. clearing on the row, float of columns etc. Generally has to be called only once for any grid setup.
+e.g. clearing on the container, float of cells etc. Generally has to be called only once for any grid setup.
 
 > [Read about namespacing](#namespace)
 
 **Generates**
 
-- `.g-row`
-- `.g-col`
+- `.g-container`
+- `.g-cell`
 
 #### `grid-unlock(<$config>)`
 
@@ -42,7 +42,7 @@ within the current scope (or globally).
 #my-scope {
 	@include grid-unlock($config-list);
 	
-	.custom-column {
+	.custom-cell {
 		@include grid-span(5);
 	}
 }
@@ -55,10 +55,10 @@ so you don't have to generate all classes anew.
 
 **Generates**
 
-- `.g-row`
-- `.g-row > .g-col`
+- `.g-container`
+- `.g-container > .g-cell`
 
-Checkout the [differing gutter setup](https://github.com/SimonHarte/SpartanGrid/tree/master/examples/differing-gutters.less) example.
+Checkout the [differing gutter setup](https://github.com/SimonHarte/SpartanGrid/tree/master/examples/differing-gutters.scss) example.
 
 You can call `grid-gutter()` without parameters, in that case it simply relies on your unlocked grid configuration,
 or you call it with either a fix value which will be taken as is or provide a relation to which a percentage value will be calculated.
@@ -87,7 +87,7 @@ or you call it with either a fix value which will be taken as is or provide a re
 @include grid-gutter(60em, 1.5em);
 ```
 
-#### `grid-generate([prefix: ''], [$columns: $spartan-cols])`
+#### `grid-generate([prefix: ''], [$cells: $spartan-cells])`
 
 This mixin will generate all configuration sensitive classes like `.g-span-{xx}`, `.g-offset-{xx}` etc. in the current scope.
 
@@ -100,11 +100,11 @@ This mixin will generate all configuration sensitive classes like `.g-span-{xx}`
 - `.g-push`
 - `.g-pull`
 
-If you pass an optional column amount, it will use this value for generation while relying on your unlocked config.
+If you pass an optional cell amount, it will use this value for generation while relying on your unlocked config.
 So if you know you'll never use classes for more than half the grid width you can reduce output css by only generating those classes:
 
 ```
-@include grid-generate($columns: 6);
+@include grid-generate($cells: 6);
 ```
 
 ### Viewport Dependent Configurations
@@ -155,8 +155,8 @@ This namespace is per default set to `g`, but you can freely customize it.
 Example with `@include grid-bundle('grid')`:
 
 ```css
-.grid-row
-.grid-col
+.grid-container
+.grid-cell
 .grid-span
 .grid-offset
 // etc...
@@ -179,8 +179,8 @@ Lets assume the following setup:
 This will generate the base classes as mentioned in the [namespace section](#namespace):
 
 ```css
-.grid-row
-.grid-col
+.grid-container
+.grid-cell
 ```
 
 But the other classes will look like this:
@@ -197,19 +197,19 @@ But the other classes will look like this:
 
 Spartan comes with two mixins for applying grid styles to any selector:
 
-- `grid-row([$gutter: $spartan-gutter])`
-- `grid-col([$gutter: $spartan-gutter])`
+- `grid-container([$gutter: $spartan-gutter])`
+- `grid-cell([$gutter: $spartan-gutter])`
 
-As you could imagine `grid-row()` applies all row styles to your selector and `grid-col()` does so for column styles.
+As you could imagine `grid-container()` applies all container styles to your selector and `grid-cell()` does so for cell styles.
 You can optionally overwrite the gutter from your previously unlocked settings.
 
 ```less
 main {
-	@include grid-row();
+	@include grid-container();
 	
 	article,
 	aside {
-		@include grid-col();
+		@include grid-cell();
 	}
 	
 	article {
@@ -230,16 +230,15 @@ Our idea and recommended way to implement a responsive grid in your project is t
 There are three mixins which will help you create responsive layouts.
 
 ```scss
-@include grid-col-set(<$col-name>, <$col-span>, [$offset], [$reorder]);
-@include grid-col-set-equal(<$col-span>);
-@include grid-col-clear(<$columns>);
+@include grid-cell-set(<$cell-name>, <$cell-span>, [$offset], [$reorder]);
+@include grid-cell-set-equal(<$cell-span>);
 ```
 
 > If your project only consists of layouts and you never use classes like `.grid-span-{xx}` you don't even have to use `grid-generate()`.
 
-#### `grid-col-set`
+#### `grid-cell-set`
 
-Generate a namespaced class `.{col-name}` as direct child of `.g-row`. Note that `$offset` and `$reorder` are optional parameters
+Generate a namespaced class `.{cell-name}` as direct child of `.g-container`. Note that `$offset` and `$reorder` are optional parameters
 and can be omitted if not used.
 
 > We use direct child selectors so different responsive layouts cannot interfere with each other.
@@ -248,62 +247,135 @@ and can be omitted if not used.
 
 | Param | Type | Value | Comment |
 |-------|:-----|:------|:--------|
-| `$col-name`    | string | | quotes optional, example: `col-1` |
-| `$columns`     | number | only positive | |
+| `$cell-name`    | string | | quotes optional, example: `cell-1` |
+| `$cells`     | number | only positive | |
 | `$offset`      | number | positive or negative | optional, uses `grid-offset()` to apply indents |
-| `$reorder`     | number | positive or negative | optional, uses `grid-reorder()` to reposition a column |
+| `$reorder`     | number | positive or negative | optional, uses `grid-reorder()` to reposition a cell |
 
-This mixin is used to define different columns inside a layout, so if one column takes 2/3 of the grid and the other 
+This mixin is used to define different cells inside a layout, so if one cell takes 2/3 of the grid and the other 
 1/3 you'd use the mixin twice like this:
 
 ```scss
 .g-layout-2 {
-	// max columns: 12
-	@include grid-col-set('col-1', 8);
-	@include grid-col-set('col-2', 4);
+	// max cells: 12
+	@include grid-cell-set('cell-1', 8);
+	@include grid-cell-set('cell-2', 4);
 }
 ```
 
-Which will enable you to use `.g-col-1` and `.g-col-2` as classes:
+Which will enable you to use `.g-cell-1` and `.g-cell-2` as classes:
 
 ```html
-<div class="g-row g-layout-2">
-	<div class="g-col g-col-1"></div>
-	<div class="g-col g-col-2"></div>
+<div class="g-container g-layout-2">
+	<div class="g-cell g-cell-1"></div>
+	<div class="g-cell g-cell-2"></div>
 </div>
 ```
 
-#### `grid-col-set-equal`
+#### `grid-cell-set-equal`
 
-Generate a direct child selector `.g-col` with the given width and also properly clear columns every 
-nth child element using the `grid-col-clear()` mixin.
+Generate a direct child selector `.g-cell` with the given width and, vertically align items to each other
+and add an optional vertical spacing.
+
+**Basic**
 
 ```scss
-$grid-columns: 12;
+$grid-cells: 12;
 
 .g-layout-1 {
-	@include grid-col-set-equal($grid-columns/4);
+	@include grid-cell-set-equal($grid-cells/4);
 }
 ```
 
 Output CSS:
 
 ```css
-.g-layout-1 > .g-col {
+.g-layout-1 > .g-cell {
 	width: 25%;
 }
-	
-.g-layout-1 > .g-col:nth-of-type(4n+1) {
+
+.g-layout-1 > .g-cell:nth-of-type(4n+1) {
 	clear: left;
 }
 ```
 
-#### `grid-col-clear`
+**Vertical Spacing between**
 
-Clear the float every nth+1 child (every new line) so columns align properly if they differ in height. So if you have 3 columns per 
-line, clear the 4th, the 7th, the 10th etc.
+```scss
+$grid-cells: 12;
 
-> Floating point numbers will always be rounded down to the next integer
+.g-layout-1 {
+	@include grid-cell-set-equal($grid-cells/4, 10px, 'between');
+}
+```
+
+Output CSS:
+
+```css
+.g-layout-1 > .g-cell {
+	width: 25%;
+}
+
+.g-layout-1 > .g-cell:nth-of-type(4n+1) {
+	clear: left;
+}
+
+.g-layout-1 > .g-cell:nth-of-type(n+5) {
+	margin-top: 10px;
+}
+```
+
+**Vertical Spacing before**
+
+```scss
+$grid-cells: 12;
+
+.g-layout-1 {
+	@include grid-cell-set-equal($grid-cells/4, 10px, 'before');
+}
+```
+
+Output CSS:
+
+```css
+.g-layout-1 > .g-cell {
+	width: 25%;
+}
+
+.g-layout-1 > .g-cell:nth-of-type(4n+1) {
+	clear: left;
+}
+
+.g-layout-1 > .g-cell {
+	margin-top: 10px;
+}
+```
+
+**Vertical Spacing after**
+
+```scss
+$grid-cells: 12;
+
+.g-layout-1 {
+	@include grid-cell-set-equal($grid-cells/4, 10px, 'after');
+}
+```
+
+Output CSS:
+
+```css
+.g-layout-1 > .g-cell {
+	width: 25%;
+}
+
+.g-layout-1 > .g-cell:nth-of-type(4n+1) {
+	clear: left;
+}
+
+.g-layout-1 > .g-cell {
+	margin-bottom: 10px;
+}
+```
 
 ### Responsive Layout Example
 
@@ -311,17 +383,17 @@ line, clear the 4th, the 7th, the 10th etc.
 
 ```scss
 .g-layout-1 {
-	// grid maximum columns = 12
+	// grid maximum cells = 12
 
-	// 1 column in small screen -> no declaration needed
+	// 1 cell in small screen -> no declaration needed
 
 	@media (min-width: 40.0625em) and (max-width: 65em) {
-		// 2 columns in medium screen
-		@include grid-col-set-equal(6); // 12 / 2 = 6
+		// 2 cells in medium screen
+		@include grid-cell-set-equal(6); // 12 / 2 = 6
 	}
 	@media (min-width: 65.0625em) {
-		// 3 columns in large screen
-		@include grid-col-set-equal(4); // 12 / 3 = 4
+		// 3 cells in large screen
+		@include grid-cell-set-equal(4); // 12 / 3 = 4
 	}
 }
 ```
@@ -355,13 +427,13 @@ $grid-config: 100%, 20px, 12;
 }
 ```
 
-Now you can use these classes in your markup and the columns will change accordingly throughout viewports.
+Now you can use these classes in your markup and the cells will change accordingly throughout viewports.
 
 ```html
-<div class="g-row">
-	<div class="g-col g-sm-span-6 g-md-span-4 g-lg-span-3"></div>
-	<div class="g-col g-sm-span-6 g-md-span-4 g-lg-span-3"></div>
-	<div class="g-col g-sm-span-6 g-md-span-4 g-lg-span-3"></div>
-	<div class="g-col g-sm-span-6 g-md-span-4 g-lg-span-3"></div>
+<div class="g-container">
+	<div class="g-cell g-sm-span-6 g-md-span-4 g-lg-span-3"></div>
+	<div class="g-cell g-sm-span-6 g-md-span-4 g-lg-span-3"></div>
+	<div class="g-cell g-sm-span-6 g-md-span-4 g-lg-span-3"></div>
+	<div class="g-cell g-sm-span-6 g-md-span-4 g-lg-span-3"></div>
 </div>
 ```
