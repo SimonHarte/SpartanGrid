@@ -1,0 +1,3 @@
+$grid-config: 100%, percentage(20px / 940px), 12;
+
+@include grid-bundle($grid-config);

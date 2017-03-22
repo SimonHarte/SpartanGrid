@@ -1,0 +1,41 @@
+@include grid-core();
+
+// unlock a config
+$grid-config: 100%, percentage(20px / 940px), 12;
+@include grid-unlock($grid-config);
+
+// set default gutter
+@include grid-gutter();
+
+.g-layout-1 {
+	// use default config
+	@include grid-cell-set-equal(4);
+}
+
+.g-layout-2 {
+	// change gutter to 10px fixed
+	@include grid-gutter(10px);
+	
+	@include grid-cell-set-equal(4);
+}
+
+.g-layout-3 {
+	// change gutter to 15px fluid (percentage) relative to 940px
+	@include grid-gutter(percentage(15px / 940px));
+	
+	@include grid-cell-set-equal(4);
+}
+
+.g-layout-4 {
+	// change gutter to 2%
+	@include grid-gutter(2%);
+	
+	@include grid-cell-set-equal(4);
+}
+
+.g-layout-5 {
+	// change gutter to 1.5em
+	@include grid-gutter(1.5em);
+	
+	@include grid-cell-set-equal(4);
+}

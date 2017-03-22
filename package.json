@@ -11,10 +11,8 @@
     "url": "https://github.com/SimonHarte/SpartanGrid.git"
   },
   "scripts": {
-    "scss": "node-sass grid-setup.scss grid.css",
-    "less": "lessc grid-setup.less grid.css",
-    "test-scss": "node-sass tests/tests.scss tests.css",
-    "test-less": "lessc tests/tests.less tests.css"
+    "start": "node-sass grid-setup.scss grid.css",
+    "test": "node-sass tests/tests.scss tests.css"
   },
   "keywords": [
     "spartan",
