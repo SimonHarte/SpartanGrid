@@ -1,7 +1,7 @@
 @import "viewports";
 
-$grid-columns: 12;
-$grid-config: 100%, 20px, $grid-columns;
+$grid-cells: 12;
+$grid-config: 100%, 20px, $grid-cells;
 
 @include grid-core();
 @include grid-unlock($grid-config);
@@ -19,11 +19,11 @@ $grid-config: 100%, 20px, $grid-columns;
 	// no need to generate for small screen since full-width
 	
 	@media #{$m-medium} {
-		@include grid-col-set-equal($grid-columns/2);
+		@include grid-cell-set-equal($grid-cells/2);
 	}
 
 	@media #{$m-large} {
-		@include grid-col-set-equal($grid-columns/3);
+		@include grid-cell-set-equal($grid-cells/3);
 	}
 }
 
@@ -35,7 +35,7 @@ $grid-config: 100%, 20px, $grid-columns;
 	// no need to generate for small screen since full-width
 	
 	@media #{$m-large} {
-		@include grid-col-set-equal($grid-columns/2);
+		@include grid-cell-set-equal($grid-cells/2);
 	}
 }
 
@@ -47,8 +47,8 @@ $grid-config: 100%, 20px, $grid-columns;
 	// no need to generate for small screen since full-width
 	
 	@media #{$m-medium-up} {
-		@include grid-col-set('col-1', $grid-columns/3*2);
-		@include grid-col-set('col-2', $grid-columns/3);
+		@include grid-cell-set('cell-1', $grid-cells/3*2);
+		@include grid-cell-set('cell-2', $grid-cells/3);
 	}
 }
 
@@ -60,16 +60,16 @@ $grid-config: 100%, 20px, $grid-columns;
 	// no need to generate for small screen since full-width
 	
 	@media #{$m-medium} {
-		@include grid-col-set('col', $grid-columns/2, $grid-columns/2);
+		@include grid-cell-set('cell', $grid-cells/2, $grid-cells/2);
 	}
 
 	@media #{$m-large} {
-		@include grid-col-set('col', $grid-columns/3, $grid-columns/3*2);
+		@include grid-cell-set('cell', $grid-cells/3, $grid-cells/3*2);
 	}
 }
 
 .g-layout-5 {
-	@include grid-row-reorder;
+	@include grid-container-reorder;
 	
 	// small: 12
 	// medium: 12
@@ -80,25 +80,25 @@ $grid-config: 100%, 20px, $grid-columns;
 	// no need to generate for medium screen since full-width
 
 	@media #{$m-large} {
-		@include grid-col-set('col-1', $grid-columns/2, $reorder: $grid-columns/2);
-		@include grid-col-set('col-2', $grid-columns/2, $reorder: -$grid-columns/2);
+		@include grid-cell-set('cell-1', $grid-cells/2, $reorder: $grid-cells/2);
+		@include grid-cell-set('cell-2', $grid-cells/2, $reorder: -$grid-cells/2);
 	}
 }
 
 .g-layout-nogrid {
-	// small: 5 columns
-	// medium: 7 columns
-	// large: 9 columns
+	// small: 5 cells
+	// medium: 7 cells
+	// large: 9 cells
 	
 	@media #{$m-small} {
-		@include grid-col-set('col', ($grid-columns / 5));
+		@include grid-cell-set('cell', ($grid-cells / 5));
 	}
 
 	@media #{$m-medium} {
-		@include grid-col-set('col', ($grid-columns / 7));
+		@include grid-cell-set('cell', ($grid-cells / 7));
 	}
 
 	@media #{$m-large} {
-		@include grid-col-set('col', ($grid-columns / 9));
+		@include grid-cell-set('cell', ($grid-cells / 9));
 	}
 }

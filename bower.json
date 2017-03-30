@@ -16,15 +16,12 @@
 		"examples/",
 		"tests/",
 		".gitignore",
-		"grid-setup.less",
 		"grid-setup.scss"
 	],
 	"keywords": [
 		"spartan",
 		"grid",
 		"responsive",
-		"LessCSS",
-		"less",
 		"SCSS",
 		"tiny",
 		"flexible",

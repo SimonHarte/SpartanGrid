@@ -33,7 +33,7 @@ $grid-config-l: 100%, 20px, 12;
 	@include grid-unlock($grid-config-m);
 	// no gutters or generate needed here
 	
-	.my-col {
+	.my-cell {
 		@include grid-span(4.5);
 	}
 }

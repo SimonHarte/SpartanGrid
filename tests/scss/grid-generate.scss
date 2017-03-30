@@ -29,6 +29,6 @@ unlock [100%, percentage(20px / 940px), 12] for all generate tests
 	
 	.generate-5 {
 		/* restrict amount */
-		@include grid-generate($columns: 6);
+		@include grid-generate($cells: 6);
 	}
 }

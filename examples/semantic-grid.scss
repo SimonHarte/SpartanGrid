@@ -4,11 +4,11 @@
 // no grid-gutter or grid-generate needed
 
 main {
-	@include grid-row();
+	@include grid-container();
 	
 	article,
 	aside {
-		@include grid-col();
+		@include grid-cell();
 	}
 	
 	article {

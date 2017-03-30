@@ -1,5 +1,13 @@
 # Changelog
 
+## 6.0.0
+
+- removed LessCSS support
+- renaming:
+  - `row` is now `container`
+  - `col` is now `cell`
+- added vertical spacing option for `grid-cell-set-equal`
+
 ## 5.1.0
 
 - simplified use of `grid-push` and `grid-pull`
@@ -9,7 +17,7 @@
 
 - added SCSS support!
 - simplified and standardised API for LessCSS and SCSS
-- `grid-unlock()` only needs 3 instead of 5 configuration parameters now: grid width, gutter width and columns
+- `grid-unlock()` only needs 3 instead of 5 configuration parameters now: grid width, gutter width and cells
 - grid and gutter type depend on passed types
 
 ## 4.0.2
@@ -70,11 +78,11 @@
 - grid creation API: `.grid-core()`, `.grid-unlock()` and `.grid-generate()`
 - generate viewport dependent grid css
 - all global grid mixins prefixed: `.grid-[mixin]`
-- reduce generated column selectors, don't use `.row` as necessary parent
+- reduce generated cell selectors, don't use `.container` as necessary parent
 
 ## 1.2.0
 
-- third parameter for `.col-set()` mixin available to define offsets
+- third parameter for `.cell-set()` mixin available to define offsets
 
 ## 1.1.0
 

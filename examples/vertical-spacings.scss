@@ -1,0 +1,17 @@
+$grid-config: 100%, 20px, 12;
+
+@include grid-core();
+@include grid-unlock($grid-config);
+@include grid-gutter();
+
+.g-layout--space-between {
+	@include grid-cell-set-equal(4, 20px, 'between');
+}
+
+.g-layout--space-before {
+	@include grid-cell-set-equal(4, 20px, 'before');
+}
+
+.g-layout--space-after {
+	@include grid-cell-set-equal(4, 20px, 'after');
+}
