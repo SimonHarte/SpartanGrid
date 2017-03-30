@@ -324,12 +324,12 @@ Output CSS:
 	width: 25%;
 }
 
-.g-layout-1 > .g-cell:nth-of-type(4n+1) {
-	clear: left;
-}
-
 .g-layout-1 > .g-cell:nth-of-type(n+5) {
 	margin-top: 10px;
+}
+
+.g-layout-1 > .g-cell:nth-of-type(4n+1) {
+	clear: left;
 }
 ```
 
@@ -348,14 +348,11 @@ Output CSS:
 ```css
 .g-layout-1 > .g-cell {
 	width: 25%;
+	margin-top: 10px;
 }
 
 .g-layout-1 > .g-cell:nth-of-type(4n+1) {
 	clear: left;
-}
-
-.g-layout-1 > .g-cell {
-	margin-top: 10px;
 }
 ```
 
@@ -374,14 +371,11 @@ Output CSS:
 ```css
 .g-layout-1 > .g-cell {
 	width: 25%;
+	margin-bottom: 10px;
 }
 
 .g-layout-1 > .g-cell:nth-of-type(4n+1) {
 	clear: left;
-}
-
-.g-layout-1 > .g-cell {
-	margin-bottom: 10px;
 }
 ```
 

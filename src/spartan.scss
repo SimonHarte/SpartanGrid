@@ -173,29 +173,25 @@ $spartan-one-cell: null !default;
 @mixin grid-cell-vertical-spacing($cells, $spacing: false, $direction: 'between') {
 	@if $spacing {
 		@if $direction == 'between' {
-			@if($cells > 0) {
+			@if ($cells > 0) {
 				$cell-integer: floor($cells);
-			
-				& > .#{$spartan-namespace}cell:nth-of-type(n+#{$cell-integer + 1}) {
+
+				&:nth-of-type(n+#{$cell-integer + 1}) {
 					margin-top: $spacing;
 				}
 			}
 		}
 		@if $direction == 'before' {
-			& > .#{$spartan-namespace}cell {
-				margin-top: $spacing;
-			}
+			margin-top: $spacing;
 		}
 		@if $direction == 'after' {
-			& > .#{$spartan-namespace}cell {
-				margin-bottom: $spacing;
-			}
+			margin-bottom: $spacing;
 		}
 	}
 }
 
 // standard mixin for setting cell styles
-@mixin grid-cell-set($cell-name, $cell-span: 0, $offset: 0, $reorder: 0) {
+@mixin grid-cell-set($cell-name, $cell-span: 0, $offset: 0, $reorder: 0, $spacing-opts: (false)) {
 	& > .#{$spartan-namespace}#{$cell-name} {
 		@if $cell-span > 0 {
 			@include grid-span($cell-span);
@@ -206,6 +202,9 @@ $spartan-one-cell: null !default;
 		@if $reorder != 0 {
 			@include grid-reorder($reorder);
 		}
+		@if $spacing-opts {
+			@include grid-cell-vertical-spacing(nth($spacing-opts, 1), nth($spacing-opts, 2), nth($spacing-opts, 3));
+		}
 	}
 }
 
@@ -214,15 +213,10 @@ $spartan-one-cell: null !default;
 	$cell-clear: $spartan-cells / $cell-span;
 
 	// use default cell-set mixin to generate selector
-	@include grid-cell-set('cell', $cell-span);
+	@include grid-cell-set('cell', $cell-span, $spacing-opts: (($cell-clear, $vertical-spacing, $spacing-direction)));
 
 	// with equal cells, clear every nth element for proper alignment
 	@include grid-cell-clear($cell-clear);
-	
-	// add vertical spacing
-	@if $vertical-spacing {
-		@include grid-cell-vertical-spacing($cell-clear, $vertical-spacing, $spacing-direction);
-	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
