@@ -7,11 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // GRID VARIABLE INIT
 
-$spartan-namespace: null !default;
-$spartan-width: null !default;
-$spartan-gutter: null !default;
-$spartan-cells: null !default;
-$spartan-one-cell: null !default;
+$spartan-config: () !global;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // HELPER FUNCTIONS
@@ -90,21 +86,21 @@ $spartan-one-cell: null !default;
 
 // "local" mixins
 @mixin _spartan-span-width($num) {
-	width: _get-rounded($spartan-one-cell * $num, 'ceil');
+	width: _get-rounded(map-get($spartan-config, 'singleCell') * $num, 'ceil');
 }
 
 @mixin _spartan-indent($num) {
-	margin-left: _get-rounded($spartan-one-cell * $num) !important;
+	margin-left: _get-rounded(map-get($spartan-config, 'singleCell') * $num) !important;
 }
 
 @mixin _spartan-push($num) {
 	position: relative;
-	left: _get-rounded($spartan-one-cell * $num);
+	left: _get-rounded(map-get($spartan-config, 'singleCell') * $num);
 }
 
 @mixin _spartan-pull($num) {
 	position: relative;
-	right: _get-rounded($spartan-one-cell * $num);
+	right: _get-rounded(map-get($spartan-config, 'singleCell') * $num);
 }
 
 // "global" mixins
@@ -165,7 +161,7 @@ $spartan-one-cell: null !default;
 @mixin grid-cell-clear($cells) {
 	$cell-integer: floor($cells);
 
-	& > .#{$spartan-namespace}cell:nth-of-type(#{$cell-integer}n+1) {
+	& > .#{map-get($spartan-config, 'namespace')}cell:nth-of-type(#{$cell-integer}n+1) {
 		clear: left;
 	}
 }
@@ -192,7 +188,7 @@ $spartan-one-cell: null !default;
 
 // standard mixin for setting cell styles
 @mixin grid-cell-set($cell-name, $cell-span: 0, $offset: 0, $reorder: 0, $spacing-opts: (false)) {
-	& > .#{$spartan-namespace}#{$cell-name} {
+	& > .#{map-get($spartan-config, 'namespace')}#{$cell-name} {
 		@if $cell-span > 0 {
 			@include grid-span($cell-span);
 		}
@@ -210,7 +206,7 @@ $spartan-one-cell: null !default;
 
 // predefined cell class with width, proper clearing and optional vertical spacing
 @mixin grid-cell-set-equal($cell-span, $vertical-spacing: false, $spacing-direction: 'between') {
-	$cell-clear: $spartan-cells / $cell-span;
+	$cell-clear: map-get($spartan-config, 'cells') / $cell-span;
 
 	// use default cell-set mixin to generate selector
 	@include grid-cell-set('cell', $cell-span, $spacing-opts: (($cell-clear, $vertical-spacing, $spacing-direction)));
@@ -238,17 +234,17 @@ $spartan-one-cell: null !default;
 }
 
 @mixin _spartan-gutter-styles($container-gutter, $cell-gutter) {
-	&.#{$spartan-namespace}container {
+	&.#{map-get($spartan-config, 'namespace')}container {
 		@include _spartan-container-gutter($container-gutter);
 
-		> .#{$spartan-namespace}cell {
+		> .#{map-get($spartan-config, 'namespace')}cell {
 			@include _spartan-cell-gutter($cell-gutter);
 		}
 	}
 }
 
 // "global" mixins
-@mixin grid-gutter($arg1: $spartan-gutter, $arg2: null) {
+@mixin grid-gutter($arg1: map-get($spartan-config, 'gutter'), $arg2: null) {
 	$_width: null;
 	$_gutter: null;
 
@@ -313,49 +309,49 @@ $spartan-one-cell: null !default;
 		float: left;
 		margin-left: 0 !important;
 		// cells should per default span the whole width if none is set
-		width: 100%;
+		width: map-get($spartan-config, 'width');
 		min-height: 1px;
 	}
 }
 
 // base grid layout styles, valid for every grid setup
 @mixin _spartan-core-selectors {
-	.#{$spartan-namespace}container,
-	.#{$spartan-namespace}cell {
+	.#{map-get($spartan-config, 'namespace')}container,
+	.#{map-get($spartan-config, 'namespace')}cell {
 		@include _spartan-base-style('both');
 	}
 
-	.#{$spartan-namespace}container {
+	.#{map-get($spartan-config, 'namespace')}container {
 		@include _spartan-base-style('container');
 	}
 
-	.#{$spartan-namespace}cell {
+	.#{map-get($spartan-config, 'namespace')}cell {
 		@include _spartan-base-style('cell');
 	}
 }
 
 // "global" mixins
-@mixin grid-core($ns: 'g', $generate: true) {
-	$spartan-namespace: $ns !global;
+@mixin grid-core($namespace: 'g') {
+	@if not map_has_key($spartan-config, 'namespace') {
+		@if $namespace != '' {
+			$namespace: #{$namespace}-;
+		}
 
-	@if $spartan-namespace != '' {
-		$spartan-namespace: #{$spartan-namespace}- !global;
+		$spartan-config: map-merge($spartan-config, (namespace: $namespace));
 	}
 
-	@if $generate {
-		@include _spartan-core-selectors;
-	}
+	@include _spartan-core-selectors;
 }
 
 // all necessary container styles with gutter
-@mixin grid-container($gutter: $spartan-gutter) {
+@mixin grid-container($gutter: map-get($spartan-config, 'gutter')) {
 	@include _spartan-base-style('both');
 	@include _spartan-base-style('container');
 	@include _spartan-container-gutter($gutter);
 }
 
 // all necessary cell styles with gutter
-@mixin grid-cell($gutter: $spartan-gutter) {
+@mixin grid-cell($gutter: map-get($spartan-config, 'gutter')) {
 	@include _spartan-base-style('both');
 	@include _spartan-base-style('cell');
 	@include _spartan-cell-gutter($gutter);
@@ -379,12 +375,12 @@ $spartan-one-cell: null !default;
 	}
 }
 
-@mixin grid-generate($prefix: '', $cells: $spartan-cells) {
+@mixin grid-generate($prefix: '', $cells: map-get($spartan-config, cells)) {
 	@if $prefix != '' {
 		$prefix: '#{$prefix}-';
 	}
 
-	$selector: #{$spartan-namespace}#{$prefix};
+	$selector: #{map-get($spartan-config, 'namespace')}#{$prefix};
 	$classes: span offset push pull;
 
 	@each $class in $classes {
@@ -396,19 +392,109 @@ $spartan-one-cell: null !default;
 	}
 }
 
-@mixin grid-unlock($config) {
-	$spartan-width: nth($config, 1) !global;
-	$spartan-gutter: nth($config, 2) !global;
-	$spartan-cells: nth($config, 3) !global;
-	$spartan-one-cell: $spartan-width / $spartan-cells !global;
+@mixin grid-unlock($width: 100%, $gutter: 0, $cells: 12, $namespace: 'g') {
+	$config: $width;
+	$base-config: (width: 100%, gutter: 0, cells: 12, namespace: 'g');
+	$target-config: ();
+	$config-type: type_of($config);
+
+	// check config type and handle settings accordingly
+	@if $config-type == list {
+		$settings: map-keys($base-config);
+
+		@each $setting in $settings {
+			$index: index($settings, $setting);
+
+			@if $index and length($config) >= $index {
+				$keyword: nth(map-keys($base-config), $index);
+				$target-config: map-merge($target-config, ($keyword: nth($config, $index)));
+			}
+		}
+
+	} @else if $config-type == map {
+		$target-config: map-merge($target-config, $config);
+
+	} @else if $config-type == number {
+		$target-config: map-merge($target-config, (width: $width, gutter: $gutter, cells: $cells, namespace: $namespace));
+
+	}
+
+	// add fallback notices
+	@if $target-config != $base-config {
+		@if not map_has_key($target-config, 'width') {
+			@warn 'No maximum grid width given, falling back to default (#{map-get($base-config, 'width')})';
+		}
+
+		@if not map_has_key($target-config, 'gutter') {
+			@warn 'No gutter width given, falling back to default (#{map-get($base-config, 'gutter')})';
+		}
+
+		@if not map_has_key($target-config, 'cells') {
+			@warn 'No cells amount given, falling back to default (#{map-get($base-config, 'cells')})';
+		}
+	} @else {
+		@warn 'No configuration parameters given. falling back to default (#{map-remove($base-config, 'namespace')})';
+	}
+
+	$target-config: map-merge($base-config, $target-config);
+
+	$width: map-get($target-config, 'width');
+	$cells: map-get($target-config, 'cells');
+
+	// if the namespace has already been set, don't update it
+	@if map_has_key($spartan-config, 'namespace') {
+		$namespace: map-get($spartan-config, 'namespace');
+	} @else if map_has_key($target-config, 'namespace') {
+		$namespace: map-get($target-config, 'namespace');
+
+		@if $namespace != '' {
+			$namespace: #{$namespace}-;
+		}
+	}
+
+	// check final settings types
+	@if type_of($width) != number {
+		@error 'Maximum grid width is not a number'
+	}
+
+	@if type_of($gutter) != number {
+		@error 'Gutter width is not a number'
+	}
+
+	@if type_of($cells) != number {
+		@error 'Cells amount is not a number'
+	}
+
+	$single-cell: $width / $cells;
+
+	$target-config: map-merge($target-config, (namespace: $namespace, singleCell: ($width / $cells)));
+
+	$spartan-config: map-merge($spartan-config, $target-config) !global;
+}
+
+@mixin grid-config-set($setting, $value) {
+	@if type_of($setting) != map {
+		$setting: ($setting: $value);
+	}
+
+	$spartan-config: map_merge($spartan-config, $setting) !global;
+
+	// always try to recalculate singleCell value
+	@if map_has_key($spartan-config, 'width') and map_has_key($spartan-config, 'cells') {
+		$spartan-config: map-merge($spartan-config, (singleCell: (map-get($spartan-config, 'width') / map-get($spartan-config, 'cells')))) !global;
+	}
+}
+
+@function grid-config-get($setting) {
+	@return map-get($spartan-config, $setting);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // DO EVERYTHING AT ONCE
 
-@mixin grid-bundle($config, $ns: 'g') {
-	@include grid-core($ns);
-	@include grid-unlock($config);
+@mixin grid-bundle($config...) {
+	@include grid-unlock($config...);
+	@include grid-core();
 	@include grid-gutter();
 	@include grid-generate();
 }
