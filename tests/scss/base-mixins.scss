@@ -4,8 +4,7 @@ BASE MIXIN TESTS
 
 #base-mixins {
 	/* unlock [100%, percentage(20px, 940px), 12] */
-	@include grid-core($generate: false);
-	@include grid-unlock((100%, percentage(20px / 940px), 12));
+	@include grid-unlock(100%, percentage(20px / 940px), 12);
 
 	.span-1 {
 		/* @include grid-span(6) */

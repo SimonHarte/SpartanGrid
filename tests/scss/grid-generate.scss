@@ -4,29 +4,28 @@ unlock [100%, percentage(20px / 940px), 12] for all generate tests
 */
 
 #generate {
-	@include grid-core($generate: false);
-	@include grid-unlock((100%, percentage(20px / 940px), 12));
-	
+	@include grid-unlock(100%, 20px, 12);
+
 	.generate-1 {
 		/* without params */
 		@include grid-generate();
 	}
-	
+
 	.generate-2 {
 		/* empty string */
 		@include grid-generate('');
 	}
-	
+
 	.generate-3 {
 		/* unquoted string */
 		@include grid-generate(unquoted);
 	}
-	
+
 	.generate-4 {
 		/* quoted string */
 		@include grid-generate('quoted');
 	}
-	
+
 	.generate-5 {
 		/* restrict amount */
 		@include grid-generate($cells: 6);

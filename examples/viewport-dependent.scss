@@ -10,11 +10,9 @@ $grid-config-m: 100%, percentage(15px / 940px), 12;
 $grid-config-l: 100%, 20px, 12;
 
 // unlock different configs and generate configuration sensitive styles
-@media #{$m-small} {
-	@include grid-unlock($grid-config-s);
-	@include grid-gutter();
-	@include grid-generate();
-}
+@include grid-unlock($grid-config-s);
+@include grid-gutter();
+@include grid-generate();
 
 @media #{$m-medium} {
 	@include grid-unlock($grid-config-m);
@@ -32,7 +30,7 @@ $grid-config-l: 100%, 20px, 12;
 @media #{$m-medium} {
 	@include grid-unlock($grid-config-m);
 	// no gutters or generate needed here
-	
+
 	.my-cell {
 		@include grid-span(4.5);
 	}
