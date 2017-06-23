@@ -1,5 +1,10 @@
 # Changelog
 
+## 6.1.0
+
+- optimized configuration handling
+- no `$generate` parameter to `grid-core()` anymore
+
 ## 6.0.0
 
 - removed LessCSS support
