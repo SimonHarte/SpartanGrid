@@ -49,7 +49,8 @@ Note that from version 6.0.0 on we will drop LessCSS support because of lacking 
 ## Websites using Spartan
 
 - [http://www.victorinox.com/](http://www.victorinox.com/)
-- [http://m15.migros.ch/](http://m15.migros.ch/)
+- [http://www.kaufland.de](http://www.kaufland.de)
+- [http://report.migros.ch/](http://report.migros.ch/)
 - [https://www.schwaebisch-hall.de/](https://www.schwaebisch-hall.de/)
 - [https://www.visana.ch/](https://www.visana.ch/)
 
@@ -98,18 +99,14 @@ Check out [responsive approaches](#advanced-usage) with Spartan.
 
 There are two ways to set up a grid with Spartan, within the basic usage we only explain the simpler one. If you need more flexibility, to set up viewport dependent grids etc. go to the [advanced usage](#advanced-usage) section.
 
-The basic grid setup requires you to call just one mixin, pass in a configuration and an optional prefix; read more about custom classes in the [documentation](#advanced-usage).
-
-> Spartan works exactly the same for both LessCSS and SCSS, you just need to consider language specific syntax.
+The basic grid setup requires you to call just one mixin, pass in a configuration and an optional namespace; read more about custom classes in the [documentation](#advanced-usage).
 
 **SCSS**
 
 ```scss
 @import 'src/spartan';
 
-$grid-config: <grid-width>, <gutter-width>, <grid-cells>;
-
-@include grid-bundle($grid-config, [@prefix: 'g']);
+@include grid-bundle(<grid-width>, <gutter-width>, <grid-cells>, [grid-namespace]);
 ```
 
 #### Example Setup
@@ -119,10 +116,46 @@ The following will implement a **fluid grid** with a fixed gutter of **20 pixel*
 **SCSS**
 
 ```scss
+@include grid-bundle(100%, 20px, 12);
+```
+
+#### Config Types
+
+There are actually 4 different ways to pass in your configuration:
+
+**Parameters**
+
+```scss
+@include grid-bundle(100%, 20px, 12);
+```
+
+**Named Parameters**
+
+```scss
+@include grid-bundle($width: 100%, $gutter: 20px, $cells: 12);
+```
+
+**List**
+
+```scss
 $grid-config: 100%, 20px, 12;
 
 @include grid-bundle($grid-config);
 ```
+
+**Map**
+
+```scss
+$grid-config: (
+    width: 100%,
+    gutter: 20px,
+    cells: 12
+);
+
+@include grid-bundle($grid-config);
+```
+
+> In the case of named parameters and a config map you could even omit settings you don't need to change and rely on the grid's defaults, i.e. (width: 100%, gutter: 0, cells: 12)
 
 #### Grid and Gutter Types
 
@@ -131,13 +164,12 @@ If you define your grid width as `100%` the grid will naturally use fluid percen
 use fixed pixel values if you define it for example as `940px`.
 This counts for the gutter as well since grid and gutter types can be defined completely independently.
 
-> You can easily calculate a relative percentage gutter from other values with a built-in function that is present in both preprocessors,
- example: `percentage(20px / 940px)`
+> You can easily calculate a relative percentage gutter from other values with a built-in function: `percentage(20px / 940px)`
 
 ### Grid Classes and Mixins
 
 Spartan generates grid classes according to your configuration,
-but instead of applying these classes you can also use similar named mixins to apply the grid.
+but instead of applying these classes you can also use similar named mixins to apply the grid in your css.
 
 **CSS**
 
@@ -204,16 +236,3 @@ There's a detailed [documentation](https://github.com/SimonHarte/SpartanGrid/blo
 **Not** supported:
 
 - **IE7-**
-
-**Partially** supported:
-
-- **Safari 7-**: as explained [below](#the-safari-problem)
-
-### The Safari Problem
-
-Unfortunately all Safari browsers up to version 7 have a very pragmatic sub-pixel rendering for widths and always round 
-values down to the next integer when calculating rendered pixels. So a width declaration of for example `88.333px` or
- even `88.666px` will always be rendered as `88px`. This of course causes issues when your grid configuration 
- leads to such values or in general when you use a fluid grid, because we get a small displacement of cells.
-
-There's an [article from John Resig](http://ejohn.org/blog/sub-pixel-problems-in-css/) about this subject.

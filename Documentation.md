@@ -21,26 +21,26 @@ All about basic usage of Spartan is documented in the [project readme](https://g
 You would normally just use `grid-bundle()` to set up a grid, but you can also use the following mixins
 to generate even more flexible grids, see [Viewport Dependent Configurations](#viewport-dependent-configurations) and [Custom Classes](#custom-classes) for use cases.
 
-#### `grid-core([$ns: 'g'], [$generate: true])`
+#### `grid-core([$namespace: 'g'])`
 
 This will define the core variables and mixins and generate selectors and styles needed for any grid setup,
 e.g. clearing on the container, float of cells etc. Generally has to be called only once for any grid setup.
 
 > [Read about namespacing](#namespace)
 
-**Generates**
+**Generates Styles for**
 
 - `.g-container`
 - `.g-cell`
 
 #### `grid-unlock(<$config>)`
 
-Pass in your grid configuration as a list object like with [`grid-bundle()`]((https://github.com/SimonHarte/SpartanGrid/blob/master/README.md#grid-setup)). This will unlock all the grid mixins using your configuration
+Pass in your grid configuration like with [`grid-bundle()`]((https://github.com/SimonHarte/SpartanGrid/blob/master/README.md#grid-setup)). This will unlock all the grid mixins using your configuration
 within the current scope (or globally).
 
 ```scss
 #my-scope {
-	@include grid-unlock($config-list);
+	@include grid-unlock($config);
 	
 	.custom-cell {
 		@include grid-span(5);
@@ -48,12 +48,12 @@ within the current scope (or globally).
 }
 ```
 
-#### `grid-gutter([$arg1: $spartan-gutter], [$arg2: null])`
+#### `grid-gutter([$arg1: $config-gutter], [$arg2: null])`
 
 Generate only gutter styles. Especially useful if you have grid setups which only differ in the gutter,
 so you don't have to generate all classes anew.
 
-**Generates**
+**Generates Styles for**
 
 - `.g-container`
 - `.g-container > .g-cell`
@@ -87,7 +87,7 @@ or you call it with either a fix value which will be taken as is or provide a re
 @include grid-gutter(60em, 1.5em);
 ```
 
-#### `grid-generate([prefix: ''], [$cells: $spartan-cells])`
+#### `grid-generate([prefix: ''], [$cells: $config-cells])`
 
 This mixin will generate all configuration sensitive classes like `.g-span-{xx}`, `.g-offset-{xx}` etc. in the current scope.
 
@@ -104,6 +104,7 @@ If you pass an optional cell amount, it will use this value for generation while
 So if you know you'll never use classes for more than half the grid width you can reduce output css by only generating those classes:
 
 ```
+@include gris-unlock(100%, 20px, 12);
 @include grid-generate($cells: 6);
 ```
 
@@ -117,14 +118,12 @@ different viewports like so:
 @include grid-core();
 
 // adjusting the gutter width and type over different viewports
+// grid setup for small screen
+@include grid-unlock((100%, 5px, 12));
+@include grid-gutter();
+@include grid-generate();
 
-@media (max-width: 40em) {
-	// grid setup for small screen
-	@include grid-unlock((100%, 5px, 12));
-	@include grid-gutter();
-	@include grid-generate();
-}
-@media (min-width: 40.0625em) and (max-width: 65em) {
+@media (min-width: 40.0625em) {
 	// grid setup for medium screen
 	@include grid-unlock((100%, 15px, 12));
 	@include grid-gutter();
@@ -138,21 +137,17 @@ different viewports like so:
 }
 ```
 
-Note that you cannot make a mobile first, global configuration because unlocked mixins like `grid-span()` can not be
-reassigned inside media queries and will use global values.
-
 > Of course `grid-generate()` will produce all the grid styles in the given viewport, so with three viewports you'll have three times the normal css. That's why we invested a lot of effort into keeping the base css as tiny as possible ;).
 
 ### Custom Classes
 
 #### Namespace
 
-`grid-bundle()` (as well as `grid-core()`) takes an optional parameter `namespace`,
-with which you can customize the generated classes.
+`grid-bundle()` (as well as `grid-core()` and `grid-unlock()`) takes an optional parameter `namespace` with which you can customize the generated classes.
 
-This namespace is per default set to `g`, but you can freely customize it.
+This namespace defaults to `g`, but you can freely customize it.
 
-Example with `@include grid-bundle('grid')`:
+Example output with `@include grid-bundle($namespace: 'grid')`:
 
 ```css
 .grid-container
@@ -166,7 +161,7 @@ Example with `@include grid-bundle('grid')`:
 
 #### Additional Prefix
 
-You can further customize the generated classes through an optional parameter to `grid-generate()` which per default is empty (`''`).
+You can further customize the generated classes through an optional parameter to `grid-generate()` which defaults to an empty string (`''`).
 See it as an addition to the namespace which counts for all generated classes while this one only adjusts the configuration sensitive classes.
 Lets assume the following setup:
 
@@ -176,7 +171,7 @@ Lets assume the following setup:
 @include grid-generate('test');
 ```
 
-This will generate the base classes as mentioned in the [namespace section](#namespace):
+This will generate the base classes as mentioned in the [namespace section](#namespace) above:
 
 ```css
 .grid-container
@@ -197,19 +192,19 @@ But the other classes will look like this:
 
 Spartan comes with two mixins for applying grid styles to any selector:
 
-- `grid-container([$gutter: $spartan-gutter])`
-- `grid-cell([$gutter: $spartan-gutter])`
+- `grid-container([$gutter: $config-gutter])`
+- `grid-cell([$gutter: $config-gutter])`
 
 As you could imagine `grid-container()` applies all container styles to your selector and `grid-cell()` does so for cell styles.
-You can optionally overwrite the gutter from your previously unlocked settings.
+You can optionally overwrite the gutter from your previously unlocked settings, but make sure both mixins use the same value.
 
 ```less
 main {
-	@include grid-container();
+	@include grid-container(5%);
 	
 	article,
 	aside {
-		@include grid-cell();
+		@include grid-cell(5%);
 	}
 	
 	article {
@@ -226,12 +221,12 @@ main {
 
 ### The "Spartan Way"
 
-Our idea and recommended way to implement a responsive grid in your project is to create reusable layouts, it reduces output CSS to only what is actually needed.
-There are three mixins which will help you create responsive layouts.
+Our recommended way and to implement a responsive grid in your project is to create reusable layouts, it reduces output CSS to only what is actually needed.
+There are two mixins which will help you create responsive layouts.
 
 ```scss
-@include grid-cell-set(<$cell-name>, <$cell-span>, [$offset], [$reorder]);
-@include grid-cell-set-equal(<$cell-span>);
+@include grid-cell-set(<$cell-name>, <$cell-span>, [$offset: 0], [$reorder: 0]);
+@include grid-cell-set-equal(<$cell-span>, [$vertical-spacing: false], [$spacing-direction: 'between']);
 ```
 
 > If your project only consists of layouts and you never use classes like `.grid-span-{xx}` you don't even have to use `grid-generate()`.
@@ -247,10 +242,10 @@ and can be omitted if not used.
 
 | Param | Type | Value | Comment |
 |-------|:-----|:------|:--------|
-| `$cell-name`    | string | | quotes optional, example: `cell-1` |
-| `$cells`     | number | only positive | |
-| `$offset`      | number | positive or negative | optional, uses `grid-offset()` to apply indents |
-| `$reorder`     | number | positive or negative | optional, uses `grid-reorder()` to reposition a cell |
+| `$cell-name`  | string | | quotes optional, example: `cell-1` |
+| `$cells`      | number | only positive | |
+| `$offset`     | number | positive or negative | optional, uses `grid-offset()` to apply indents |
+| `$reorder`    | number | positive or negative | optional, uses `grid-reorder()` to reposition a cell |
 
 This mixin is used to define different cells inside a layout, so if one cell takes 2/3 of the grid and the other 
 1/3 you'd use the mixin twice like this:
@@ -274,7 +269,7 @@ Which will enable you to use `.g-cell-1` and `.g-cell-2` as classes:
 
 #### `grid-cell-set-equal`
 
-Generate a direct child selector `.g-cell` with the given width and, vertically align items to each other
+Generate a direct child selector `.g-cell` with the given width, vertically align items to each other
 and add an optional vertical spacing.
 
 **Params**
@@ -285,99 +280,7 @@ and add an optional vertical spacing.
 | `$spacing`   | any valid `margin-top` or `margin-bottom` setting | | optional, add a vertical spacing on rows of cells |
 | `$direction` | string | defaults to `'between'`| optional, the spacing direction (`'between'`, `'before'`, `'after'`) |
 
-**Basic**
-
-```scss
-$grid-cells: 12;
-
-.g-layout-1 {
-	@include grid-cell-set-equal($grid-cells/4);
-}
-```
-
-Output CSS:
-
-```css
-.g-layout-1 > .g-cell {
-	width: 25%;
-}
-
-.g-layout-1 > .g-cell:nth-of-type(4n+1) {
-	clear: left;
-}
-```
-
-**Vertical Spacing between**
-
-```scss
-$grid-cells: 12;
-
-.g-layout-1 {
-	@include grid-cell-set-equal($grid-cells/4, 10px, 'between');
-}
-```
-
-Output CSS:
-
-```css
-.g-layout-1 > .g-cell {
-	width: 25%;
-}
-
-.g-layout-1 > .g-cell:nth-of-type(n+5) {
-	margin-top: 10px;
-}
-
-.g-layout-1 > .g-cell:nth-of-type(4n+1) {
-	clear: left;
-}
-```
-
-**Vertical Spacing before**
-
-```scss
-$grid-cells: 12;
-
-.g-layout-1 {
-	@include grid-cell-set-equal($grid-cells/4, 10px, 'before');
-}
-```
-
-Output CSS:
-
-```css
-.g-layout-1 > .g-cell {
-	width: 25%;
-	margin-top: 10px;
-}
-
-.g-layout-1 > .g-cell:nth-of-type(4n+1) {
-	clear: left;
-}
-```
-
-**Vertical Spacing after**
-
-```scss
-$grid-cells: 12;
-
-.g-layout-1 {
-	@include grid-cell-set-equal($grid-cells/4, 10px, 'after');
-}
-```
-
-Output CSS:
-
-```css
-.g-layout-1 > .g-cell {
-	width: 25%;
-	margin-bottom: 10px;
-}
-
-.g-layout-1 > .g-cell:nth-of-type(4n+1) {
-	clear: left;
-}
-```
+> Spacing 'between' means that there is space between every grid "row", i.e. when cells shift down to a new line because there is no more room for them.
 
 ### Responsive Layout Example
 
@@ -403,16 +306,13 @@ Output CSS:
 ## The "Twitter Bootstrap Way"
 
 If you prefer or have to be able to use a twitter bootstrap like system with viewport specific classes in your markup you can use this technique.
-Our highly flexible creation API enables you to generate predefined classes for every viewport you have and set up fully responsive layouts in the markup directly.
+The highly flexible creation API enables you to generate predefined classes for every viewport you have and set up fully responsive layouts in the markup directly.
 
 Simply make use of the optional parameter to [`grid-generate()`](#custom-classes) inside media queries like the following:
 
 ```scss
-// grid configuration
-$grid-config: 100%, 20px, 12;
-
+@include grid-unlock(100%, 20px, 12);
 @include grid-core(); // base classes, no change in namespace
-@include grid-unlock($grid-config);
 @include grid-gutter(); // define gutter once
 
 // generate mobile first, small screen classes
