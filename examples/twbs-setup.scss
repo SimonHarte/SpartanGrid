@@ -3,12 +3,10 @@
 @import "viewports";
 
 // set up twitter bootstrap like grid classes for every viewport
-$grid-config: 100%, 20px, 12;
-
 // general styles and mobile first classes generation could be simplified with .grid-bundle()
 // but we'll write it out for the example's sake
+@include grid-unlock(100%, 20px, 12);
 @include grid-core();
-@include grid-unlock($grid-config);
 @include grid-gutter();
 
 // generate mobile first grid classes

@@ -1,9 +1,8 @@
 /* LAYOUT MIXINS TESTS */
 
 #layout-mixins {
-	/* unlock [100%, percentage(20px / 940px), 12] */
-	@include grid-core($generate: false);
-	@include grid-unlock((100%, percentage(20px / 940px), 12));
+	/* unlock [100%, 20px, 12] */
+	@include grid-unlock(100%, 20px, 12);
 
 	.set-equal-1 {
 		/* @include grid-cell-set-equal(4) */

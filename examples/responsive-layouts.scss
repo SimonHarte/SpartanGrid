@@ -1,10 +1,9 @@
 @import "viewports";
 
 $grid-cells: 12;
-$grid-config: 100%, 20px, $grid-cells;
 
+@include grid-unlock(100%, 20px, $grid-cells);
 @include grid-core();
-@include grid-unlock($grid-config);
 @include grid-gutter();
 
 // dont generate grid classes since we only use layouts
@@ -17,7 +16,7 @@ $grid-config: 100%, 20px, $grid-cells;
 	// large: 4
 
 	// no need to generate for small screen since full-width
-	
+
 	@media #{$m-medium} {
 		@include grid-cell-set-equal($grid-cells/2);
 	}
@@ -33,7 +32,7 @@ $grid-config: 100%, 20px, $grid-cells;
 	// large: 6
 
 	// no need to generate for small screen since full-width
-	
+
 	@media #{$m-large} {
 		@include grid-cell-set-equal($grid-cells/2);
 	}
@@ -45,7 +44,7 @@ $grid-config: 100%, 20px, $grid-cells;
 	// large: 8 | 4
 
 	// no need to generate for small screen since full-width
-	
+
 	@media #{$m-medium-up} {
 		@include grid-cell-set('cell-1', $grid-cells/3*2);
 		@include grid-cell-set('cell-2', $grid-cells/3);
@@ -58,7 +57,7 @@ $grid-config: 100%, 20px, $grid-cells;
 	// large: 4 offset 8
 
 	// no need to generate for small screen since full-width
-	
+
 	@media #{$m-medium} {
 		@include grid-cell-set('cell', $grid-cells/2, $grid-cells/2);
 	}
@@ -70,13 +69,13 @@ $grid-config: 100%, 20px, $grid-cells;
 
 .g-layout-5 {
 	@include grid-container-reorder;
-	
+
 	// small: 12
 	// medium: 12
 	// large: 6 / +6 | 6 / -6
 
 	// no need to generate for small screen since full-width
-	
+
 	// no need to generate for medium screen since full-width
 
 	@media #{$m-large} {
@@ -89,7 +88,7 @@ $grid-config: 100%, 20px, $grid-cells;
 	// small: 5 cells
 	// medium: 7 cells
 	// large: 9 cells
-	
+
 	@media #{$m-small} {
 		@include grid-cell-set('cell', ($grid-cells / 5));
 	}

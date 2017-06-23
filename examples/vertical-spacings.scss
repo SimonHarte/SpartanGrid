@@ -1,7 +1,5 @@
-$grid-config: 100%, 20px, 12;
-
+@include grid-unlock(100%, 20px, 12);
 @include grid-core();
-@include grid-unlock($grid-config);
 @include grid-gutter();
 
 .g-layout--space-between {

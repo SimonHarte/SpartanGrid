@@ -1,0 +1,15 @@
+/*
+CONFIG TYPES TESTS
+*/
+
+#config-type-parameters {
+	@include grid-bundle(100%, 20px, 12);
+}
+
+#config-type-list {
+	@include grid-bundle((940px, percentage(20px / 940px), 10));
+}
+
+#config-type-map {
+	@include grid-bundle((width: 100%, gutter: 5%, cells: 12));
+}

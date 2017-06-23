@@ -1,10 +1,9 @@
 /* GRID-UNLOCK TESTS */
 #unlock-1 {
 	/* unlock [720px, 20px, 12] */
-	@include grid-core($generate: false);
-	@include grid-unlock((720px, 20px, 12));
+	@include grid-unlock(720px, 20px, 12);
 	@include grid-gutter();
-	
+
 	.test-1 {
 		/* @include grid-span(6) */
 		@include grid-span(6);
@@ -13,10 +12,9 @@
 
 #unlock-2 {
 	/* unlock [100%, 80px, 12] */
-	@include grid-core($generate: false);
-	@include grid-unlock((100%, 80px, 12));
+	@include grid-unlock(100%, 80px, 12);
 	@include grid-gutter();
-	
+
 	.test-1 {
 		/* @include grid-span(6) */
 		@include grid-span(6);

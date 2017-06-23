@@ -1,20 +1,18 @@
-// don't generate unnecessary core css
-@include grid-core($generate: false);
-@include grid-unlock((100%, 20px, 12));
-// no grid-gutter or grid-generate needed
+// only unlock grid settings but do not generate any grid css yet
+@include grid-unlock(100%, 20px, 12);
 
 main {
 	@include grid-container();
-	
+
 	article,
 	aside {
 		@include grid-cell();
 	}
-	
+
 	article {
 		@include grid-span(8);
 	}
-	
+
 	aside {
 		@include grid-span(4);
 	}
