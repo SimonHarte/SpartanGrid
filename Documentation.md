@@ -104,7 +104,7 @@ If you pass an optional cell amount, it will use this value for generation while
 So if you know you'll never use classes for more than half the grid width you can reduce output css by only generating those classes:
 
 ```
-@include gris-unlock(100%, 20px, 12);
+@include grid-unlock(100%, 20px, 12);
 @include grid-generate($cells: 6);
 ```
 
@@ -119,19 +119,19 @@ different viewports like so:
 
 // adjusting the gutter width and type over different viewports
 // grid setup for small screen
-@include grid-unlock((100%, 5px, 12));
+@include grid-unlock(100%, 5px, 12);
 @include grid-gutter();
 @include grid-generate();
 
 @media (min-width: 40.0625em) {
 	// grid setup for medium screen
-	@include grid-unlock((100%, 15px, 12));
+	@include grid-unlock(100%, 15px, 12);
 	@include grid-gutter();
 	@include grid-generate();
 }
 @media (min-width: 65.0625em) {
 	// grid setup for large screen
-	@include grid-unlock((100%, percentage(30px / 940px), 12));
+	@include grid-unlock(100%, percentage(30px / 940px), 12);
 	@include grid-gutter();
 	@include grid-generate();
 }
@@ -221,7 +221,7 @@ main {
 
 ### The "Spartan Way"
 
-Our recommended way and to implement a responsive grid in your project is to create reusable layouts, it reduces output CSS to only what is actually needed.
+Our recommended way to implement a responsive grid in your project is to create reusable layouts, it reduces output CSS to only what is actually needed.
 There are two mixins which will help you create responsive layouts.
 
 ```scss
@@ -233,7 +233,7 @@ There are two mixins which will help you create responsive layouts.
 
 #### `grid-cell-set`
 
-Generate a namespaced class `.{cell-name}` as direct child of `.g-container`. Note that `$offset` and `$reorder` are optional parameters
+Generate a class `.#{$config-namespace}#{$cell-name}` as direct child of `.g-container`. Note that `$offset` and `$reorder` are optional parameters
 and can be omitted if not used.
 
 > We use direct child selectors so different responsive layouts cannot interfere with each other.
@@ -284,7 +284,7 @@ and add an optional vertical spacing.
 
 ### Responsive Layout Example
 
-> **Note**: With a mobile first approach you either have to declare a media query or omit the definition because of possible interfering pseudo selectors (:nth-of-type).
+> **Note**: With a mobile first approach you either have to declare a media query in layouts or omit the definition because of possible interfering pseudo selectors (:nth-of-type).
 
 ```scss
 .g-layout-1 {
@@ -303,9 +303,11 @@ and add an optional vertical spacing.
 }
 ```
 
+Keep in mind that you don't need to `grid-generate()` all the usual grid styles if you're only using layouts throughout your project.
+
 ## The "Twitter Bootstrap Way"
 
-If you prefer or have to be able to use a twitter bootstrap like system with viewport specific classes in your markup you can use this technique.
+If you prefer or have to be able to use a twitter bootstrap like system with viewport specific classes in your markup you can use the following technique.
 The highly flexible creation API enables you to generate predefined classes for every viewport you have and set up fully responsive layouts in the markup directly.
 
 Simply make use of the optional parameter to [`grid-generate()`](#custom-classes) inside media queries like the following:
@@ -319,7 +321,7 @@ Simply make use of the optional parameter to [`grid-generate()`](#custom-classes
 @include grid-generate('sm');
 
 // generate medium screen classes
-@media (min-width: 40.0625em) and (max-width: 65em) {
+@media (min-width: 40.0625em) {
 	@include grid-generate('md');
 }
 
