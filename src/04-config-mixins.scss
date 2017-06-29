@@ -1,0 +1,92 @@
+@mixin grid-unlock($width: 100%, $gutter: 0, $cells: 12, $namespace: 'g') {
+	$config: $width;
+	$base-config: (width: 100%, gutter: 0, cells: 12, namespace: 'g');
+	$target-config: ();
+	$config-type: type_of($config);
+
+	// check config type and handle settings accordingly
+	@if $config-type == list {
+		$settings: map-keys($base-config);
+
+		@each $setting in $settings {
+			$index: index($settings, $setting);
+
+			@if $index and length($config) >= $index {
+				$keyword: nth(map-keys($base-config), $index);
+				$target-config: map-merge($target-config, ($keyword: nth($config, $index)));
+			}
+		}
+
+	} @else if $config-type == map {
+		$target-config: map-merge($target-config, $config);
+
+	} @else if $config-type == number {
+		$target-config: map-merge($target-config, (width: $width, gutter: $gutter, cells: $cells, namespace: $namespace));
+
+	}
+
+	// add fallback notices
+	@if $target-config != $base-config {
+		@if not map_has_key($target-config, 'width') {
+			@warn 'No maximum grid width given, falling back to default (#{map-get($base-config, 'width')})';
+		}
+
+		@if not map_has_key($target-config, 'gutter') {
+			@warn 'No gutter width given, falling back to default (#{map-get($base-config, 'gutter')})';
+		}
+
+		@if not map_has_key($target-config, 'cells') {
+			@warn 'No cells amount given, falling back to default (#{map-get($base-config, 'cells')})';
+		}
+	} @else {
+		@warn 'No configuration parameters given. falling back to default (#{map-remove($base-config, 'namespace')})';
+	}
+
+	$target-config: map-merge($base-config, $target-config);
+
+	$width: map-get($target-config, 'width');
+	$cells: map-get($target-config, 'cells');
+
+	// if the namespace has already been set, don't update it
+	@if map_has_key($spartan-config, 'namespace') {
+		$namespace: map-get($spartan-config, 'namespace');
+	} @else if map_has_key($target-config, 'namespace') {
+		$namespace: map-get($target-config, 'namespace');
+
+		@if $namespace != '' {
+			$namespace: #{$namespace}-;
+		}
+	}
+
+	// check final settings types
+	@if type_of($width) != number {
+		@error 'Maximum grid width is not a number'
+	}
+
+	@if type_of($gutter) != number {
+		@error 'Gutter width is not a number'
+	}
+
+	@if type_of($cells) != number {
+		@error 'Cells amount is not a number'
+	}
+
+	$single-cell: $width / $cells;
+
+	$target-config: map-merge($target-config, (namespace: $namespace, singleCell: ($width / $cells)));
+
+	$spartan-config: map-merge($spartan-config, $target-config) !global;
+}
+
+@mixin grid-config-set($setting, $value) {
+	@if type_of($setting) != map {
+		$setting: ($setting: $value);
+	}
+
+	$spartan-config: map_merge($spartan-config, $setting) !global;
+
+	// always try to recalculate singleCell value
+	@if map_has_key($spartan-config, 'width') and map_has_key($spartan-config, 'cells') {
+		$spartan-config: map-merge($spartan-config, (singleCell: (map-get($spartan-config, 'width') / map-get($spartan-config, 'cells')))) !global;
+	}
+}

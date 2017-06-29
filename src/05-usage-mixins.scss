@@ -1,0 +1,109 @@
+@mixin grid-span($num: 0) {
+	@if $num > 0 {
+		@include _spartan-span-width($num);
+	}
+}
+
+@mixin grid-offset($num: 0) {
+	@include _spartan-indent($num);
+}
+
+@mixin grid-push($num: 0) {
+	@if $num > 0 {
+		@include _spartan-push($num);
+	}
+}
+
+@mixin grid-pull($num: 0) {
+	@if $num > 0 {
+		@include _spartan-pull($num);
+	}
+}
+
+@mixin grid-reorder($num: 0) {
+	@if $num >= 0 {
+		@include grid-push($num);
+	} @else {
+		@include grid-pull(abs($num));
+	}
+}
+
+@mixin grid-gutter($arg1: map-get($spartan-config, 'gutter'), $arg2: null) {
+	$_width: null;
+	$_gutter: null;
+
+	@if $arg2 {
+		$_width: $arg1;
+		$_gutter: $arg2;
+	} @else {
+		$_gutter: $arg1;
+	}
+
+	@if $_width {
+		@if unit($_gutter) == '%' {
+			// width is given but gutter is percentage anyway
+			@include _spartan-gutter-styles($_gutter, $_gutter);
+		} @else {
+			@if comparable($_width, $_gutter) {
+				// width is given and gutter is the same unit
+				@include _spartan-gutter-styles(percentage(_strip-unit($_gutter) / _strip-unit($_width)), percentage(_strip-unit($_gutter) / _strip-unit($_width + $_gutter)));
+			} @else {
+				@error 'width and gutter units must be the same to calculate percentage';
+			}
+		}
+	} @else {
+		// take gutter as is
+		@include _spartan-gutter-styles($_gutter, $_gutter);
+	}
+}
+
+@mixin grid-core($namespace: 'g') {
+	@if not map_has_key($spartan-config, 'namespace') {
+		@if $namespace != '' {
+			$namespace: #{$namespace}-;
+		}
+
+		$spartan-config: map-merge($spartan-config, (namespace: $namespace));
+	}
+
+	@include _spartan-core-selectors;
+}
+
+// all necessary container styles with gutter
+@mixin grid-container($gutter: map-get($spartan-config, 'gutter')) {
+	@include _spartan-base-style('both');
+	@include _spartan-base-style('container');
+	@include _spartan-container-gutter($gutter);
+}
+
+// all necessary cell styles with gutter
+@mixin grid-cell($gutter: map-get($spartan-config, 'gutter')) {
+	@include _spartan-base-style('both');
+	@include _spartan-base-style('cell');
+	@include _spartan-cell-gutter($gutter);
+}
+
+@mixin grid-generate($prefix: '', $cells: map-get($spartan-config, cells)) {
+	@if $prefix != '' {
+		$prefix: '#{$prefix}-';
+	}
+
+	$selector: #{map-get($spartan-config, 'namespace')}#{$prefix};
+	$classes: span offset push pull;
+
+	@each $class in $classes {
+		@for $i from 1 through $cells {
+			.#{$selector}#{$class}-#{$i} {
+				@include _spartan-apply($class, $i);
+			}
+		}
+	}
+}
+
+// do everything at once
+@mixin grid-bundle($config...) {
+	@include grid-unlock($config...);
+	@include grid-core();
+	@include grid-gutter();
+	@include grid-generate();
+}

@@ -1,0 +1,72 @@
+// _pow() - Raise number to the nth power
+//
+// @param {number} $base      The base number
+// @param {number} $exponents The exponent to which to raise $base
+@function _pow($base, $exponents) {
+	$raised: 1;
+
+	@for $i from 1 through $exponents {
+		$raised: $raised * $base;
+	}
+
+	@return $raised;
+}
+
+// _strip-unit() - from https://css-tricks.com/snippets/sass/strip-unit-function/
+@function _strip-unit($number) {
+	@if type-of($number) == 'number' and not unitless($number) {
+		@return $number / ($number * 0 + 1);
+	}
+
+	@return $number;
+}
+
+@function _get-rounded($val, $type: 'round') {
+	// Float precision used for rounding is the most important variable because we get different behaviours over browsers
+	// and certain grid container widths. Note that rounding issues only exist for width and padding style properties.
+	//
+	// There are two factors to consider when adjusting the precision:
+	// - precision value itself
+	// - using round(), floor() or ceil() to calculate width and padding (cell gutter)
+	//
+	// Tests have shown these behaviours:
+	//
+	// - Using precision < 3:
+	//     - We get inaccurate values with round(), floor(), and ceil()
+	// - Using precision = 3:
+	//     - We get inaccurate values in Safari when using floor(),
+	//     - We get inaccurate values with round() and ceil() which leads to jumping cells,
+	//       with round() starting in containers larger than ~800px (FF)
+	// - Using precision = 4:
+	//     - We get inaccurate values in Safari when using round() and floor()
+	//     - We get an overall good behaviour when using ceil(),
+	//       cells will start jumping in containers larger than ~2200px (FF)
+	// - Using precision > 4:
+	//     - We get inaccurate values in Safari with round() and floor()
+	//     - We get an overall good behaviour when using ceil()
+	//
+	// Recommendation:
+	// Using a float precision of 5 together with ceil() seems to be the smallest possible,
+	// most accurate amount for a future-proof grid system.
+	$precision: 5;
+
+	@if $type == 'ceil' {
+		@return ceil($val * _pow(10, $precision)) / _pow(10, $precision);
+	} @else if $type == 'floor' {
+		@return floor($val * _pow(10, $precision)) / _pow(10, $precision);
+	} @else {
+		@return round($val * _pow(10, $precision)) / _pow(10, $precision);
+	}
+}
+
+@function _get-gutter($type, $width, $gutter) {
+	@if $type == 'fluid' and unit($gutter) !='%' {
+		@return percentage($gutter / $width);
+	} @else {
+		@return $gutter;
+	}
+}
+
+@function grid-config-get($setting) {
+	@return map-get($spartan-config, $setting);
+}

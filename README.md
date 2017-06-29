@@ -60,7 +60,7 @@ Note that from version 6.0.0 on we will drop LessCSS support because of lacking 
 
 ### Have a Project at the Ready?
 
-- Integrate the [source file](https://github.com/SimonHarte/SpartanGrid/blob/master/src) in your project
+- Integrate the [source file](https://github.com/SimonHarte/SpartanGrid/blob/master/dist/spartan.scss) in your project
 - Use [API mixins](#grid-setup) to set up your grid
 
 > Spartan will not generate any CSS until you use the setup API.
@@ -101,7 +101,7 @@ The basic grid setup requires you to call just one mixin, pass in a configuratio
 
 
 ```scss
-@import 'src/spartan';
+@import 'dist/spartan';
 
 @include grid-bundle(<grid-width>, <gutter-width>, <grid-cells>, [grid-namespace]);
 ```

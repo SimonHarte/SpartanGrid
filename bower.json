@@ -13,8 +13,9 @@
 		"url": "git://github.com/SimonHarte/SpartanGrid.git"
 	},
 	"ignore": [
-		"examples/",
-		"tests/",
+    "src",
+		"examples",
+		"tests",
 		".gitignore",
 		"grid-setup.scss"
 	],
