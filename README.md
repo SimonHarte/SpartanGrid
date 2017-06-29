@@ -30,8 +30,8 @@ Spartan provides you with a sensible set of mixins to freely customize your setu
 ## Features
 
 - supports all common grid features:
-  - fluid or static grid cells
-  - independent gutter, fluid or static
+  - fluid or static grid cells width
+  - independent gutter width, fluid or static
   - fully responsive
   - cell offsets
   - cell reordering
@@ -44,7 +44,7 @@ Spartan provides you with a sensible set of mixins to freely customize your setu
 
 Note that from version 6.0.0 on we will drop LessCSS support because of lacking demand and simpler maintenance.
 
-> For LessCSS Support you can use Spartan v5.1.0
+> For LessCSS Support you can use Spartan v5.1.0.
 
 ## Websites using Spartan
 
@@ -61,7 +61,7 @@ Note that from version 6.0.0 on we will drop LessCSS support because of lacking 
 ### Have a Project at the Ready?
 
 - Integrate the [source file](https://github.com/SimonHarte/SpartanGrid/blob/master/src) in your project
-- Use [API mixin(s)](#grid-setup) to set up your grid
+- Use [API mixins](#grid-setup) to set up your grid
 
 > Spartan will not generate any CSS until you use the setup API.
 
@@ -75,8 +75,6 @@ Note that from version 6.0.0 on we will drop LessCSS support because of lacking 
 ## Grid Structure
 
 Here's a short example of Spartans base structure in a 12-cell grid:
-
-**HTML**
 
 ```html
 <div class="g-container">
@@ -101,7 +99,6 @@ There are two ways to set up a grid with Spartan, within the basic usage we only
 
 The basic grid setup requires you to call just one mixin, pass in a configuration and an optional namespace; read more about custom classes in the [documentation](#advanced-usage).
 
-**SCSS**
 
 ```scss
 @import 'src/spartan';
@@ -111,9 +108,7 @@ The basic grid setup requires you to call just one mixin, pass in a configuratio
 
 #### Example Setup
 
-The following will implement a **fluid grid** with a fixed gutter of **20 pixel** and **12 cells**:
-
-**SCSS**
+The following will implement a **fluid grid** with a fixed gutter of **20 pixels** and **12 cells**:
 
 ```scss
 @include grid-bundle(100%, 20px, 12);
@@ -155,23 +150,23 @@ $grid-config: (
 @include grid-bundle($grid-config);
 ```
 
-> In the case of named parameters and a config map you could even omit settings you don't need to change and rely on the grid's defaults, i.e. (width: 100%, gutter: 0, cells: 12)
+> In the case of named parameters and a config map you could even omit settings you don't need to change and rely on the grid's defaults, i.e. (width: 100%, gutter: 0, cells: 12).
 
 #### Grid and Gutter Types
 
 The grid and gutter type depend solely on the unit of the value you have given.
 If you define your grid width as `100%` the grid will naturally use fluid percentage values, while it will
-use fixed pixel values if you define it for example as `940px`.
+use fixed pixel values if you define it as e.g. `940px`.
 This counts for the gutter as well since grid and gutter types can be defined completely independently.
 
-> You can easily calculate a relative percentage gutter from other values with a built-in function: `percentage(20px / 940px)`
+> You can easily calculate a relative percentage gutter from other values with a built-in function: `percentage(20px / 940px)`.
 
 ### Grid Classes and Mixins
 
 Spartan generates grid classes according to your configuration,
-but instead of applying these classes you can also use similar named mixins to apply the grid in your css.
+but instead of applying these classes you can also use corresponding mixins to apply the grid in your css.
 
-**CSS**
+**Classes**
 
 ```css
 .g-span-{cells}
@@ -180,7 +175,7 @@ but instead of applying these classes you can also use similar named mixins to a
 .g-pull-{cells}
 ```
 
-**SCSS**
+**Mixins**
 
 ```scss
 @include grid-span(<cells>)
@@ -191,10 +186,11 @@ but instead of applying these classes you can also use similar named mixins to a
 
 #### `grid-span`
 
-Override the width of a cell (default is full-width), equivalent to `.g-span-{cells}`. The mixin allows you to pass
-in floating point numbers, which enables you to define literally **any** width.
+Override the width of a cell (default is full-width), equivalent to `.g-span-{cells}`.
 
-Following an example of a 5 cell layout in a 12 cell grid:
+> The mixin allows you to pass in floating point numbers, which enables you to define literally **any** width.
+
+Following an example of a 5 cell width in a 12 cell grid:
 
 **SCSS**
 
@@ -225,7 +221,7 @@ There's a detailed [documentation](https://github.com/SimonHarte/SpartanGrid/blo
 
 **Overview**
 
-- [Grid Creation API](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#grid-creation-api)
+- [Full Grid Creation API](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#grid-creation-api)
 - [Viewport Dependent Configurations](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#viewport-dependent-configurations)
 - [Custom Classes](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#custom-classes)
 - [Semantic Grid](https://github.com/SimonHarte/SpartanGrid/blob/master/Documentation.md#semantic-grid)
