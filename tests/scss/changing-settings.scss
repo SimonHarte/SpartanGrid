@@ -1,0 +1,43 @@
+/*
+CHANGE SETTINGS TEST
+*/
+
+#changing-config {
+	@include grid-unlock(940px, 20px, 12);
+
+	.config-base {
+		@include grid-core();
+		@include grid-gutter();
+
+		.test {
+			@include grid-span(6);
+		}
+	}
+
+	.setting-width {
+		@include grid-config-set('width', 100%);
+		@include grid-gutter();
+
+		.test {
+			@include grid-span(6);
+		}
+	}
+
+	.setting-gutter {
+		@include grid-config-set('gutter', 5%);
+		@include grid-gutter();
+
+		.test {
+			@include grid-span(6);
+		}
+	}
+
+	.setting-cells {
+		@include grid-config-set('cells', 10);
+		@include grid-gutter();
+
+		.test {
+			@include grid-span(6);
+		}
+	}
+}
