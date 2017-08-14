@@ -58,13 +58,17 @@
 }
 
 @mixin grid-core($namespace: 'g') {
-	@if not map_has_key($spartan-config, 'namespace') {
-		@if $namespace != '' {
-			$namespace: #{$namespace}-;
-		}
+	$config: ();
 
-		$spartan-config: map-merge($spartan-config, (namespace: $namespace));
+	@if type_of($namespace) == map {
+		$config: $namespace;
+	} @else {
+		$config: map-merge($spartan-config, (namespace: $namespace));
 	}
+
+	@include _set-config-namespace(map-get($config, 'namespace'));
+
+	@include grid-config-set($config);
 
 	@include _spartan-core-selectors;
 }
