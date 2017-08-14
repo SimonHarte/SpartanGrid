@@ -59,14 +59,6 @@
 	}
 }
 
-@function _get-gutter($type, $width, $gutter) {
-	@if $type == 'fluid' and unit($gutter) !='%' {
-		@return percentage($gutter / $width);
-	} @else {
-		@return $gutter;
-	}
-}
-
 @function grid-config-get($setting) {
 	@return map-get($spartan-config, $setting);
 }
