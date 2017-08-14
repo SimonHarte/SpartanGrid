@@ -1,0 +1,40 @@
+@mixin _spartan-gutter-styles($container-gutter, $cell-gutter) {
+	&.#{map-get($spartan-config, 'namespace')}container {
+		@include _spartan-container-gutter($container-gutter);
+
+		> .#{map-get($spartan-config, 'namespace')}cell {
+			@include _spartan-cell-gutter($cell-gutter);
+		}
+	}
+}
+
+// base grid layout styles, valid for every grid setup
+@mixin _spartan-core-selectors {
+	.#{map-get($spartan-config, 'namespace')}container,
+	.#{map-get($spartan-config, 'namespace')}cell {
+		@include _spartan-base-style('both');
+	}
+
+	.#{map-get($spartan-config, 'namespace')}container {
+		@include _spartan-base-style('container');
+	}
+
+	.#{map-get($spartan-config, 'namespace')}cell {
+		@include _spartan-base-style('cell');
+	}
+}
+
+@mixin _spartan-apply($selector, $index) {
+	@if $selector == 'span' {
+		@include grid-span($index);
+	}
+	@if $selector == 'offset' {
+		@include grid-offset($index);
+	}
+	@if $selector == 'push' {
+		@include grid-push($index);
+	}
+	@if $selector == 'pull' {
+		@include grid-pull($index);
+	}
+}

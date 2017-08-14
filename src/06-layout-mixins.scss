@@ -1,0 +1,28 @@
+// standard mixin for setting cell styles
+@mixin grid-cell-set($cell-name, $cell-span: 0, $offset: 0, $reorder: 0, $spacing-opts: (false)) {
+	& > .#{map-get($spartan-config, 'namespace')}#{$cell-name} {
+		@if $cell-span > 0 {
+			@include grid-span($cell-span);
+		}
+		@if $offset != 0 {
+			@include grid-offset($offset);
+		}
+		@if $reorder != 0 {
+			@include grid-reorder($reorder);
+		}
+		@if $spacing-opts {
+			@include _grid-cell-vertical-spacing(nth($spacing-opts, 1), nth($spacing-opts, 2), nth($spacing-opts, 3));
+		}
+	}
+}
+
+// predefined cell class with width, proper clearing and optional vertical spacing
+@mixin grid-cell-set-equal($cell-span, $vertical-spacing: false, $spacing-direction: 'between') {
+	$cell-clear: map-get($spartan-config, 'cells') / $cell-span;
+
+	// use default cell-set mixin to generate selector
+	@include grid-cell-set('cell', $cell-span, $spacing-opts: (($cell-clear, $vertical-spacing, $spacing-direction)));
+
+	// with equal cells, clear every nth element for proper alignment
+	@include grid-cell-clear($cell-clear);
+}

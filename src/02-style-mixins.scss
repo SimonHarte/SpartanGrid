@@ -1,0 +1,97 @@
+@mixin _spartan-span-width($num) {
+	width: _get-rounded(map-get($spartan-config, 'singleCell') * $num, 'ceil');
+}
+
+@mixin _spartan-indent($num) {
+	margin-left: _get-rounded(map-get($spartan-config, 'singleCell') * $num) !important;
+}
+
+@mixin _spartan-push($num) {
+	position: relative;
+	left: _get-rounded(map-get($spartan-config, 'singleCell') * $num);
+}
+
+@mixin _spartan-pull($num) {
+	position: relative;
+	right: _get-rounded(map-get($spartan-config, 'singleCell') * $num);
+}
+
+@mixin _spartan-container-gutter($gutter) {
+	margin-left: _get-rounded(-$gutter) !important;
+}
+
+// assuming px, em
+@mixin _spartan-cell-gutter($gutter) {
+	@if unit($gutter) == '%' {
+		// cell gutter has to be slightly smaller with percentage value because container is bigger
+		padding-left: _get-rounded(percentage($gutter / (100% + $gutter)), 'ceil') !important;
+	} @else {
+		padding-left: _get-rounded($gutter, 'ceil') !important;
+	}
+}
+
+@mixin _spartan-cf {
+	&:before,
+	&:after {
+		content: '';
+		display: table;
+	}
+
+	&:after {
+		clear: both;
+	}
+}
+
+@mixin _spartan-box-sizing($sizing: border-box) {
+	box-sizing: $sizing;
+}
+
+@mixin _spartan-base-style($item) {
+	@if $item == 'both' {
+		display: block;
+		// make sure no shorthand properties interfere with grid styles
+		margin-right: 0 !important;
+		padding-right: 0 !important;
+	}
+	@if $item == 'container' {
+		@include _spartan-cf;
+		padding-left: 0 !important;
+	}
+	@if $item == 'cell' {
+		@include _spartan-box-sizing;
+		float: left;
+		margin-left: 0 !important;
+		// cells should per default span the whole width if none is set
+		width: map-get($spartan-config, 'width');
+		min-height: 1px;
+	}
+}
+
+// clear every new grid line, see issue in "before" state here: http://stackoverflow.com/questions/3628311/css-floating-divs-with-different-height-are-aligned-with-space-between-them
+@mixin grid-cell-clear($cells) {
+	$cell-integer: floor($cells);
+
+	& > .#{map-get($spartan-config, 'namespace')}cell:nth-of-type(#{$cell-integer}n+1) {
+		clear: left;
+	}
+}
+
+@mixin _grid-cell-vertical-spacing($cells, $spacing: false, $direction: 'between') {
+	@if $spacing {
+		@if $direction == 'between' {
+			@if ($cells > 0) {
+				$cell-integer: floor($cells);
+
+				&:nth-of-type(n+#{$cell-integer + 1}) {
+					margin-top: $spacing;
+				}
+			}
+		}
+		@if $direction == 'before' {
+			margin-top: $spacing;
+		}
+		@if $direction == 'after' {
+			margin-bottom: $spacing;
+		}
+	}
+}

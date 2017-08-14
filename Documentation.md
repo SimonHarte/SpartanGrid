@@ -26,8 +26,8 @@ to generate even more flexible grids, see [Viewport Dependent Configurations](#v
 This will define the core variables and mixins and generate selectors and styles needed for any grid setup,
 i.e. clearing on the container, floating of cells etc. Generally has to be called only once for any grid setup.
 
-> Note that once the namespace is defined either with this mixin or `grid-unlock()` it cannot be changed anymore.
-[Read about namespacing](#namespace)
+> Note that the namespace can also be set with `grid-unlock` but once it's set/overwritten through this mixin, it can **only** be
+overwritten again with this mixin. [Read about namespacing](#namespace)
 
 **Generates styles for:**
 
