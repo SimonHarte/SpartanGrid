@@ -1,5 +1,5 @@
 // "Spartan" Grid System
-// version: 5.1.0
+// version: 6.1.2
 // https://github.com/SimonHarte/SpartanGrid
 // License: MIT
 // Copyright 2015 Simon Harte <s.harte@gmx.ch>
@@ -64,14 +64,6 @@ $spartan-config: () !global;
 		@return floor($val * _pow(10, $precision)) / _pow(10, $precision);
 	} @else {
 		@return round($val * _pow(10, $precision)) / _pow(10, $precision);
-	}
-}
-
-@function _get-gutter($type, $width, $gutter) {
-	@if $type == 'fluid' and unit($gutter) !='%' {
-		@return percentage($gutter / $width);
-	} @else {
-		@return $gutter;
 	}
 }
 
@@ -218,6 +210,37 @@ $spartan-config: () !global;
 	}
 }
 
+@mixin _update-spartan-config($settings, $force: false) {
+	@if map_has_key($settings, 'namespace') and not $force {
+		$settings: map_remove($settings, 'namespace');
+	}
+
+	$spartan-config: map-merge($spartan-config, $settings) !global;
+}
+
+@mixin grid-config-set($setting, $value: false) {
+	@if type_of($setting) != map {
+		$setting: ($setting: $value);
+	}
+
+	@include _update-spartan-config($setting);
+
+	// always try to recalculate singleCell value
+	@if map_has_key($spartan-config, 'width') and map_has_key($spartan-config, 'cells') {
+		@include _update-spartan-config((singleCell: (map-get($spartan-config, 'width') / map-get($spartan-config, 'cells'))));
+	}
+}
+
+@mixin _set-config-namespace($namespace) {
+	@if $namespace != '' {
+		$namespace: #{$namespace}-;
+	}
+
+	$settings: (namespace: $namespace);
+
+	@include _update-spartan-config($settings, true);
+}
+
 @mixin grid-unlock($width: 100%, $gutter: 0, $cells: 12, $namespace: 'g') {
 	$config: $width;
 	$base-config: (width: 100%, gutter: 0, cells: 12, namespace: 'g');
@@ -236,13 +259,10 @@ $spartan-config: () !global;
 				$target-config: map-merge($target-config, ($keyword: nth($config, $index)));
 			}
 		}
-
 	} @else if $config-type == map {
 		$target-config: map-merge($target-config, $config);
-
 	} @else if $config-type == number {
 		$target-config: map-merge($target-config, (width: $width, gutter: $gutter, cells: $cells, namespace: $namespace));
-
 	}
 
 	// add fallback notices
@@ -259,24 +279,13 @@ $spartan-config: () !global;
 			@warn 'No cells amount given, falling back to default (#{map-get($base-config, 'cells')})';
 		}
 	} @else {
-		@warn 'No configuration parameters given. falling back to default (#{map-remove($base-config, 'namespace')})';
+		@warn 'No configuration parameters given. falling back to defaults (#{map-remove($base-config, 'namespace')})';
 	}
 
 	$target-config: map-merge($base-config, $target-config);
 
 	$width: map-get($target-config, 'width');
 	$cells: map-get($target-config, 'cells');
-
-	// if the namespace has already been set, don't update it
-	@if map_has_key($spartan-config, 'namespace') {
-		$namespace: map-get($spartan-config, 'namespace');
-	} @else if map_has_key($target-config, 'namespace') {
-		$namespace: map-get($target-config, 'namespace');
-
-		@if $namespace != '' {
-			$namespace: #{$namespace}-;
-		}
-	}
 
 	// check final settings types
 	@if type_of($width) != number {
@@ -293,22 +302,9 @@ $spartan-config: () !global;
 
 	$single-cell: $width / $cells;
 
-	$target-config: map-merge($target-config, (namespace: $namespace, singleCell: ($width / $cells)));
+	$target-config: map-merge($target-config, (singleCell: ($width / $cells)));
 
-	$spartan-config: map-merge($spartan-config, $target-config) !global;
-}
-
-@mixin grid-config-set($setting, $value) {
-	@if type_of($setting) != map {
-		$setting: ($setting: $value);
-	}
-
-	$spartan-config: map_merge($spartan-config, $setting) !global;
-
-	// always try to recalculate singleCell value
-	@if map_has_key($spartan-config, 'width') and map_has_key($spartan-config, 'cells') {
-		$spartan-config: map-merge($spartan-config, (singleCell: (map-get($spartan-config, 'width') / map-get($spartan-config, 'cells')))) !global;
-	}
+	@include grid-config-set($target-config);
 }
 
 @mixin grid-span($num: 0) {
@@ -371,13 +367,17 @@ $spartan-config: () !global;
 }
 
 @mixin grid-core($namespace: 'g') {
-	@if not map_has_key($spartan-config, 'namespace') {
-		@if $namespace != '' {
-			$namespace: #{$namespace}-;
-		}
+	$config: ();
 
-		$spartan-config: map-merge($spartan-config, (namespace: $namespace));
+	@if type_of($namespace) == map {
+		$config: $namespace;
+	} @else {
+		$config: map-merge($spartan-config, (namespace: $namespace));
 	}
+
+	@include _set-config-namespace(map-get($config, 'namespace'));
+
+	@include grid-config-set($config);
 
 	@include _spartan-core-selectors;
 }
