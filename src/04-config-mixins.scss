@@ -1,8 +1,4 @@
-@mixin _update-spartan-config($settings, $force: false) {
-	@if map_has_key($settings, 'namespace') and not $force {
-		$settings: map_remove($settings, 'namespace');
-	}
-
+@mixin _update-spartan-config($settings) {
 	$spartan-config: map-merge($spartan-config, $settings) !global;
 }
 
@@ -17,16 +13,6 @@
 	@if map_has_key($spartan-config, 'width') and map_has_key($spartan-config, 'cells') {
 		@include _update-spartan-config((singleCell: (map-get($spartan-config, 'width') / map-get($spartan-config, 'cells'))));
 	}
-}
-
-@mixin _set-config-namespace($namespace) {
-	@if $namespace != '' {
-		$namespace: #{$namespace}-;
-	}
-
-	$settings: (namespace: $namespace);
-
-	@include _update-spartan-config($settings, true);
 }
 
 @mixin grid-unlock($width: 100%, $gutter: 0, $cells: 12, $namespace: 'g') {

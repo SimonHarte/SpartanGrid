@@ -71,6 +71,12 @@ $spartan-config: () !global;
 	@return map-get($spartan-config, $setting);
 }
 
+@function get-formatted-namespace() {
+	$namespace: map-get($spartan-config, 'namespace');
+
+	@return if($namespace != '', #{$namespace}-, $namespace);
+}
+
 @mixin _spartan-span-width($num) {
 	width: _get-rounded(map-get($spartan-config, 'singleCell') * $num, 'ceil');
 }
@@ -144,7 +150,7 @@ $spartan-config: () !global;
 @mixin grid-cell-clear($cells) {
 	$cell-integer: floor($cells);
 
-	& > .#{map-get($spartan-config, 'namespace')}cell:nth-of-type(#{$cell-integer}n+1) {
+	& > .#{get-formatted-namespace()}cell:nth-of-type(#{$cell-integer}n+1) {
 		clear: left;
 	}
 }
@@ -170,10 +176,10 @@ $spartan-config: () !global;
 }
 
 @mixin _spartan-gutter-styles($container-gutter, $cell-gutter) {
-	&.#{map-get($spartan-config, 'namespace')}container {
+	&.#{get-formatted-namespace()}container {
 		@include _spartan-container-gutter($container-gutter);
 
-		> .#{map-get($spartan-config, 'namespace')}cell {
+		> .#{get-formatted-namespace()}cell {
 			@include _spartan-cell-gutter($cell-gutter);
 		}
 	}
@@ -181,16 +187,16 @@ $spartan-config: () !global;
 
 // base grid layout styles, valid for every grid setup
 @mixin _spartan-core-selectors {
-	.#{map-get($spartan-config, 'namespace')}container,
-	.#{map-get($spartan-config, 'namespace')}cell {
+	.#{get-formatted-namespace()}container,
+	.#{get-formatted-namespace()}cell {
 		@include _spartan-base-style('both');
 	}
 
-	.#{map-get($spartan-config, 'namespace')}container {
+	.#{get-formatted-namespace()}container {
 		@include _spartan-base-style('container');
 	}
 
-	.#{map-get($spartan-config, 'namespace')}cell {
+	.#{get-formatted-namespace()}cell {
 		@include _spartan-base-style('cell');
 	}
 }
@@ -210,11 +216,7 @@ $spartan-config: () !global;
 	}
 }
 
-@mixin _update-spartan-config($settings, $force: false) {
-	@if map_has_key($settings, 'namespace') and not $force {
-		$settings: map_remove($settings, 'namespace');
-	}
-
+@mixin _update-spartan-config($settings) {
 	$spartan-config: map-merge($spartan-config, $settings) !global;
 }
 
@@ -229,16 +231,6 @@ $spartan-config: () !global;
 	@if map_has_key($spartan-config, 'width') and map_has_key($spartan-config, 'cells') {
 		@include _update-spartan-config((singleCell: (map-get($spartan-config, 'width') / map-get($spartan-config, 'cells'))));
 	}
-}
-
-@mixin _set-config-namespace($namespace) {
-	@if $namespace != '' {
-		$namespace: #{$namespace}-;
-	}
-
-	$settings: (namespace: $namespace);
-
-	@include _update-spartan-config($settings, true);
 }
 
 @mixin grid-unlock($width: 100%, $gutter: 0, $cells: 12, $namespace: 'g') {
@@ -375,8 +367,6 @@ $spartan-config: () !global;
 		$config: map-merge($spartan-config, (namespace: $namespace));
 	}
 
-	@include _set-config-namespace(map-get($config, 'namespace'));
-
 	@include grid-config-set($config);
 
 	@include _spartan-core-selectors;
@@ -401,7 +391,7 @@ $spartan-config: () !global;
 		$prefix: '#{$prefix}-';
 	}
 
-	$selector: #{map-get($spartan-config, 'namespace')}#{$prefix};
+	$selector: #{get-formatted-namespace()}#{$prefix};
 	$classes: span offset push pull;
 
 	@each $class in $classes {
@@ -423,7 +413,7 @@ $spartan-config: () !global;
 
 // standard mixin for setting cell styles
 @mixin grid-cell-set($cell-name, $cell-span: 0, $offset: 0, $reorder: 0, $spacing-opts: (false)) {
-	& > .#{map-get($spartan-config, 'namespace')}#{$cell-name} {
+	& > .#{get-formatted-namespace()}#{$cell-name} {
 		@if $cell-span > 0 {
 			@include grid-span($cell-span);
 		}

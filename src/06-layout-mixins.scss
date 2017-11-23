@@ -1,6 +1,6 @@
 // standard mixin for setting cell styles
 @mixin grid-cell-set($cell-name, $cell-span: 0, $offset: 0, $reorder: 0, $spacing-opts: (false)) {
-	& > .#{map-get($spartan-config, 'namespace')}#{$cell-name} {
+	& > .#{get-formatted-namespace()}#{$cell-name} {
 		@if $cell-span > 0 {
 			@include grid-span($cell-span);
 		}
