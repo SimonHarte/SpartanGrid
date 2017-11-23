@@ -11,9 +11,8 @@
     "url": "https://github.com/SimonHarte/SpartanGrid.git"
   },
   "scripts": {
-    "start": "npm run build; node-sass grid-setup.scss grid.css",
-    "test": "npm run build; node-sass tests/tests.scss tests.css",
-    "build": "gulp build",
+    "start": "gulp build; gulp compile",
+    "test": "gulp build; gulp compile-test",
     "dev": "gulp dev"
   },
   "keywords": [
@@ -34,7 +33,7 @@
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
-    "gulp-watch": "^4.3.11",
-    "node-sass": "^3.10.1"
+    "gulp-sass": "^3.1.0",
+    "gulp-watch": "^4.3.11"
   }
 }
