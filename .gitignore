@@ -1,5 +1,5 @@
 grid.css
 tests.css
-.sass-cache
 .idea
 node_modules
+package-lock.json
