@@ -1,8 +1,8 @@
 @mixin _spartan-gutter-styles($container-gutter, $cell-gutter) {
-	&.#{map-get($spartan-config, 'namespace')}container {
+	&.#{get-formatted-namespace()}container {
 		@include _spartan-container-gutter($container-gutter);
 
-		> .#{map-get($spartan-config, 'namespace')}cell {
+		> .#{get-formatted-namespace()}cell {
 			@include _spartan-cell-gutter($cell-gutter);
 		}
 	}
@@ -10,16 +10,16 @@
 
 // base grid layout styles, valid for every grid setup
 @mixin _spartan-core-selectors {
-	.#{map-get($spartan-config, 'namespace')}container,
-	.#{map-get($spartan-config, 'namespace')}cell {
+	.#{get-formatted-namespace()}container,
+	.#{get-formatted-namespace()}cell {
 		@include _spartan-base-style('both');
 	}
 
-	.#{map-get($spartan-config, 'namespace')}container {
+	.#{get-formatted-namespace()}container {
 		@include _spartan-base-style('container');
 	}
 
-	.#{map-get($spartan-config, 'namespace')}cell {
+	.#{get-formatted-namespace()}cell {
 		@include _spartan-base-style('cell');
 	}
 }

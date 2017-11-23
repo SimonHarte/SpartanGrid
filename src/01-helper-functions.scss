@@ -62,3 +62,9 @@
 @function grid-config-get($setting) {
 	@return map-get($spartan-config, $setting);
 }
+
+@function get-formatted-namespace() {
+	$namespace: map-get($spartan-config, 'namespace');
+
+	@return if($namespace != '', #{$namespace}-, $namespace);
+}

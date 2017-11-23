@@ -66,8 +66,6 @@
 		$config: map-merge($spartan-config, (namespace: $namespace));
 	}
 
-	@include _set-config-namespace(map-get($config, 'namespace'));
-
 	@include grid-config-set($config);
 
 	@include _spartan-core-selectors;
@@ -92,7 +90,7 @@
 		$prefix: '#{$prefix}-';
 	}
 
-	$selector: #{map-get($spartan-config, 'namespace')}#{$prefix};
+	$selector: #{get-formatted-namespace()}#{$prefix};
 	$classes: span offset push pull;
 
 	@each $class in $classes {

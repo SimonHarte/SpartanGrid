@@ -71,7 +71,7 @@
 @mixin grid-cell-clear($cells) {
 	$cell-integer: floor($cells);
 
-	& > .#{map-get($spartan-config, 'namespace')}cell:nth-of-type(#{$cell-integer}n+1) {
+	& > .#{get-formatted-namespace()}cell:nth-of-type(#{$cell-integer}n+1) {
 		clear: left;
 	}
 }
