@@ -1,5 +1,13 @@
-src
 examples
+src
 tests
+.editorconfig
 .gitignore
+.npmignore
+bower.json
+grid.css
 grid-setup.scss
+gulpfile.js
+package.json
+package-lock.json
+tests.css

@@ -1,31 +1,39 @@
 {
-	"name": "spartan-grid",
-	"description": "A highly customizable yet tiny, standalone grid system",
-	"license": "MIT",
-	"authors": [
-		{
-			"name": "Simon Harte",
-			"email": "s.harte@gmx.ch"
-		}
-	],
-	"repository": {
-		"type": "git",
-		"url": "git://github.com/SimonHarte/SpartanGrid.git"
-	},
-	"ignore": [
+  "name": "spartan-grid",
+  "description": "A highly customizable yet tiny, standalone grid system",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Simon Harte",
+      "email": "s.harte@gmx.ch"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/SimonHarte/SpartanGrid.git"
+  },
+  "ignore": [
+    "examples",
     "src",
-		"examples",
-		"tests",
-		".gitignore",
-		"grid-setup.scss"
-	],
-	"keywords": [
-		"spartan",
-		"grid",
-		"responsive",
-		"SCSS",
-		"tiny",
-		"flexible",
-		"standalone"
-	]
+    "tests",
+    ".editorconfig",
+    ".gitignore",
+    ".npmignore",
+    "bower.json",
+    "grid.css",
+    "grid-setup.scss",
+    "gulpfile.js",
+    "package.json",
+    "package-lock.json",
+    "tests.css"
+  ],
+  "keywords": [
+    "spartan",
+    "grid",
+    "responsive",
+    "SCSS",
+    "tiny",
+    "flexible",
+    "standalone"
+  ]
 }
