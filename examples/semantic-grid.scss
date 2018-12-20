@@ -1,12 +1,21 @@
 // only unlock grid settings but do not generate any grid css yet
 @include grid-unlock(100%, 20px, 12);
 
+// we adjust the gutter to 30px for larger screens
 main {
 	@include grid-container();
+
+	@media (min-width: 40em) {
+		@include grid-container(30px);
+	}
 
 	article,
 	aside {
 		@include grid-cell();
+
+		@media (min-width: 40em) {
+			@include grid-cell(30px);
+		}
 	}
 
 	article {

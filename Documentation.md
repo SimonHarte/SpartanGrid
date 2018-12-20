@@ -210,13 +210,24 @@ As you could imagine `grid-container()` applies all container styles to your sel
 
 You can optionally overwrite the gutter from your previously unlocked settings, but make sure both mixins use the same value.
 
-```less
+```scss
+@include grid-unlock(100%, 20px, 12);
+
+// 20px gutter from default config will be overwritten by mixins
 main {
 	@include grid-container(5%);
+	
+	@media (min-width: 40em) {
+		@include grid-container(30px);
+	}
 	
 	article,
 	aside {
 		@include grid-cell(5%);
+	
+		@media (min-width: 40em) {
+			@include grid-cell(30px);
+		}
 	}
 	
 	article {
@@ -228,6 +239,8 @@ main {
 	}
 }
 ```
+
+> You cannot use the mixin `grid-gutter()` to adjust gutters for responsive layouts since this generates the default grid classes.
 
 ## Responsive Approaches
 

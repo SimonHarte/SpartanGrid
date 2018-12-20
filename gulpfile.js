@@ -9,20 +9,23 @@ gulp.task('compile', () => {
 	return gulp.src('grid-setup.scss')
 		.pipe(sass().on('error', sass.logError))
 		.pipe(concat('grid.css'))
-		.pipe(gulp.dest('./'));
+		.pipe(gulp.dest('./'))
+		;
 });
 
 gulp.task('compile-test', () => {
 	return gulp.src('tests/*.scss')
 		.pipe(sass().on('error', sass.logError))
 		.pipe(concat('tests.css'))
-		.pipe(gulp.dest('./'));
+		.pipe(gulp.dest('./'))
+		;
 });
 
 gulp.task('build', () => {
 	return gulp.src('src/*.scss')
 		.pipe(concat('spartan.scss'))
-		.pipe(gulp.dest('dist'));
+		.pipe(gulp.dest('dist'))
+		;
 });
 
 gulp.task('watch', () => {
@@ -31,4 +34,4 @@ gulp.task('watch', () => {
 	});
 });
 
-gulp.task('dev', ['build', 'watch']);
+gulp.task('dev', gulp.parallel('build', 'watch'));
